@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph.xml"
+    app:startDestination="@id/homeScreen">
+
+    <fragment
+        android:id="@+id/homeScreen"
+        android:name="com.example.wallet.ui.screens.Home"
+        android:label="Home"
+        tools:layout="@layout/fragment__home_screen" >
+        <action
+            android:id="@+id/action_homeScreen_to_welcome"
+            app:destination="@id/welcome"
+            app:popUpTo="@id/homeScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeScreen_to_settings"
+            app:destination="@id/settings"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcome"
+        android:name="com.example.wallet.ui.screens.Welcome"
+        android:label="Welcome"
+        tools:layout="@layout/fragment__welcome_screen">
+        <action
+            android:id="@+id/action_welcome_to_settings"
+            app:destination="@id/settings"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment__settings_screen"
+        android:id="@+id/settings"
+        android:name="com.example.wallet.ui.screens.Settings"
+        android:label="Settings" />
+</navigation>

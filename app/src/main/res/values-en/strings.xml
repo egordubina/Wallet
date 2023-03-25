@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wallet</string>
+    <string name="welcome_good_morning">Good morning, %s</string>
+    <string name="welcome_good_day">Good day, %s</string>
+    <string name="welcome_good_evening">Good evening, %s</string>
+    <string name="welcome_good_night">Good night, %s</string>
+    <string name="welcome_to_wallet">Welcome to wallet!</string>
+    <string name="excellently">Excellently!</string>
+    <string name="settings">Settings</string>
+    <string name="user_name">Name</string>
+    <string name="save">Save</string>
+    <string name="app_description">With the help of a wallet, you will be able to effectively keep track of your funds</string>
+</resources>
