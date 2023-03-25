@@ -23,13 +23,14 @@
             android:orientation="vertical">
 
             <ImageView
+                android:layout_marginTop="@dimen/large_margin"
                 android:src="@drawable/icon_without_bg"
                 android:layout_width="match_parent"
                 android:layout_height="192dp"
                 android:contentDescription="@string/app_name" />
 
             <TextView
-                android:layout_marginTop="@dimen/xlarge_margin"
+                android:layout_marginTop="@dimen/large_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_to_wallet"

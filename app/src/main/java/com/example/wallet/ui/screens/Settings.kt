@@ -48,7 +48,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                     }
                 }
             }
-            buttonSaveUserSettings.setOnClickListener { checkUserSettings() }
             imageUserPhoto.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
@@ -60,9 +59,10 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             if (editTextUserName.text.toString().isEmpty()) {
                 textInputLayoutUserName.error = textInputLayoutUserName.helperText
             } else {
+                val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeScreen, true).build()
                 textInputLayoutUserName.error = null
                 userViewModel.setUserName(editTextUserName.text.toString())
-                findNavController().navigateUp()
+                findNavController().navigate(R.id.homeScreen, null, navOptions)
             }
         }
     }

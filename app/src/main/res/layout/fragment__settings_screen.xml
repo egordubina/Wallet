@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:layout_marginBottom="@dimen/large_margin"
-                android:text="Нажмите на лицо, чтобы поставить свою замечательную фотографию"
+                android:text="@string/action_change_photo_help_text"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
 
@@ -65,13 +65,6 @@
                     android:hint="@string/user_name" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button__save_user_settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/large_margin"
-                android:text="@string/save" />
 
         </LinearLayout>
 

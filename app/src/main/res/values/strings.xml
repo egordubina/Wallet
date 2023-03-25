@@ -11,4 +11,5 @@
     <string name="user_name">Имя</string>
     <string name="save">Сохранить</string>
     <string name="app_description">С помощью кошелька вы сможете эффективно вести учет своих средств</string>
+    <string name="action_change_photo_help_text">Нажмите на лицо, чтобы поставить свою замечательную фотографию</string>
 </resources>
