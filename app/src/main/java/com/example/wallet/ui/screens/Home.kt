@@ -11,6 +11,8 @@ import com.example.wallet.databinding.FragmentHomeScreenBinding
 import com.example.wallet.ui.uistate.HomeScreenUiState
 import com.example.wallet.ui.viewmodels.HomeScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
+import com.google.android.material.transition.Hold
+import com.google.android.material.transition.MaterialSharedAxis
 import java.time.LocalTime
 
 class Home : Fragment(R.layout.fragment__home_screen) {
@@ -26,18 +28,30 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                 is HomeScreenUiState.Error -> TODO()
                 is HomeScreenUiState.Content -> {
                     binding.apply {
-                        textViewWelcome.text = getWelcomeMessage(userName = uiState.welcomeMessage)
+                        textViewWelcome.text = getWelcomeMessage(userName = userViewModel.userName.value.toString())
                     }
                 }
 
                 HomeScreenUiState.Loading -> TODO()
             }
         }
+        binding.apply {
+            toolbarHome.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_item__settings -> {
+                        findNavController().navigate(R.id.action_homeScreen_to_settings)
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }
     }
 
     private fun checkUserLogin() {
         if (userViewModel.userName.value == null || userViewModel.userName.value!!.isEmpty())
-            findNavController().navigate(R.id.action_homeScreen_to_welcome)
+            findNavController().navigate(R.id.welcome)
     }
 
     private fun getWelcomeMessage(userName: String): String {
@@ -51,5 +65,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 }

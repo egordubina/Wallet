@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="?attr/colorSurfaceContainer">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:background="?attr/colorSurfaceContainer"
+            android:id="@+id/toolbar_settings"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/round_done_24"
+            app:menu="@menu/settings"
+            app:navigationIcon="@drawable/arrow_back_fill1_wght400_grad0_opsz24"
             app:title="@string/settings" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -30,16 +33,33 @@
             android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image__user_photo"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/large_margin" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/face_fill1_wght400_grad0_opsz24"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/large_margin"
+                android:text="Нажмите на лицо, чтобы поставить свою замечательную фотографию"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout__user_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:helperText="Введите имя, чтобы мы знали, как к вам обращаться"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text__user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/user_name" />
@@ -47,6 +67,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/button__save_user_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/large_margin"

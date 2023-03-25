@@ -20,7 +20,7 @@ class Welcome : Fragment(R.layout.fragment__welcome_screen) {
         val binding: FragmentWelcomeScreenBinding = FragmentWelcomeScreenBinding.bind(view)
         binding.apply {
             buttonGo.setOnClickListener {
-                findNavController().navigate(R.id.action_welcome_to_settings)
+//                findNavController().navigate(R.id.action_welcome_to_settings)
             }
         }
     }
