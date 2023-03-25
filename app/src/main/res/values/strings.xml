@@ -12,4 +12,7 @@
     <string name="save">Сохранить</string>
     <string name="app_description">С помощью кошелька вы сможете эффективно вести учет своих средств</string>
     <string name="action_change_photo_help_text">Нажмите на лицо, чтобы поставить свою замечательную фотографию</string>
+    <string name="no_transaction">Транзакций нет</string>
+    <string name="fab_action_to_add_transaction">Добавить транзакцию</string>
+    <string name="no_transaction_detailed_info">Транзакций нет.\n\n Вы можете добавить их вручную, нажав на + или привязать карту в настройках</string>
 </resources>
