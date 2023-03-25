@@ -51,6 +51,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             imageUserPhoto.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
+            editTextUserName.setText(userViewModel.userName.value)
         }
     }
 

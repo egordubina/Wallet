@@ -2,16 +2,17 @@ package com.example.wallet.ui.screens
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.databinding.FragmentHomeScreenBinding
 import com.example.wallet.ui.uistate.HomeScreenUiState
 import com.example.wallet.ui.viewmodels.HomeScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
-import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialSharedAxis
 import java.time.LocalTime
 
@@ -28,7 +29,9 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                 is HomeScreenUiState.Error -> TODO()
                 is HomeScreenUiState.Content -> {
                     binding.apply {
-                        textViewWelcome.text = getWelcomeMessage(userName = userViewModel.userName.value.toString())
+                        textViewWelcome.text =
+                            getWelcomeMessage(userName = userViewModel.userName.value.toString())
+                        fabAddTransaction.setOnClickListener { actionToAddTransaction() }
                     }
                 }
 
@@ -49,9 +52,15 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         }
     }
 
+    private fun actionToAddTransaction() {
+        Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
+    }
+
     private fun checkUserLogin() {
-        if (userViewModel.userName.value == null || userViewModel.userName.value!!.isEmpty())
-            findNavController().navigate(R.id.welcome)
+        if (userViewModel.userName.value == null || userViewModel.userName.value!!.isEmpty()) {
+            val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeScreen, true).build()
+            findNavController().navigate(R.id.welcome, null, navOptions)
+        }
     }
 
     private fun getWelcomeMessage(userName: String): String {

@@ -11,7 +11,6 @@
         android:layout_height="?attr/actionBarSize">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:background="?attr/colorSurfaceContainer"
             android:id="@+id/toolbar_home"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -56,8 +55,46 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Good morning, Egor!" />
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/xlarge_margin"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/constraint_end"
+                app:layout_constraintStart_toStartOf="@id/constraint_start"
+                app:layout_constraintTop_toBottomOf="@id/text_view__welcome">
+
+                <ImageView
+                    android:contentDescription="@string/no_transaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp"
+                    android:src="@drawable/info_fill1_wght400_grad0_opsz24"
+                    app:tint="?attr/colorPrimary" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/no_transaction_detailed_info"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="?attr/colorPrimary" />
+
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab__add_transaction"
+        android:contentDescription="@string/fab_action_to_add_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/default_margin"
+        android:src="@drawable/add_fill1_wght400_grad0_opsz24"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
