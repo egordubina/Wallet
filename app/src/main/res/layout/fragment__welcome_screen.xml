@@ -22,14 +22,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:src="@drawable/icon_without_bg"
+                android:layout_width="match_parent"
+                android:layout_height="192dp"
+                android:contentDescription="@string/app_name" />
+
             <TextView
                 android:layout_marginTop="@dimen/xlarge_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_to_wallet"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-                android:drawableTop="@drawable/icon"
-                android:drawablePadding="@dimen/xlarge_margin"/>
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"/>
 
             <TextView
                 android:layout_width="match_parent"
