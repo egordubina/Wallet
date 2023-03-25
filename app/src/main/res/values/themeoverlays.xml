@@ -3,6 +3,5 @@
 
     <style name="ThemeOverlay.Wallet.Toolbar" parent="">
         <item name="colorSurface">?attr/colorSurfaceContainer</item>
-<!--        <item name="colorOnSurface">?attr/colorOnSurface</item>-->
     </style>
 </resources>
