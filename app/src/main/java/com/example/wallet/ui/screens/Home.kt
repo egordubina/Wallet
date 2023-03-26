@@ -2,7 +2,12 @@ package com.example.wallet.ui.screens
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -58,7 +63,11 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     }
 
     private fun checkUserFirstLogin() {
-        if (WalletPreferences(requireActivity()).getValue("new_user", WalletPreferences.INT) == null) {
+        if (WalletPreferences(requireActivity()).getValue(
+                "new_user",
+                WalletPreferences.INT
+            ) == null
+        ) {
             val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeScreen, true).build()
             findNavController().navigate(R.id.welcome, null, navOptions)
         }

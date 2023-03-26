@@ -30,8 +30,8 @@
 
         <item name="toolbarStyle">@style/Widget.Wallet.Toolbar</item>
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?attr/colorSurfaceContainer</item>
+        <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>
     </style>
 
     <style name="Base.Theme.Wallet" parent="Base.V26.Night.Theme.Wallet" />
