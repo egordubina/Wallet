@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
+import com.example.wallet.data.preferences.WalletPreferences
 import com.example.wallet.databinding.FragmentHomeScreenBinding
 import com.example.wallet.ui.uistate.HomeScreenUiState
 import com.example.wallet.ui.viewmodels.HomeScreenViewModel
@@ -57,7 +58,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     }
 
     private fun checkUserFirstLogin() {
-        if (false) {
+        if (WalletPreferences(requireActivity()).getValue("new_user", WalletPreferences.INT) == null) {
             val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeScreen, true).build()
             findNavController().navigate(R.id.welcome, null, navOptions)
         }
