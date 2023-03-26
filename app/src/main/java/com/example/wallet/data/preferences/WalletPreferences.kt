@@ -20,7 +20,6 @@ class WalletPreferences(private val activity: Activity) {
                 if (ans == -1) null else ans as T
             }
 
-//            is Boolean -> prefs.getBoolean(name, null) as T
             else -> null
         }
     }
@@ -31,9 +30,13 @@ class WalletPreferences(private val activity: Activity) {
             when (value) {
                 is String -> putString(name, value)
                 is Int -> putInt(name, value)
-//                is Boolean -> putInt(name, value)
+                is Boolean -> putInt(name, value.toInt())
             }
             apply()
         }
     }
+}
+
+private fun Boolean.toInt(): Int {
+    return if (this) 1 else 0
 }
