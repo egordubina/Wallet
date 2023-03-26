@@ -15,4 +15,7 @@
     <string name="no_transaction">Транзакций нет</string>
     <string name="fab_action_to_add_transaction">Добавить транзакцию</string>
     <string name="no_transaction_detailed_info">Транзакций нет.\n\n Вы можете добавить их вручную, нажав на + или привязать карту в настройках</string>
+    <string name="login">Авторизация</string>
+    <string name="registration">Регистрация</string>
+    <string name="next">Дальше</string>
 </resources>

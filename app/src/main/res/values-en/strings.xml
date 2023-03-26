@@ -15,4 +15,7 @@
     <string name="no_transaction">No transaction</string>
     <string name="fab_action_to_add_transaction">Add transaction</string>
     <string name="no_transaction_detailed_info">" There are no transactions.\n\n You can add them manually by clicking on + or link the card in the settings"</string>
+    <string name="login">Login</string>
+    <string name="registration">Registration</string>
+    <string name="next">Next</string>
 </resources>

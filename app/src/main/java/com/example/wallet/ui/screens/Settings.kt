@@ -9,16 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
+import com.example.wallet.data.preferences.WalletPreferences
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
-import com.example.wallet.ui.viewmodels.UserViewModel
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Settings : Fragment(R.layout.fragment__settings_screen) {
     private lateinit var binding: FragmentSettingsScreenBinding
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
-
-    private val userViewModel: UserViewModel by activityViewModels()
-
+    private lateinit var walletPreferences: WalletPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -33,6 +31,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSettingsScreenBinding.bind(view)
+        walletPreferences = WalletPreferences(requireActivity())
         binding.apply {
             toolbarSettings.apply {
                 setNavigationOnClickListener { findNavController().navigateUp() }
@@ -50,7 +49,18 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             imageUserPhoto.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
-            editTextUserName.setText(userViewModel.userName.value)
+//            editTextUserName.setText()
+//            editTextUserName.setText(userViewModel.userName.value)
+            switchUseFingerPrintToLogin.apply {
+                isChecked =
+                    walletPreferences.getValue(WalletPreferences.USE_FINGERPRINT_TO_LOGIN, WalletPreferences.BOOLEAN)
+                setOnCheckedChangeListener { _, isChecked ->
+                    walletPreferences.setValue<Boolean>(
+                        WalletPreferences.USE_FINGERPRINT_TO_LOGIN,
+                        isChecked
+                    )
+                }
+            }
         }
     }
 
@@ -60,7 +70,8 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                 textInputLayoutUserName.error = textInputLayoutUserName.helperText
             } else {
                 textInputLayoutUserName.error = null
-                userViewModel.setUserName(editTextUserName.text.toString())
+//                userViewModel.setUserName(editTextUserName.text.toString())
+                walletPreferences.setValue(WalletPreferences.USER_NAME, editTextUserName.text.toString())
                 findNavController().navigateUp()
             }
         }

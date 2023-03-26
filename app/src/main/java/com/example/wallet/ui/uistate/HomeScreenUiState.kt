@@ -7,6 +7,6 @@ sealed class HomeScreenUiState {
     ) : HomeScreenUiState()
 
     data class Content(
-        val welcomeMessage: String,
+        val userName: String,
     ) : HomeScreenUiState()
 }

@@ -65,6 +65,16 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch__use_finger_print_to_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/large_margin"
+                android:checked="true"
+                android:text="Use fingerprint to login"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
         </LinearLayout>
 
     </ScrollView>
