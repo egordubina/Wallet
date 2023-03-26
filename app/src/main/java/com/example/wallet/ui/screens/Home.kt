@@ -23,7 +23,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeScreenBinding.bind(view)
-        checkUserLogin()
+        checkUserFirstLogin()
         homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is HomeScreenUiState.Error -> TODO()
@@ -56,8 +56,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
     }
 
-    private fun checkUserLogin() {
-        if (userViewModel.userName.value == null || userViewModel.userName.value!!.isEmpty()) {
+    private fun checkUserFirstLogin() {
+        if (false) {
             val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeScreen, true).build()
             findNavController().navigate(R.id.welcome, null, navOptions)
         }

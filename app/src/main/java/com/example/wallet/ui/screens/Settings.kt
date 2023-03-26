@@ -7,7 +7,6 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
@@ -60,10 +59,9 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             if (editTextUserName.text.toString().isEmpty()) {
                 textInputLayoutUserName.error = textInputLayoutUserName.helperText
             } else {
-                val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeScreen, true).build()
                 textInputLayoutUserName.error = null
                 userViewModel.setUserName(editTextUserName.text.toString())
-                findNavController().navigate(R.id.homeScreen, null, navOptions)
+                findNavController().navigateUp()
             }
         }
     }

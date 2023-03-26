@@ -3,6 +3,7 @@ package com.example.wallet.ui.screens
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.databinding.FragmentWelcomeScreenBinding
@@ -20,7 +21,8 @@ class Welcome : Fragment(R.layout.fragment__welcome_screen) {
         val binding: FragmentWelcomeScreenBinding = FragmentWelcomeScreenBinding.bind(view)
         binding.apply {
             buttonGo.setOnClickListener {
-                findNavController().navigate(R.id.action_welcome_to_settings)
+                val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeScreen, true).build()
+                findNavController().navigate(R.id.homeScreen, null, navOptions)
             }
         }
     }

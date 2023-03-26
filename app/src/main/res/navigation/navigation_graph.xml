@@ -19,11 +19,7 @@
         android:id="@+id/welcome"
         android:name="com.example.wallet.ui.screens.Welcome"
         android:label="Welcome"
-        tools:layout="@layout/fragment__welcome_screen">
-        <action
-            android:id="@+id/action_welcome_to_settings"
-            app:destination="@id/settings" />
-    </fragment>
+        tools:layout="@layout/fragment__welcome_screen"/>
     <fragment
         android:id="@+id/settings"
         android:name="com.example.wallet.ui.screens.Settings"
