@@ -29,6 +29,7 @@
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
 
         <item name="toolbarStyle">@style/Widget.Wallet.Toolbar</item>
+        <item name="linearProgressIndicatorStyle">@style/Widget.Wallet.LinearProgressIndicator</item>
 
         <item name="android:statusBarColor">?attr/colorSurfaceContainer</item>
         <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>

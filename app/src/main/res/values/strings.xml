@@ -18,7 +18,10 @@
     <string name="login">Авторизация</string>
     <string name="registration">Регистрация</string>
     <string name="next">Дальше</string>
-    <string name="phone_number">Номер телефона</string>
+    <string name="email">E-mail</string>
     <string name="pin_code">Пин код</string>
     <string name="error_message">Ошибка</string>
+    <string name="reg_help_text_name">Введите своё имя, чтобы мы знали, как к вам обращаться</string>
+    <string name="reg_help_text_email">Введите почту, чтобы не потерять доступ к аккаунту</string>
+    <string name="reg_help_text_pin_code">Пин-код должен быть длиной от 4 до 8 цифр</string>
 </resources>

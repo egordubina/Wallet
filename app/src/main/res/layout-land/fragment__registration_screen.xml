@@ -33,20 +33,25 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:animateLayoutChanges="true">
+                android:paddingBottom="@dimen/default_margin">
 
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/linear_progress_indicator__registration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/image__registration_user_badge"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:contentDescription="@string/user_name"
+                    android:src="@drawable/badge_fill1_wght400_grad0_opsz24"
+                    app:layout_constraintEnd_toEndOf="@+id/text_input_layout__registration_user_name"
+                    app:layout_constraintStart_toStartOf="@+id/text_input_layout__registration_user_name"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout__registration_user_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
@@ -54,8 +59,10 @@
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
                     app:helperText="@string/reg_help_text_name"
-                    app:helperTextEnabled="true"
-                    app:startIconDrawable="@drawable/badge_fill1_wght400_grad0_opsz24">
+                    app:layout_constraintEnd_toStartOf="@+id/text_input_layout__registration_user_email"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image__registration_user_badge">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_text__registration_user_name"
@@ -65,18 +72,32 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <ImageView
+                    android:id="@+id/image__registration_user_email"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:contentDescription="@string/email"
+                    android:src="@drawable/alternate_email_fill1_wght400_grad0_opsz24"
+                    app:layout_constraintEnd_toEndOf="@+id/text_input_layout__registration_user_email"
+                    app:layout_constraintStart_toStartOf="@+id/text_input_layout__registration_user_email"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout__registration_user_email"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/text_input_layout__registration_user_name"
                     android:layout_marginHorizontal="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
                     android:hint="@string/email"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
                     app:helperText="@string/reg_help_text_email"
-                    app:helperTextEnabled="true"
-                    app:startIconDrawable="@drawable/alternate_email_fill1_wght400_grad0_opsz24">
+                    app:layout_constraintEnd_toStartOf="@+id/text_input_layout__registration_user_pin_code"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/text_input_layout__registration_user_name"
+                    app:layout_constraintTop_toBottomOf="@id/image__registration_user_email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_text__registration_user_email"
@@ -86,10 +107,22 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <ImageView
+                    android:id="@+id/image__registration_user_pin_code"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:contentDescription="@string/pin_code"
+                    android:src="@drawable/password_fill1_wght400_grad0_opsz24"
+                    app:layout_constraintEnd_toEndOf="@+id/text_input_layout__registration_user_pin_code"
+                    app:layout_constraintStart_toStartOf="@+id/text_input_layout__registration_user_pin_code"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout__registration_user_pin_code"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/text_input_layout__registration_user_email"
                     android:layout_margin="@dimen/default_margin"
                     android:hint="@string/pin_code"
                     app:counterEnabled="true"
@@ -98,7 +131,10 @@
                     app:errorEnabled="true"
                     app:helperText="@string/reg_help_text_pin_code"
                     app:helperTextEnabled="true"
-                    app:startIconDrawable="@drawable/password_fill1_wght400_grad0_opsz24">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/text_input_layout__registration_user_email"
+                    app:layout_constraintTop_toBottomOf="@id/image__registration_user_pin_code">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_text__registration_user_pin_code"
@@ -109,7 +145,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
@@ -117,12 +153,13 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button__action_registration"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         android:text="@string/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent" />
 
 

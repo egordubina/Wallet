@@ -5,4 +5,11 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.Wallet.Toolbar</item>
         <item name="elevation">16dp</item>
     </style>
+
+    <style name="Widget.Wallet.LinearProgressIndicator" parent="Widget.Material3.LinearProgressIndicator">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Wallet.LinearProgressIndicator</item>
+        <item name="hideAnimationBehavior">outward</item>
+        <item name="showAnimationBehavior">inward</item>
+        <item name="android:indeterminate">true</item>
+    </style>
 </resources>

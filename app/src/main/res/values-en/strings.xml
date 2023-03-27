@@ -18,7 +18,10 @@
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="next">Next</string>
-    <string name="phone_number">Phone</string>
+    <string name="email">E-mail</string>
     <string name="pin_code">Pin code</string>
     <string name="error_message">Error</string>
+    <string name="reg_help_text_name">" Enter your name so we know how to contact you"</string>
+    <string name="reg_help_text_email">" Enter your email so you don't lose access to your account"</string>
+    <string name="reg_help_text_pin_code">PIN code must be 4 to 8 digits long</string>
 </resources>

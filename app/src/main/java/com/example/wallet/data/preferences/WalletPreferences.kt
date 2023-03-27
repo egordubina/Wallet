@@ -3,12 +3,9 @@ package com.example.wallet.data.preferences
 import android.content.Context
 import androidx.preference.PreferenceManager
 
-class WalletPreferences(private val context: Context) {
+class WalletPreferences(context: Context) {
+    @Suppress("UNUSED")
     companion object {
-        const val INT: Int = -1
-        const val STRING: String = ""
-        const val BOOLEAN: Boolean = true
-
         const val USER_NEW: String = "USER_NEW"
         const val USE_FINGERPRINT_TO_LOGIN: String = "USE_FINGERPRINT_TO_LOGIN"
         const val USER_NAME: String = "USER_NAME"
@@ -19,13 +16,14 @@ class WalletPreferences(private val context: Context) {
     private val preferencesManager =
         PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
-    val isFirstLogin: Boolean = preferencesManager.getBoolean(USER_NEW, true)
+    val isFirstLogin: Boolean
+        get() = preferencesManager.getBoolean(USER_NEW, true)
 
-    fun userRegistration(name: String, phoneNumber: String, pin: Int) {
+    fun registrationUser(name: String, email: String, pin: Int) {
         with(preferencesManager.edit()) {
             putBoolean(USER_NEW, false)
             putString(USER_NAME, name)
-            putString(USER_PHONE_NUMBER, phoneNumber)
+            putString(USER_PHONE_NUMBER, email)
             putInt(USER_PIN, pin)
             apply()
         }

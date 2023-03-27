@@ -26,7 +26,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         binding = FragmentHomeScreenBinding.bind(view)
         walletPreferences = WalletPreferences(requireActivity())
         checkUserFirstLogin()
-        checkUserData()
+//        checkUserData()
         homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is HomeScreenUiState.Error -> showError()
@@ -62,18 +62,12 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         ).show()
     }
 
-    private fun checkUserData() {
-        if (userViewModel.user.value == null) {
-
-        }
-    }
-
     private fun actionToAddTransaction() {
         Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
     }
 
     private fun checkUserFirstLogin() {
-        if (userViewModel.isFirstLogin)
+        if (userViewModel.isFirstLogin())
             findNavController().navigate(R.id.action_homeScreen_to_welcome)
     }
 
