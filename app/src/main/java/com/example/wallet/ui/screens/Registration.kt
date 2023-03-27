@@ -14,8 +14,6 @@ import com.google.android.material.transition.MaterialSharedAxis
 
 class Registration : Fragment(R.layout.fragment__registration_screen) {
     private lateinit var binding: FragmentRegistrationScreenBinding
-
-    //    private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     private val registrationScreeViewModel: RegistrationScreenViewModel by viewModels { RegistrationScreenViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,22 +36,9 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
         binding.toolbarRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
-    private fun showSuccessfulUi() {
-        hideLoading()
-        findNavController().navigate(R.id.action_registration_to_homeScreen)
-    }
-
-    private fun showFailedUi() {
-        hideLoading()
-    }
-
-    private fun showLoadingUi() {
-        showLoading()
-    }
-
     private fun showContentUi() {
+        hideLoading()
         binding.apply {
-            binding.linearProgressIndicatorRegistration?.isVisible = false
             // Клик по кнопке "Регистрация"
             buttonActionRegistration.setOnClickListener {
                 if (checkUserDataForRegistration()) {
@@ -67,6 +52,38 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
         }
     }
 
+    private fun showSuccessfulUi() {
+        hideLoading()
+        findNavController().navigate(R.id.action_registration_to_homeScreen)
+    }
+
+    private fun showFailedUi() {
+        hideLoading()
+    }
+
+    private fun showLoadingUi() {
+        showLoading()
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            linearProgressIndicatorRegistration?.isVisible = true
+            editTextRegistrationUserName.isEnabled = false
+            editTextRegistrationUserEmail.isEnabled = false
+            editTextRegistrationUserPinCode.isEnabled = false
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            linearProgressIndicatorRegistration?.isVisible = false
+            editTextRegistrationUserName.isEnabled = true
+            editTextRegistrationUserEmail.isEnabled = true
+            editTextRegistrationUserPinCode.isEnabled = true
+        }
+    }
+
+    // todo переписать на when
     private fun checkUserDataForRegistration(): Boolean {
         binding.apply {
             textInputLayoutRegistrationUserName.error = null
@@ -96,24 +113,6 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
                 return false
             }
             return true
-        }
-    }
-
-    private fun showLoading() {
-        binding.apply {
-            linearProgressIndicatorRegistration?.isVisible = true
-            editTextRegistrationUserName.isEnabled = false
-            editTextRegistrationUserEmail.isEnabled = false
-            editTextRegistrationUserPinCode.isEnabled = false
-        }
-    }
-
-    private fun hideLoading() {
-        binding.apply {
-            linearProgressIndicatorRegistration?.isVisible = false
-            editTextRegistrationUserName.isEnabled = true
-            editTextRegistrationUserEmail.isEnabled = true
-            editTextRegistrationUserPinCode.isEnabled = true
         }
     }
 }

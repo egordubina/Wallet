@@ -7,11 +7,10 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
 import com.example.wallet.data.preferences.WalletPreferences
 
-class UserViewModel(
-    private val walletPreferences: WalletPreferences
-) : ViewModel() {
+class UserViewModel(private val walletPreferences: WalletPreferences) : ViewModel() {
 
-    fun isFirstLogin(): Boolean = walletPreferences.isFirstLogin
+    val isFirstLogin: Boolean
+        get() = walletPreferences.isFirstLogin
 
     companion object {
         @Suppress("UNCHECKED_CAST")

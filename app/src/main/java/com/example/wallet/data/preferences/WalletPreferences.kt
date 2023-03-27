@@ -2,29 +2,37 @@ package com.example.wallet.data.preferences
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.example.wallet.data.models.Settings
+import com.example.wallet.data.models.Settings.*
+import kotlinx.coroutines.delay
 
 class WalletPreferences(context: Context) {
-    @Suppress("UNUSED")
-    companion object {
-        const val USER_NEW: String = "USER_NEW"
-        const val USE_FINGERPRINT_TO_LOGIN: String = "USE_FINGERPRINT_TO_LOGIN"
-        const val USER_NAME: String = "USER_NAME"
-        const val USER_PHONE_NUMBER: String = "USER_PHONE_NUMBER"
-        const val USER_PIN: String = "USER_PIN"
-    }
-
     private val preferencesManager =
         PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
-    val isFirstLogin: Boolean
-        get() = preferencesManager.getBoolean(USER_NEW, true)
+    var fingerPrintLogin: Boolean
+        get() = preferencesManager.getBoolean(USE_FINGERPRINT_TO_LOGIN.id, true)
+        set(value) = preferencesManager.edit().putBoolean(USE_FINGERPRINT_TO_LOGIN.id, value)
+            .apply()
+    var isFirstLogin: Boolean
+        get() = preferencesManager.getBoolean(USER_NEW.id, true)
+        set(value) = preferencesManager.edit().putBoolean(USER_NEW.id, value).apply()
+    var userName: String
+        get() = preferencesManager.getString(USER_NAME.id, "").toString()
+        set(value) = preferencesManager.edit().putString(USER_NAME.id, value).apply()
+    var userPin: Int
+        get() = preferencesManager.getInt(USER_PIN.id, -1)
+        set(value) = preferencesManager.edit().putInt(USER_PIN.id, value).apply()
+    var userEmail: String
+        get() = preferencesManager.getString(USER_EMAIL.id, "").toString()
+        set(value) = preferencesManager.edit().putString(USER_EMAIL.id, value).apply()
 
     fun registrationUser(name: String, email: String, pin: Int) {
         with(preferencesManager.edit()) {
-            putBoolean(USER_NEW, false)
-            putString(USER_NAME, name)
-            putString(USER_PHONE_NUMBER, email)
-            putInt(USER_PIN, pin)
+            putBoolean(USER_NEW.id, false)
+            putString(USER_NAME.id, name)
+            putString(USER_EMAIL.id, email)
+            putInt(USER_PIN.id, pin)
             apply()
         }
     }

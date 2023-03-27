@@ -3,6 +3,7 @@ package com.example.wallet.ui.screens
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -20,24 +21,18 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     private val homeScreenViewModel: HomeScreenViewModel by viewModels { HomeScreenViewModel.Factory }
     private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     private lateinit var binding: FragmentHomeScreenBinding
-    private lateinit var walletPreferences: WalletPreferences
+//    private lateinit var walletPreferences: WalletPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeScreenBinding.bind(view)
-        walletPreferences = WalletPreferences(requireActivity())
+//        walletPreferences = WalletPreferences(requireActivity())
         checkUserFirstLogin()
-//        checkUserData()
         homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
-                is HomeScreenUiState.Error -> showError()
-                is HomeScreenUiState.Content -> {
-                    binding.apply {
-                        textViewWelcome.text = getWelcomeMessage(uiState.userName)
-                        fabAddTransaction.setOnClickListener { actionToAddTransaction() }
-                    }
-                }
+                is HomeScreenUiState.Error -> showErrorUi()
+                is HomeScreenUiState.Content -> showContentUi(uiState.userName)
 
-                HomeScreenUiState.Loading -> TODO()
+                HomeScreenUiState.Loading -> showLoadingUi()
             }
         }
         binding.apply {
@@ -54,7 +49,28 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         }
     }
 
-    private fun showError() {
+    private fun showLoadingUi() {
+        showLoading()
+    }
+
+    private fun showLoading() {
+        binding.linearProgressIndicatorHome.isVisible = true
+    }
+
+    private fun showContentUi(userName: String) {
+        hideLoading()
+        binding.apply {
+            textViewWelcome.text = getWelcomeMessage(userName)
+            fabAddTransaction.setOnClickListener { actionToAddTransaction() }
+        }
+    }
+
+    private fun hideLoading() {
+        binding.linearProgressIndicatorHome.isVisible = false
+    }
+
+    private fun showErrorUi() {
+        hideLoading()
         Toast.makeText(
             requireContext(),
             getString(R.string.error_message),
@@ -67,7 +83,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     }
 
     private fun checkUserFirstLogin() {
-        if (userViewModel.isFirstLogin())
+        if (userViewModel.isFirstLogin)
             findNavController().navigate(R.id.action_homeScreen_to_welcome)
     }
 
