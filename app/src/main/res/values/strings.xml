@@ -18,4 +18,7 @@
     <string name="login">Авторизация</string>
     <string name="registration">Регистрация</string>
     <string name="next">Дальше</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="pin_code">Пин код</string>
+    <string name="error_message">Ошибка</string>
 </resources>

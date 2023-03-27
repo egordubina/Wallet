@@ -1,38 +1,32 @@
 package com.example.wallet.data.preferences
 
-import android.app.Activity
 import android.content.Context
-import java.lang.RuntimeException
+import androidx.preference.PreferenceManager
 
-class WalletPreferences(private val activity: Activity) {
-    private val prefs = activity.getPreferences(Context.MODE_PRIVATE)
+class WalletPreferences(private val context: Context) {
     companion object {
         const val INT: Int = -1
         const val STRING: String = ""
         const val BOOLEAN: Boolean = true
 
         const val USER_NEW: String = "USER_NEW"
-        const val USE_FINGERPRINT_TO_LOGIN = "USE_FINGERPRINT_TO_LOGIN"
+        const val USE_FINGERPRINT_TO_LOGIN: String = "USE_FINGERPRINT_TO_LOGIN"
         const val USER_NAME: String = "USER_NAME"
+        const val USER_PHONE_NUMBER: String = "USER_PHONE_NUMBER"
+        const val USER_PIN: String = "USER_PIN"
     }
 
-    fun <T> getValue(name: String, answer: T): T {
-        return when (answer) {
-            is String -> prefs.getString(name, STRING) as T
-            is Int -> prefs.getInt(name, INT) as T
-            is Boolean -> prefs.getBoolean(name, BOOLEAN) as T
-            else -> throw RuntimeException("getValue only for String, Int, Boolean")
-        }
-    }
+    private val preferencesManager =
+        PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
-    fun <T> setValue(name: String, value: T) {
-        with(prefs.edit()) {
-            when (value) {
-                is String -> putString(name, value)
-                is Int -> putInt(name, value)
-                is Boolean -> putBoolean(name, value)
-                else -> throw RuntimeException("setValue only for String, Int, Boolean")
-            }
+    val isFirstLogin: Boolean = preferencesManager.getBoolean(USER_NEW, true)
+
+    fun userRegistration(name: String, phoneNumber: String, pin: Int) {
+        with(preferencesManager.edit()) {
+            putBoolean(USER_NEW, false)
+            putString(USER_NAME, name)
+            putString(USER_PHONE_NUMBER, phoneNumber)
+            putInt(USER_PIN, pin)
             apply()
         }
     }

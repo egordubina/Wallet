@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.data.preferences.WalletPreferences
@@ -18,10 +17,8 @@ import com.google.android.material.transition.MaterialSharedAxis
 import java.time.LocalTime
 
 class Home : Fragment(R.layout.fragment__home_screen) {
-    private val homeScreenViewModel: HomeScreenViewModel by viewModels {
-        HomeScreenViewModel.provideFactory(requireActivity())
-    }
-    private val userViewModel: UserViewModel by activityViewModels()
+    private val homeScreenViewModel: HomeScreenViewModel by viewModels { HomeScreenViewModel.Factory }
+    private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     private lateinit var binding: FragmentHomeScreenBinding
     private lateinit var walletPreferences: WalletPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,15 +29,9 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         checkUserData()
         homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
-                is HomeScreenUiState.Error -> TODO()
+                is HomeScreenUiState.Error -> showError()
                 is HomeScreenUiState.Content -> {
                     binding.apply {
-//                        textViewWelcome.text = getWelcomeMessage(
-//                            userName = walletPreferences.getValue(
-//                                WalletPreferences.USER_NAME,
-//                                WalletPreferences.STRING
-//                            )
-//                        )
                         textViewWelcome.text = getWelcomeMessage(uiState.userName)
                         fabAddTransaction.setOnClickListener { actionToAddTransaction() }
                     }
@@ -63,6 +54,14 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         }
     }
 
+    private fun showError() {
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.error_message),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
     private fun checkUserData() {
         if (userViewModel.user.value == null) {
 
@@ -74,12 +73,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     }
 
     private fun checkUserFirstLogin() {
-        if (userViewModel.isFirstLogin())
+        if (userViewModel.isFirstLogin)
             findNavController().navigate(R.id.action_homeScreen_to_welcome)
-//        if (walletPreferences.getValue(WalletPreferences.USER_NEW, WalletPreferences.BOOLEAN)) {
-//            val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeScreen, true).build()
-//            findNavController().navigate(R.id.welcome, null, navOptions)
-//        }
     }
 
     private fun getWelcomeMessage(userName: String): String {

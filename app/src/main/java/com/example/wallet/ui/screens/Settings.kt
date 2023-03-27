@@ -6,7 +6,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.data.preferences.WalletPreferences
@@ -49,17 +48,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             imageUserPhoto.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
-//            editTextUserName.setText()
-//            editTextUserName.setText(userViewModel.userName.value)
             switchUseFingerPrintToLogin.apply {
-                isChecked =
-                    walletPreferences.getValue(WalletPreferences.USE_FINGERPRINT_TO_LOGIN, WalletPreferences.BOOLEAN)
-                setOnCheckedChangeListener { _, isChecked ->
-                    walletPreferences.setValue<Boolean>(
-                        WalletPreferences.USE_FINGERPRINT_TO_LOGIN,
-                        isChecked
-                    )
-                }
             }
         }
     }
@@ -70,8 +59,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                 textInputLayoutUserName.error = textInputLayoutUserName.helperText
             } else {
                 textInputLayoutUserName.error = null
-//                userViewModel.setUserName(editTextUserName.text.toString())
-                walletPreferences.setValue(WalletPreferences.USER_NAME, editTextUserName.text.toString())
                 findNavController().navigateUp()
             }
         }
