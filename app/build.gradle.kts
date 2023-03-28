@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.coil.ktx)
     implementation(libs.androidx.preference.ktx)
     ksp(libs.androidx.room.compiler)
 

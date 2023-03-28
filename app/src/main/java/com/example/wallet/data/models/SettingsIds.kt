@@ -1,6 +1,6 @@
 package com.example.wallet.data.models
 
-enum class Settings(val id: String) {
+enum class SettingsIds(val id: String) {
     USER_NEW("SETTINGS_USER_NEW"),
     USER_NAME("SETTINGS_USER_NAME"),
     USE_FINGERPRINT_TO_LOGIN("SETTINGS_USE_FINGERPRINT_TO_LOGIN"),

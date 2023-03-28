@@ -26,4 +26,7 @@
     <string name="reg_help_text_pin_code">Пин-код должен быть длиной от 4 до 8 цифр</string>
     <string name="use_fingerprint_to_login">Использовать отпечаток пальца для входа</string>
     <string name="change_pin_code_to_login">Изменить пин код для входа</string>
+    <string name="settings_have_been_saved">Настройки сохранены</string>
+    <string name="retry_action">Повторить</string>
+    <string name="unsaved_changes">Несохранённые настройки</string>
 </resources>

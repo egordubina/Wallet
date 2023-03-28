@@ -8,8 +8,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
-import com.example.wallet.data.models.Settings
-import com.example.wallet.data.models.Settings.*
+import com.example.wallet.data.models.SettingsIds
 import com.example.wallet.data.preferences.WalletPreferences
 import com.example.wallet.domain.usecases.UpdateSettingsUseCase
 import com.example.wallet.ui.uistate.SettingsScreenUiState
@@ -18,10 +17,10 @@ import kotlinx.coroutines.launch
 
 class SettingsScreenViewModel(private val walletPreferences: WalletPreferences) : ViewModel() {
     fun changeSettings(
-        settingsId: Settings,
-        value: Any
+        settingsId: SettingsIds,
+        value: String
     ) {
-        UpdateSettingsUseCase(walletPreferences).updateSetting(settingsId, value.toString())
+        UpdateSettingsUseCase(walletPreferences).updateSetting(settingsId, value)
     }
 
     private val _uiState = MutableLiveData<SettingsScreenUiState>(SettingsScreenUiState.Loading)
@@ -43,11 +42,13 @@ class SettingsScreenViewModel(private val walletPreferences: WalletPreferences) 
                     )
                 )
             } catch (e: Exception) {
+                _uiState.postValue(SettingsScreenUiState.Error)
             }
         }
     }
 
     companion object {
+        @Suppress("UNCHECKED_CAST")
         val Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])

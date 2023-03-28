@@ -26,4 +26,7 @@
     <string name="reg_help_text_pin_code">PIN code must be 4 to 8 digits long</string>
     <string name="use_fingerprint_to_login">Use fingerprint to login</string>
     <string name="change_pin_code_to_login">Change pin code to login</string>
+    <string name="settings_have_been_saved">Settings have been saved</string>
+    <string name="retry_action">Retry</string>
+    <string name="unsaved_changes">Unsaved settings</string>
 </resources>

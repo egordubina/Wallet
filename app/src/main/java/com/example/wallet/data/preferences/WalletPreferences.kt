@@ -2,9 +2,7 @@ package com.example.wallet.data.preferences
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import com.example.wallet.data.models.Settings
-import com.example.wallet.data.models.Settings.*
-import kotlinx.coroutines.delay
+import com.example.wallet.data.models.SettingsIds.*
 
 class WalletPreferences(context: Context) {
     private val preferencesManager =

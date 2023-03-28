@@ -1,8 +1,9 @@
 package com.example.wallet.ui.screens
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,24 +11,34 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.wallet.R
-import com.example.wallet.data.models.Settings
-import com.example.wallet.data.preferences.WalletPreferences
+import com.example.wallet.data.models.SettingsIds
+import com.example.wallet.data.models.SettingsIds.USER_EMAIL
+import com.example.wallet.data.models.SettingsIds.USER_NAME
+import com.example.wallet.data.models.SettingsIds.USER_PIN
+import com.example.wallet.data.models.SettingsIds.USE_FINGERPRINT_TO_LOGIN
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import com.example.wallet.ui.viewmodels.SettingsScreenViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Settings : Fragment(R.layout.fragment__settings_screen) {
     private val settingsScreenViewModel: SettingsScreenViewModel by viewModels { SettingsScreenViewModel.Factory }
+    private val currentUserSettings: MutableMap<SettingsIds, Any> = mutableMapOf()
+    private var settingsChangeFlag: Boolean = false
     private lateinit var binding: FragmentSettingsScreenBinding
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
-    private val currentUserSettings: MutableMap<Settings, Any> = mutableMapOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val backPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            checkUserSettings()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
         pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null)
-                binding.imageUserPhoto.setImageURI(uri)
+                binding.imageUserPhoto.load(uri) { crossfade(true) }
         }
 
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
@@ -45,18 +56,21 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                         email = uiState.userEmail,
                         useFingerprintToLogin = uiState.fingerprintLogin
                     )
-                    currentUserSettings[Settings.USER_NAME] = uiState.userName
-                    currentUserSettings[Settings.USE_FINGERPRINT_TO_LOGIN] = uiState.fingerprintLogin
-                    currentUserSettings[Settings.USER_EMAIL] = uiState.userEmail
-                    currentUserSettings[Settings.USER_PIN] = uiState.pinCodeToLogin
+                    with(currentUserSettings) {
+                        set(USER_NAME, uiState.userName)
+                        set(USE_FINGERPRINT_TO_LOGIN, uiState.fingerprintLogin)
+                        set(USER_EMAIL, uiState.userEmail)
+                        set(USER_PIN, uiState.pinCodeToLogin)
+                    }
                 }
 
                 SettingsScreenUiState.Loading -> showLoadingUi()
+                SettingsScreenUiState.Error -> showFailedUi()
             }
         }
         binding.apply {
             toolbarSettings.apply {
-                setNavigationOnClickListener { findNavController().navigateUp() }
+                setNavigationOnClickListener { checkUserSettings() }
                 setOnMenuItemClickListener {
                     when (it.itemId) {
                         R.id.menu_item__save_settings -> {
@@ -73,10 +87,19 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             }
             switchUseFingerPrintToLogin.apply {
                 setOnCheckedChangeListener { _, state ->
-                    settingsScreenViewModel.changeSettings(Settings.USE_FINGERPRINT_TO_LOGIN, state)
+                    settingsScreenViewModel.changeSettings(
+                        USE_FINGERPRINT_TO_LOGIN,
+                        state.toString()
+                    )
                 }
             }
         }
+    }
+
+    private fun showFailedUi() {
+        hideLoading()
+        Snackbar.make(requireView(), getString(R.string.error_message), Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.retry_action) {}.show()
     }
 
     private fun showLoadingUi() {
@@ -106,19 +129,51 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 
     private fun checkUserSettings() {
         binding.apply {
-            if (editTextUserName.text.toString().isEmpty()) {
-                textInputLayoutUserName.error = textInputLayoutUserName.helperText
-            } else {
-                textInputLayoutUserName.error = null
-                when {
-                    currentUserSettings[Settings.USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked ->
-                        settingsScreenViewModel.changeSettings(Settings.USE_FINGERPRINT_TO_LOGIN, switchUseFingerPrintToLogin.isChecked)
-                    currentUserSettings[Settings.USER_NAME] != editTextUserName.text.toString() ->
-                        settingsScreenViewModel.changeSettings(Settings.USER_NAME, editTextUserName.text.toString())
-                    // todo добавить остальные настройки. логика сохранени обдумать
+            textInputLayoutUserName.error = null
+            textInputLayoutUserEmail.error = null
+            when {
+                editTextUserName.text.toString().isEmpty() -> {
+                    textInputLayoutUserName.error = textInputLayoutUserName.helperText
+                    return
                 }
-                findNavController().navigateUp()
+
+                editTextUserEmail.text.toString().isEmpty() -> {
+                    textInputLayoutUserEmail.error = textInputLayoutUserEmail.helperText
+                    return
+                }
+
+                currentUserSettings[USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked -> {
+                    settingsScreenViewModel.changeSettings(
+                        USE_FINGERPRINT_TO_LOGIN,
+                        switchUseFingerPrintToLogin.isChecked.toString()
+                    )
+                    settingsChangeFlag = true
+                }
+
+                currentUserSettings[USER_NAME] != editTextUserName.text.toString() -> {
+                    settingsScreenViewModel.changeSettings(
+                        USER_NAME,
+                        editTextUserName.text.toString()
+                    )
+                    settingsChangeFlag = true
+                }
+
+                currentUserSettings[USER_EMAIL] != editTextUserEmail.text.toString() -> {
+                    settingsScreenViewModel.changeSettings(
+                        USER_EMAIL,
+                        editTextUserEmail.text.toString()
+                    )
+                    settingsChangeFlag = true
+                }
             }
+            if (settingsChangeFlag) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.settings_have_been_saved),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            findNavController().navigateUp()
         }
     }
 }

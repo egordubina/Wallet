@@ -9,4 +9,5 @@ sealed class SettingsScreenUiState {
     ) : SettingsScreenUiState()
 
     object Loading : SettingsScreenUiState()
+    object Error : SettingsScreenUiState()
 }
