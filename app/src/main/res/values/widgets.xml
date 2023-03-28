@@ -3,7 +3,15 @@
 
     <style name="Widget.Wallet.Toolbar" parent="Widget.Material3.Toolbar.Surface">
         <item name="materialThemeOverlay">@style/ThemeOverlay.Wallet.Toolbar</item>
-        <item name="elevation">16dp</item>
+    </style>
+
+    <style name="Widget.Wallet.CollapsingToolbar.Large" parent="Widget.Material3.CollapsingToolbar.Large">
+        <item name="android:background">?attr/colorSurfaceContainer</item>
+    </style>
+
+    <style name="Widget.Wallet.CardViewFilledStyle" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">2dp</item>
+        <item name="strokeColor">?attr/colorSecondary</item>
     </style>
 
     <style name="Widget.Wallet.LinearProgressIndicator" parent="Widget.Material3.LinearProgressIndicator">

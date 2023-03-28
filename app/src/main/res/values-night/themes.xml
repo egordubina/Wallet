@@ -30,6 +30,7 @@
 
         <item name="toolbarStyle">@style/Widget.Wallet.Toolbar</item>
         <item name="linearProgressIndicatorStyle">@style/Widget.Wallet.LinearProgressIndicator</item>
+        <item name="materialCardViewFilledStyle">@style/Widget.Wallet.CardViewFilledStyle</item>
 
         <item name="android:statusBarColor">?attr/colorSurfaceContainer</item>
         <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>

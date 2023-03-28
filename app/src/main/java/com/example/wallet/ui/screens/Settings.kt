@@ -68,19 +68,19 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             }
         }
         binding.apply {
-            toolbarSettings.apply {
-                setNavigationOnClickListener { checkUserSettings() }
-                setOnMenuItemClickListener {
-                    when (it.itemId) {
-                        R.id.menu_item__save_settings -> {
-                            checkUserSettings()
-                            true
-                        }
-
-                        else -> false
-                    }
-                }
-            }
+//            toolbarSettings.apply {
+//                setNavigationOnClickListener { checkUserSettings() }
+//                setOnMenuItemClickListener {
+//                    when (it.itemId) {
+//                        R.id.menu_item__save_settings -> {
+//                            checkUserSettings()
+//                            true
+//                        }
+//
+//                        else -> false
+//                    }
+//                }
+//            }
             imageUserPhoto.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
