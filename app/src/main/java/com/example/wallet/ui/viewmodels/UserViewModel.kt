@@ -9,6 +9,8 @@ import com.example.wallet.data.preferences.WalletPreferences
 
 class UserViewModel(private val walletPreferences: WalletPreferences) : ViewModel() {
 
+    val userIsLogin: Boolean
+        get() = walletPreferences.userIsLogin
     val isFirstLogin: Boolean
         get() = walletPreferences.isFirstLogin
 

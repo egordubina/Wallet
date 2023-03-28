@@ -21,7 +21,6 @@ import com.example.wallet.data.models.SettingsIds.USE_FINGERPRINT_TO_LOGIN
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import com.example.wallet.ui.viewmodels.SettingsScreenViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Settings : Fragment(R.layout.fragment__settings_screen) {
@@ -93,13 +92,19 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                     )
                 }
             }
+            buttonActionToChangePinCode.setOnClickListener {
+                cardChangePinCode.isVisible = !cardChangePinCode.isVisible
+            }
+            buttonActionSavePinCode.setOnClickListener {
+                cardChangePinCode.isVisible = false
+            }
         }
     }
 
     private fun showFailedUi() {
         hideLoading()
-        Snackbar.make(requireView(), getString(R.string.error_message), Snackbar.LENGTH_INDEFINITE)
-            .setAction(R.string.retry_action) {}.show()
+//        Snackbar.make(requireView(), getString(R.string.error_message), Snackbar.LENGTH_INDEFINITE)
+//            .setAction(R.string.retry_action) {}.show()
     }
 
     private fun showLoadingUi() {

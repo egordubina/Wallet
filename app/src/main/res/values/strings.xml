@@ -30,4 +30,8 @@
     <string name="retry_action">Повторить</string>
     <string name="unsaved_changes">Несохранённые настройки</string>
     <string name="i_forgot_pin_code">Я забыл пин код</string>
+    <string name="action_save_pin_code">Сохранить пин код</string>
+    <string name="change_pin_code">Изменение пин кода</string>
+    <string name="hint_new_pin_code">Новый пин код</string>
+    <string name="hint_current_pin_code">Текущий пин код</string>
 </resources>

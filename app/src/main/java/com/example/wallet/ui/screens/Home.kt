@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
-import com.example.wallet.data.preferences.WalletPreferences
 import com.example.wallet.databinding.FragmentHomeScreenBinding
 import com.example.wallet.ui.uistate.HomeScreenUiState
 import com.example.wallet.ui.viewmodels.HomeScreenViewModel
@@ -21,12 +20,15 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     private val homeScreenViewModel: HomeScreenViewModel by viewModels { HomeScreenViewModel.Factory }
     private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     private lateinit var binding: FragmentHomeScreenBinding
-//    private lateinit var walletPreferences: WalletPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeScreenBinding.bind(view)
-//        walletPreferences = WalletPreferences(requireActivity())
-        checkUserFirstLogin()
+        if (userViewModel.isFirstLogin)
+            findNavController().navigate(R.id.action_homeScreen_to_welcome)
+//        else
+//            if (!userViewModel.userIsLogin)
+//                findNavController().navigate(R.id.action_homeScreen_to_login)
+
         homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is HomeScreenUiState.Error -> showErrorUi()
@@ -80,11 +82,6 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     private fun actionToAddTransaction() {
         Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun checkUserFirstLogin() {
-        if (userViewModel.isFirstLogin)
-            findNavController().navigate(R.id.action_homeScreen_to_welcome)
     }
 
     private fun getWelcomeMessage(userName: String): String {

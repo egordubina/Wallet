@@ -30,4 +30,8 @@
     <string name="retry_action">Retry</string>
     <string name="unsaved_changes">Unsaved settings</string>
     <string name="i_forgot_pin_code">I forgot my pin code</string>
+    <string name="action_save_pin_code">Save pin code</string>
+    <string name="change_pin_code">Change pin code</string>
+    <string name="hint_new_pin_code">New pin code</string>
+    <string name="hint_current_pin_code">Current pin code</string>
 </resources>
