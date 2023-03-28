@@ -1,7 +1,9 @@
 package com.example.wallet.ui.screens
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,15 +21,32 @@ import java.time.LocalTime
 class Home : Fragment(R.layout.fragment__home_screen) {
     private val homeScreenViewModel: HomeScreenViewModel by viewModels { HomeScreenViewModel.Factory }
     private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
-    private lateinit var binding: FragmentHomeScreenBinding
+    private var _binding: FragmentHomeScreenBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeScreenBinding.bind(view)
+        // todo пофиксить проверку на логин
         if (userViewModel.isFirstLogin)
             findNavController().navigate(R.id.action_homeScreen_to_welcome)
-//        else
-//            if (!userViewModel.userIsLogin)
-//                findNavController().navigate(R.id.action_homeScreen_to_login)
+        else
+            if (!userViewModel.userIsLogin)
+                findNavController().navigate(R.id.action_homeScreen_to_login)
 
         homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
@@ -93,9 +112,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

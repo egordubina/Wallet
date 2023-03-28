@@ -38,18 +38,23 @@
                 android:paddingHorizontal="@dimen/default_margin">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:hint="@string/pin_code"
+                    android:id="@+id/text_input_layout__login_pin_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/pin_code"
                     app:counterEnabled="true"
                     app:counterMaxLength="8"
                     app:errorEnabled="true"
+                    app:helperText="@string/reg_help_text_pin_code"
+                    app:helperTextEnabled="true"
                     app:startIconDrawable="@drawable/password_fill1_wght400_grad0_opsz24">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text__login_pin_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="numberPassword" />
+                        android:inputType="numberPassword"
+                        android:maxLength="8" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,12 +65,12 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <TextView
-        android:text="@string/i_forgot_pin_code"
-        android:layout_marginHorizontal="@dimen/default_margin"
-        android:layout_marginBottom="@dimen/default_margin"
         android:id="@+id/textView__action_forgot_pin_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:text="@string/i_forgot_pin_code"
         app:layout_constraintBottom_toTopOf="@+id/button__action_use_fingerprint_to_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

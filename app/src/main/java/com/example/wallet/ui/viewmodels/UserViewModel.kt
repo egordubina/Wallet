@@ -5,14 +5,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
+import com.example.wallet.data.models.SettingsIds
 import com.example.wallet.data.preferences.WalletPreferences
+import com.example.wallet.domain.usecases.UpdateSettingsUseCase
 
 class UserViewModel(private val walletPreferences: WalletPreferences) : ViewModel() {
 
-    val userIsLogin: Boolean
+    var userIsLogin: Boolean
         get() = walletPreferences.userIsLogin
+        set(value) = UpdateSettingsUseCase(walletPreferences).updateSetting(SettingsIds.USER_IS_LOGIN, value.toString())
     val isFirstLogin: Boolean
         get() = walletPreferences.isFirstLogin
+    val pinCode: Int
+        get() = walletPreferences.userPin
 
     companion object {
         @Suppress("UNCHECKED_CAST")

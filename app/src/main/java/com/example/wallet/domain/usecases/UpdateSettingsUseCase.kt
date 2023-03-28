@@ -10,7 +10,7 @@ class UpdateSettingsUseCase(private val walletPreferences: WalletPreferences) {
             USER_NEW -> walletPreferences.isFirstLogin = value.toBooleanStrict()
             USER_NAME -> walletPreferences.userName = value
             USE_FINGERPRINT_TO_LOGIN -> walletPreferences.fingerPrintLogin = value.toBooleanStrict()
-            USER_PIN -> {}
+            USER_PIN -> walletPreferences.userPin = value.toInt()
             USER_EMAIL -> walletPreferences.userEmail = value
             USER_IS_LOGIN -> walletPreferences.userIsLogin = value.toBooleanStrict()
         }

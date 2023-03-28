@@ -1,7 +1,9 @@
 package com.example.wallet.ui.screens
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,7 +15,8 @@ import com.example.wallet.ui.viewmodels.RegistrationScreenViewModel
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Registration : Fragment(R.layout.fragment__registration_screen) {
-    private lateinit var binding: FragmentRegistrationScreenBinding
+    private var _binding: FragmentRegistrationScreenBinding? = null
+    private val binding get() = _binding!!
     private val registrationScreeViewModel: RegistrationScreenViewModel by viewModels { RegistrationScreenViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +24,17 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentRegistrationScreenBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentRegistrationScreenBinding.bind(view)
         registrationScreeViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 RegistrationScreenUiState.Content -> showContentUi()
@@ -89,30 +100,40 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
             textInputLayoutRegistrationUserName.error = null
             textInputLayoutRegistrationUserEmail.error = null
             textInputLayoutRegistrationUserPinCode.error = null
-            if (editTextRegistrationUserName.text.toString().isEmpty()) {
-                textInputLayoutRegistrationUserName.error = getString(R.string.reg_help_text_name)
-                return false
+            when {
+                editTextRegistrationUserName.text.toString().isEmpty() -> {
+                    textInputLayoutRegistrationUserName.error = getString(R.string.reg_help_text_name)
+                    return false
+                }
+                editTextRegistrationUserEmail.text.toString().isEmpty() -> {
+                    textInputLayoutRegistrationUserEmail.error = getString(R.string.reg_help_text_email)
+                    return false
+                }
+                editTextRegistrationUserPinCode.text.toString().isEmpty() -> {
+                    textInputLayoutRegistrationUserPinCode.error =
+                        getString(R.string.reg_help_text_pin_code)
+                    return false
+                }
+                editTextRegistrationUserPinCode.text.toString().length !in 4..8 -> {
+                    textInputLayoutRegistrationUserPinCode.error =
+                        getString(R.string.reg_help_text_pin_code)
+                    return false
+                }
+                else -> {
+                    try {
+                        editTextRegistrationUserPinCode.text.toString().toInt()
+                    } catch (e: Exception) {
+                        textInputLayoutRegistrationUserPinCode.error = getString(R.string.only_number_pin_code)
+                        return false
+                    }
+                    return true
+                }
             }
-            if (editTextRegistrationUserEmail.text.toString().isEmpty()) {
-                textInputLayoutRegistrationUserEmail.error = getString(R.string.reg_help_text_email)
-                return false
-            }
-            if (editTextRegistrationUserPinCode.text.toString().isEmpty()) {
-                textInputLayoutRegistrationUserPinCode.error =
-                    getString(R.string.reg_help_text_pin_code)
-                return false
-            }
-            if (editTextRegistrationUserPinCode.text.toString().length !in 4..8) {
-                textInputLayoutRegistrationUserPinCode.error =
-                    getString(R.string.reg_help_text_pin_code)
-                return false
-            }
-            try {
-                editTextRegistrationUserPinCode.text.toString().toInt()
-            } catch (e: Exception) {
-                return false
-            }
-            return true
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

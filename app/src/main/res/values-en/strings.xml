@@ -34,4 +34,7 @@
     <string name="change_pin_code">Change pin code</string>
     <string name="hint_new_pin_code">New pin code</string>
     <string name="hint_current_pin_code">Current pin code</string>
+    <string name="incorrect_pin_code">Incorret pin code</string>
+    <string name="only_number_pin_code">Pin code must be numeric</string>
+    <string name="pin_save">Pin code have been saved</string>
 </resources>

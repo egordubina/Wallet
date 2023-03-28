@@ -34,4 +34,7 @@
     <string name="change_pin_code">Изменение пин кода</string>
     <string name="hint_new_pin_code">Новый пин код</string>
     <string name="hint_current_pin_code">Текущий пин код</string>
+    <string name="incorrect_pin_code">Неверный пин код</string>
+    <string name="only_number_pin_code">Пин код должен быть из цифр</string>
+    <string name="pin_save">Пин код сохранен</string>
 </resources>

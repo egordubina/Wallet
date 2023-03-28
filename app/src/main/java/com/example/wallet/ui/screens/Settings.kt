@@ -1,7 +1,9 @@
 package com.example.wallet.ui.screens
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -27,7 +29,8 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     private val settingsScreenViewModel: SettingsScreenViewModel by viewModels { SettingsScreenViewModel.Factory }
     private val currentUserSettings: MutableMap<SettingsIds, Any> = mutableMapOf()
     private var settingsChangeFlag: Boolean = false
-    private lateinit var binding: FragmentSettingsScreenBinding
+    private var _binding: FragmentSettingsScreenBinding? = null
+    private val binding get() = _binding!!
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +47,17 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSettingsScreenBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSettingsScreenBinding.bind(view)
         settingsScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is SettingsScreenUiState.Content -> {
@@ -68,47 +79,10 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             }
         }
         binding.apply {
-//            toolbarSettings.apply {
-//                setNavigationOnClickListener { checkUserSettings() }
-//                setOnMenuItemClickListener {
-//                    when (it.itemId) {
-//                        R.id.menu_item__save_settings -> {
-//                            checkUserSettings()
-//                            true
-//                        }
-//
-//                        else -> false
-//                    }
-//                }
-//            }
-            imageUserPhoto.setOnClickListener {
-                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            }
-            switchUseFingerPrintToLogin.apply {
-                setOnCheckedChangeListener { _, state ->
-                    settingsScreenViewModel.changeSettings(
-                        USE_FINGERPRINT_TO_LOGIN,
-                        state.toString()
-                    )
-                }
-            }
-            buttonActionToChangePinCode.setOnClickListener {
-                cardChangePinCode.isVisible = !cardChangePinCode.isVisible
-            }
-            buttonActionSavePinCode.setOnClickListener {
-                cardChangePinCode.isVisible = false
+            toolbarSettings.apply {
+                setNavigationOnClickListener { checkUserSettings() }
             }
         }
-    }
-
-    private fun showFailedUi() {
-        hideLoading()
-//        Snackbar.make(requireView(), getString(R.string.error_message), Snackbar.LENGTH_INDEFINITE)
-//            .setAction(R.string.retry_action) {}.show()
-    }
-
-    private fun showLoadingUi() {
-        showLoading()
     }
 
     private fun showContentUi(
@@ -118,10 +92,66 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     ) {
         hideLoading()
         binding.apply {
+            toolbarSettings.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_item__save_settings -> {
+                        checkUserSettings()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+            imageUserPhoto.setOnClickListener {
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
+            buttonActionToChangePinCode.setOnClickListener {
+                cardChangePinCode.isVisible = !cardChangePinCode.isVisible
+            }
+            buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
             editTextUserName.setText(name)
             switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
             editTextUserEmail.setText(email)
         }
+    }
+
+    private fun checkPinCodes() {
+        binding.apply {
+            textInputLayoutSettingsCurrentPinCode.error = null
+            textInputLayoutSettingsNewPinCode.error = null
+            when {
+                editTextSettingsCurrentPinCode.text.toString() != currentUserSettings[USER_PIN].toString() ->
+                    textInputLayoutSettingsCurrentPinCode.error = getString(R.string.incorrect_pin_code)
+
+                editTextSettingsNewPinCode.text.toString().length !in 4..8 ->
+                    textInputLayoutSettingsNewPinCode.error = textInputLayoutSettingsNewPinCode.helperText
+
+                else -> {
+                    try {
+                        editTextSettingsNewPinCode.text.toString().toInt()
+                        cardChangePinCode.isVisible = false
+                        settingsScreenViewModel.changeSettings(
+                            USER_PIN, editTextSettingsNewPinCode.text.toString()
+                        )
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.pin_save,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception) {
+                        textInputLayoutSettingsNewPinCode.error = getString(R.string.only_number_pin_code)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showFailedUi() {
+        hideLoading()
+    }
+
+    private fun showLoadingUi() {
+        showLoading()
     }
 
     private fun showLoading() {
@@ -147,6 +177,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                     return
                 }
 
+                // fingerprint settings
                 currentUserSettings[USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked -> {
                     settingsScreenViewModel.changeSettings(
                         USE_FINGERPRINT_TO_LOGIN,
@@ -155,6 +186,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                     settingsChangeFlag = true
                 }
 
+                // name settings
                 currentUserSettings[USER_NAME] != editTextUserName.text.toString() -> {
                     settingsScreenViewModel.changeSettings(
                         USER_NAME,
@@ -163,6 +195,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                     settingsChangeFlag = true
                 }
 
+                // email settings
                 currentUserSettings[USER_EMAIL] != editTextUserEmail.text.toString() -> {
                     settingsScreenViewModel.changeSettings(
                         USER_EMAIL,
@@ -180,5 +213,10 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             }
             findNavController().navigateUp()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
