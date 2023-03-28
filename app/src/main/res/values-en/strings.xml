@@ -29,4 +29,5 @@
     <string name="settings_have_been_saved">Settings have been saved</string>
     <string name="retry_action">Retry</string>
     <string name="unsaved_changes">Unsaved settings</string>
+    <string name="i_forgot_pin_code">I forgot my pin code</string>
 </resources>

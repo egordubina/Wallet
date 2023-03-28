@@ -29,4 +29,5 @@
     <string name="settings_have_been_saved">Настройки сохранены</string>
     <string name="retry_action">Повторить</string>
     <string name="unsaved_changes">Несохранённые настройки</string>
+    <string name="i_forgot_pin_code">Я забыл пин код</string>
 </resources>
