@@ -1,31 +1,31 @@
-<h1>ВСЕ ПОМЕНЯТЬ</h1>
 
-<h1 align="center"> GitPoint </h1> <br>
+
+<h1 align="center"> Wallet </h1> <br>
 <p align="center">
-  <a href="https://gitpoint.co/">
-    <img alt="GitPoint" title="GitPoint" src="http://i.imgur.com/VShxJHs.png" width="450">
+  <a href="https://82.147.69.30/ ">
+    <img alt="Wallet" title="Wallet" src="https://i.imgur.com/HpEedHi.png" width="450">
   </a>
 </p>
 
 <p align="center">
-  GitHub in your pocket. Built with React Native.
+  Теперь <b>Кошелек</b> в твоем <u>телефоне</u>. Следи за деньгами в <b>любой момент.</b>
 </p>
 
 <p align="center">
-  <a href="https://itunes.apple.com/us/app/gitpoint/id1251245162?mt=8">
+  <a href="https://www.apple.com/app-store/">
     <img alt="Download on the App Store" title="App Store" src="http://i.imgur.com/0n2zqHD.png" width="140">
   </a>
 
-  <a href="https://play.google.com/store/apps/details?id=com.gitpoint">
+  <a href="https://play.google.com/store/">
     <img alt="Get it on Google Play" title="Google Play" src="http://i.imgur.com/mtGRPuM.png" width="140">
   </a>
 </p>
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Table of Contents
+## Оглавление
 
-- [Introduction](#introduction)
+- [Введение](#introduction)
 - [Features](#features)
 - [Feedback](#feedback)
 - [Contributors](#contributors)
@@ -36,13 +36,13 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Introduction
+## Введение
 
-[![Build Status](https://img.shields.io/travis/gitpoint/git-point.svg?style=flat-square)](https://travis-ci.org/gitpoint/git-point)
-[![Coveralls](https://img.shields.io/coveralls/github/gitpoint/git-point.svg?style=flat-square)](https://coveralls.io/github/gitpoint/git-point)
-[![All Contributors](https://img.shields.io/badge/all_contributors-73-orange.svg?style=flat-square)](./CONTRIBUTORS.md)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
+[![Repo size](https://img.shields.io/github/repo-size/belochka200/Wallet)](https://youtu.be/dQw4w9WgXcQ)
+[![Downloads](https://img.shields.io/github/downloads/belochka200/Wallet/total)](https://youtu.be/dQw4w9WgXcQ)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](./CONTRIBUTORS.md)
+[![Languages](https://img.shields.io/github/languages/count/belochka200/Wallet)](http://makeapullrequest.com)
+[![License](https://img.shields.io/github/license/belochka200/Wallet)](http://commitizen.github.io/cz-cli/)
 [![Gitter chat](https://img.shields.io/badge/chat-on_gitter-008080.svg?style=flat-square)](https://gitter.im/git-point)
 
 View repository and user information, control your notifications and even manage your issues and pull requests. Built with React Native, GitPoint is one of the most feature-rich unofficial GitHub clients that is 100% free.
