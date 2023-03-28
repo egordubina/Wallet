@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ThemeOverlay.Wallet.Toolbar" parent="">
+        <item name="colorSurface">?attr/colorSurfaceContainer</item>
+    </style>
+
+    <style name="ThemeOverlay.Wallet.LinearProgressIndicator" parent="">
+        <item name="colorSurfaceVariant">?attr/colorSurfaceContainer</item>
+    </style>
+</resources>

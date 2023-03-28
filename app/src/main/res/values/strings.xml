@@ -1,3 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Wallet</string>
+    <string name="app_name">Кошелек</string>
+    <string name="welcome_good_morning">Доброе утро, %s</string>
+    <string name="welcome_good_day">Добрый день, %s</string>
+    <string name="welcome_good_evening">Добрый вечер, %s</string>
+    <string name="welcome_good_night">Доброй ночи, %s</string>
+    <string name="welcome_to_wallet">Добро пожаловать в кошелек!</string>
+    <string name="excellently">Круто!</string>
+    <string name="settings">Настройки</string>
+    <string name="user_name">Имя</string>
+    <string name="save">Сохранить</string>
+    <string name="app_description">С помощью кошелька вы сможете эффективно вести учет своих средств</string>
+    <string name="action_change_photo_help_text">Нажмите на лицо, чтобы поставить свою замечательную фотографию</string>
+    <string name="no_transaction">Транзакций нет</string>
+    <string name="fab_action_to_add_transaction">Добавить транзакцию</string>
+    <string name="no_transaction_detailed_info">Транзакций нет.\n\n Вы можете добавить их вручную, нажав на + или привязать карту в настройках</string>
+    <string name="login">Авторизация</string>
+    <string name="registration">Регистрация</string>
+    <string name="next">Дальше</string>
+    <string name="email">E-mail</string>
+    <string name="pin_code">Пин код</string>
+    <string name="error_message">Ошибка</string>
+    <string name="reg_help_text_name">Введите своё имя, чтобы мы знали, как к вам обращаться</string>
+    <string name="reg_help_text_email">Введите почту, чтобы не потерять доступ к аккаунту</string>
+    <string name="reg_help_text_pin_code">Пин-код должен быть длиной от 4 до 8 цифр</string>
+    <string name="use_fingerprint_to_login">Использовать отпечаток пальца для входа</string>
+    <string name="change_pin_code_to_login">Изменить пин код для входа</string>
+    <string name="settings_have_been_saved">Настройки сохранены</string>
+    <string name="retry_action">Повторить</string>
+    <string name="unsaved_changes">Несохранённые настройки</string>
+    <string name="i_forgot_pin_code">Я забыл пин код</string>
+    <string name="action_save_pin_code">Сохранить пин код</string>
+    <string name="change_pin_code">Изменение пин кода</string>
+    <string name="hint_new_pin_code">Новый пин код</string>
+    <string name="hint_current_pin_code">Текущий пин код</string>
+    <string name="incorrect_pin_code">Неверный пин код</string>
+    <string name="only_number_pin_code">Пин код должен быть из цифр</string>
+    <string name="pin_save">Пин код сохранен</string>
 </resources>

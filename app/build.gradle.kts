@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.com.google.devtools.ksp)
 }
 
 android {
@@ -28,11 +28,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_19.toString()
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -42,6 +45,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.cardview)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.coil.ktx)
+    implementation(libs.androidx.preference.ktx)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

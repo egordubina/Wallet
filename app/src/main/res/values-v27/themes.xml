@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.V27.Theme.Wallet" parent="Base.V26.Theme.Wallet">
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="Base.Theme.Wallet" parent="Base.V27.Theme.Wallet" />
+
+</resources>

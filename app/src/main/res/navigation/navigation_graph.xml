@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph.xml"
+    app:startDestination="@id/homeScreen">
+
+    <fragment
+        android:id="@+id/homeScreen"
+        android:name="com.example.wallet.ui.screens.Home"
+        android:label="Home"
+        tools:layout="@layout/fragment__home_screen">
+        <action
+            android:id="@+id/action_homeScreen_to_settings"
+            app:destination="@id/settings"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_homeScreen_to_welcome"
+            app:destination="@id/welcome"
+            app:popUpTo="@id/homeScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeScreen_to_login"
+            app:destination="@id/login"
+            app:popUpTo="@id/homeScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcome"
+        android:name="com.example.wallet.ui.screens.Welcome"
+        android:label="Welcome"
+        tools:layout="@layout/fragment__welcome_screen">
+        <action
+            android:id="@+id/action_welcome_to_register"
+            app:destination="@id/registration" />
+    </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.wallet.ui.screens.Settings"
+        android:label="Settings"
+        tools:layout="@layout/fragment__settings_screen" />
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.wallet.ui.screens.Login"
+        android:label="Login"
+        tools:layout="@layout/fragment__login_screen">
+        <action
+            android:id="@+id/action_login_to_homeScreen"
+            app:destination="@id/homeScreen"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registration"
+        android:name="com.example.wallet.ui.screens.Registration"
+        android:label="Registration"
+        tools:layout="@layout/fragment__registration_screen" >
+        <action
+            android:id="@+id/action_registration_to_homeScreen"
+            app:destination="@id/homeScreen"
+            app:popUpTo="@id/welcome"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
