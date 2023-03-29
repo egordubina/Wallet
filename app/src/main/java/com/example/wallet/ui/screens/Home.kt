@@ -43,7 +43,6 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // todo пофиксить проверку на логин
         if (userViewModel.isFirstLogin)
             findNavController().navigate(R.id.action_homeScreen_to_welcome)
         else

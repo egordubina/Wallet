@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator_layout__add_transaction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,10 +20,11 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_add_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationIcon="@drawable/arrow_back_fill1_wght400_grad0_opsz24"
-                app:title="Add transaction" />
+                app:title="@string/add_transaction" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -41,7 +43,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:hint="@string/price">
+                    android:hint="@string/price"
+                    app:startIconDrawable="@drawable/currency_ruble_fill0_wght400_grad0_opsz24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -57,7 +60,8 @@
                     android:layout_marginTop="@dimen/default_margin"
                     android:hint="@string/description"
                     app:counterEnabled="true"
-                    app:counterMaxLength="100">
+                    app:counterMaxLength="100"
+                    app:startIconDrawable="@drawable/description_fill0_wght400_grad0_opsz24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -73,9 +77,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:hint="@string/category">
+                    android:hint="@string/category"
+                    app:startIconDrawable="@drawable/category_fill0_wght400_grad0_opsz24">
 
                     <AutoCompleteTextView
+                        android:id="@+id/text_input_edit_text__transaction_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none" />
@@ -83,32 +89,73 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    tools:text="@tools:sample/date/ddmmyy"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:id="@+id/text_view__transaction_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/select_date"
+                    android:id="@+id/button__action_select_transaction_date"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/default_margin" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:text="@string/type"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
-                    android:text="@string/type"
-                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
+                    android:gravity="center_vertical">
 
-                <RadioGroup
+                    <ImageView
+                        android:id="@+id/image_view__upward"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_upward_fill0_wght400_grad0_opsz24" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button__income"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/income" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/default_margin"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical">
 
-                    <RadioButton
+                    <ImageView
+                        android:id="@+id/image_view__downward"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="@string/income" />
+                        android:src="@drawable/arrow_downward_fill0_wght400_grad0_opsz24" />
 
                     <RadioButton
-                        android:layout_width="wrap_content"
+                        android:id="@+id/radio_button__expenses"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_marginStart="8dp"
                         android:text="@string/expenses" />
 
-                </RadioGroup>
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -126,10 +126,18 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             textInputLayoutSettingsNewPinCode.error = null
             when {
                 editTextSettingsCurrentPinCode.text.toString() != currentUserSettings[USER_PIN].toString() ->
-                    textInputLayoutSettingsCurrentPinCode.error = getString(R.string.incorrect_pin_code)
+                    textInputLayoutSettingsCurrentPinCode.error =
+                        getString(R.string.incorrect_pin_code)
 
                 editTextSettingsNewPinCode.text.toString().length !in 4..8 ->
-                    textInputLayoutSettingsNewPinCode.error = textInputLayoutSettingsNewPinCode.helperText
+                    textInputLayoutSettingsNewPinCode.error =
+                        textInputLayoutSettingsNewPinCode.helperText
+
+                editTextSettingsCurrentPinCode.text.toString() == editTextSettingsNewPinCode.text.toString() -> {
+                    textInputLayoutSettingsNewPinCode.error = getString(R.string.pin_codes_equals)
+                    textInputLayoutSettingsCurrentPinCode.error =
+                        getString(R.string.pin_codes_equals)
+                }
 
                 else -> {
                     try {
