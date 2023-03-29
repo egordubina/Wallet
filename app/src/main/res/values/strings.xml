@@ -41,7 +41,7 @@
     <string name="security_info">Безопасность</string>
     <string name="add">Добавить</string>
     <string name="category">Категория</string>
-    <string name="price">Стоимость</string>
+    <string name="price">Сумма</string>
     <string name="description">Описание</string>
     <string name="type">Тип</string>
     <string name="income">Доходы</string>
