@@ -14,6 +14,7 @@ import com.example.wallet.databinding.FragmentRegistrationScreenBinding
 import com.example.wallet.ui.uistate.RegistrationScreenUiState
 import com.example.wallet.ui.viewmodels.RegistrationScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
+import com.example.wallet.utils.CheckUtils
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Registration : Fragment(R.layout.fragment__registration_screen) {
@@ -114,7 +115,12 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
                     return false
                 }
 
-                userEmail.isEmpty() -> {
+//                userEmail.isEmpty() -> {
+//                    textInputLayoutRegistrationUserEmail.error =
+//                        getString(R.string.reg_help_text_email)
+//                    return false
+//                }
+                !CheckUtils().checkEmail(userEmail) -> {
                     textInputLayoutRegistrationUserEmail.error =
                         getString(R.string.reg_help_text_email)
                     return false

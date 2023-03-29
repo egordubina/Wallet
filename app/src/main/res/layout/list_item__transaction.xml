@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/list_item_transaction__description"
             tools:text="@tools:sample/lorem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

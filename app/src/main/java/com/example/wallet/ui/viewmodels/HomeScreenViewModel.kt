@@ -9,12 +9,17 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
 import com.example.wallet.data.preferences.WalletPreferences
+import com.example.wallet.data.repository.TransactionRepository
+import com.example.wallet.domain.models.asUi
 import com.example.wallet.domain.usecases.LoadHomeScreenUseCase
 import com.example.wallet.ui.uistate.HomeScreenUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class HomeScreenViewModel(walletPreferences: WalletPreferences) : ViewModel() {
+class HomeScreenViewModel(
+    walletPreferences: WalletPreferences,
+    transactionRepository: TransactionRepository
+) : ViewModel() {
     private val _uiState: MutableLiveData<HomeScreenUiState> =
         MutableLiveData(HomeScreenUiState.Loading)
     val uiState: LiveData<HomeScreenUiState> = _uiState
@@ -25,8 +30,13 @@ class HomeScreenViewModel(walletPreferences: WalletPreferences) : ViewModel() {
         job?.cancel()
         job = viewModelScope.launch {
             try {
-                val result = LoadHomeScreenUseCase(walletPreferences).loadHomeScreen()
-                _uiState.postValue(HomeScreenUiState.Content(userName = result, emptyList()))
+                val userName =
+                    LoadHomeScreenUseCase(walletPreferences, transactionRepository).userName
+                val transactionList =
+                    LoadHomeScreenUseCase(walletPreferences, transactionRepository).allTransaction
+                transactionList.collect {
+                    _uiState.postValue(HomeScreenUiState.Content(userName = userName, it.asUi()))
+                }
             } catch (e: Exception) {
                 _uiState.postValue(HomeScreenUiState.Error(e.message.toString()))
             }
@@ -39,7 +49,8 @@ class HomeScreenViewModel(walletPreferences: WalletPreferences) : ViewModel() {
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 return HomeScreenViewModel(
-                    (application as WalletApplication).walletPreferences
+                    (application as WalletApplication).walletPreferences,
+                    application.transactionRepository
                 ) as T
             }
         }

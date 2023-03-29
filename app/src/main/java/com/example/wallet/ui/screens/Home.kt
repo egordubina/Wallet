@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.databinding.FragmentHomeScreenBinding
+import com.example.wallet.ui.adapters.HomeTransactionAdapter
+import com.example.wallet.ui.models.Transaction
 import com.example.wallet.ui.uistate.HomeScreenUiState
 import com.example.wallet.ui.viewmodels.HomeScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
@@ -84,13 +86,19 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     private fun showContentUi(
         userName: String,
-        transactionList: List<String>
+        transactionList: List<Transaction>
     ) {
         hideLoading()
         binding.apply {
             textViewWelcome.text = getWelcomeMessage(userName)
             fabAddTransaction.setOnClickListener { actionToAddTransaction() }
             layoutNoTransaction.isVisible = transactionList.isEmpty()
+            textViewLatestTransaction.isVisible = transactionList.isNotEmpty()
+            recyclerViewHomeAllTransaction.apply {
+                isVisible = transactionList.isNotEmpty()
+                if (isVisible)
+                    adapter = HomeTransactionAdapter(transactionList.asReversed())
+            }
         }
     }
 

@@ -45,26 +45,6 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item__transaction_type, types)
         binding.apply {
             (textInputEditTextTransactionType as? AutoCompleteTextView)?.setAdapter(adapter)
-            toolbarAddTransaction.setNavigationOnClickListener { findNavController().navigateUp() }
-            buttonActionSaveTransaction.setOnClickListener {
-                addTransactionViewModel.addTransaction(
-                    Transaction(
-                        title = "Title",
-                        description = "Description",
-                        price = 100,
-                        date = "1111",
-                        type = TransactionType.OTHER
-                    )
-                )
-            }
-            radioButtonIncome.setOnClickListener {
-                radioButtonIncome.isChecked = true
-                radioButtonExpenses.isChecked = false
-            }
-            radioButtonExpenses.setOnClickListener {
-                radioButtonIncome.isChecked = false
-                radioButtonExpenses.isChecked = true
-            }
             val todayDate = LocalDate.now()
             val formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy").format(todayDate)
             textViewTransactionDate.text = getString(R.string.transaction_date, formatDate)
@@ -79,6 +59,34 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
 //                    textViewTransactionDate.text = getString(R.string.transaction_date, formatDate)
                 }
             }
+            toolbarAddTransaction.setNavigationOnClickListener { findNavController().navigateUp() }
+            buttonActionSaveTransaction.setOnClickListener {
+                addTransactionViewModel.addTransaction(
+                    Transaction(
+                        description = editTextAddTransactionDescription.text.toString(),
+                        price = editTextAddTransactionPrice.text.toString().toInt(),
+                        date = formatDate,
+                        type = getTransactionType(textInputEditTextTransactionType.text.toString())
+                    )
+                )
+                findNavController().navigateUp()
+            }
+            radioButtonIncome.setOnClickListener {
+                radioButtonIncome.isChecked = true
+                radioButtonExpenses.isChecked = false
+            }
+            radioButtonExpenses.setOnClickListener {
+                radioButtonIncome.isChecked = false
+                radioButtonExpenses.isChecked = true
+            }
+        }
+    }
+
+    private fun getTransactionType(string: String): TransactionType {
+        return when (string) {
+            TransactionType.OTHER.title -> TransactionType.OTHER
+            TransactionType.CAFES.title -> TransactionType.CAFES
+            else -> TransactionType.OTHER
         }
     }
 

@@ -4,18 +4,20 @@ import android.content.Context
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.wallet.data.models.Transaction
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TransactionDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(transaction: Transaction)
 
     @Query("select * from `transaction`")
-    suspend fun getAllTransactions(): List<Transaction>
+    fun getAllTransactions(): Flow<List<Transaction>>
 }
 
 @Database(entities = [Transaction::class], exportSchema = false, version = 1)

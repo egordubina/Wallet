@@ -108,15 +108,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             imageUserPhoto.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
-            buttonActionToChangePinCode.setOnClickListener {
-                cardChangePinCode.isVisible = true
-                buttonActionToChangePinCode.isVisible = false
-            }
-            buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
-            buttonActionCancelChangePinCode.setOnClickListener {
-                cardChangePinCode.isVisible = false
-                buttonActionToChangePinCode.isVisible = true
-            }
+            initWorkWithPinCode()
         }
     }
 
@@ -152,9 +144,24 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                             Toast.LENGTH_SHORT
                         ).show()
                     } catch (e: Exception) {
-                        textInputLayoutSettingsNewPinCode.error = getString(R.string.only_number_pin_code)
+                        textInputLayoutSettingsNewPinCode.error =
+                            getString(R.string.only_number_pin_code)
                     }
                 }
+            }
+        }
+    }
+
+    private fun initWorkWithPinCode() {
+        binding.apply {
+            buttonActionToChangePinCode.setOnClickListener {
+                cardChangePinCode.isVisible = true
+                buttonActionToChangePinCode.isVisible = false
+            }
+            buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
+            buttonActionCancelChangePinCode.setOnClickListener {
+                cardChangePinCode.isVisible = false
+                buttonActionToChangePinCode.isVisible = true
             }
         }
     }
@@ -208,7 +215,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                     settingsChangeFlag = true
                 }
 
-                // email settings
+                // email settingsa
                 currentUserSettings[USER_EMAIL] != editTextUserEmail.text.toString() -> {
                     settingsScreenViewModel.changeSettings(
                         USER_EMAIL,

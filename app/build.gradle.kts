@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.biometric.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
