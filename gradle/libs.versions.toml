@@ -1,7 +1,11 @@
 [versions]
+activity-ktx = "1.7.0"
+biometric-ktx = "1.2.0-alpha05"
 cardview = "1.0.0"
 coil = "2.3.0"
 com-android-application = "8.1.0-alpha10"
+lifecycle-livedata-ktx = "2.6.1"
+mail = "1.4.1"
 navigation-fragment-ktx = "2.5.3"
 org-jetbrains-kotlin-android = "1.8.0"
 core-ktx = "1.9.0"
@@ -13,19 +17,25 @@ material = "1.9.0-beta01"
 constraintlayout = "2.1.4"
 preference-ktx = "1.2.0"
 room-ktx = "2.5.1"
+work-runtime-ktx = "2.8.1"
 
 [libraries]
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity-ktx" }
+androidx-biometric-ktx = { module = "androidx.biometric:biometric-ktx", version.ref = "biometric-ktx" }
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
+androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycle-livedata-ktx" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preference-ktx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-ktx" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-ktx" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "work-runtime-ktx" }
 coil-ktx = { module = "io.coil-kt:coil", version.ref = "coil" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+mail = { module = "javax.mail:mail", version.ref = "mail" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 

@@ -42,7 +42,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             if (uri != null)
                 binding.imageUserPhoto.load(uri) { crossfade(true) }
         }
-
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
@@ -92,6 +91,10 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     ) {
         hideLoading()
         binding.apply {
+            editTextUserName.setText(name)
+            editTextUserEmail.setText(email)
+            switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
+
             toolbarSettings.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_item__save_settings -> {
@@ -105,13 +108,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             imageUserPhoto.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
-            buttonActionToChangePinCode.setOnClickListener {
-                cardChangePinCode.isVisible = !cardChangePinCode.isVisible
-            }
-            buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
-            editTextUserName.setText(name)
-            switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
-            editTextUserEmail.setText(email)
+            initWorkWithPinCode()
         }
     }
 
@@ -121,10 +118,18 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             textInputLayoutSettingsNewPinCode.error = null
             when {
                 editTextSettingsCurrentPinCode.text.toString() != currentUserSettings[USER_PIN].toString() ->
-                    textInputLayoutSettingsCurrentPinCode.error = getString(R.string.incorrect_pin_code)
+                    textInputLayoutSettingsCurrentPinCode.error =
+                        getString(R.string.incorrect_pin_code)
 
                 editTextSettingsNewPinCode.text.toString().length !in 4..8 ->
-                    textInputLayoutSettingsNewPinCode.error = textInputLayoutSettingsNewPinCode.helperText
+                    textInputLayoutSettingsNewPinCode.error =
+                        textInputLayoutSettingsNewPinCode.helperText
+
+                editTextSettingsCurrentPinCode.text.toString() == editTextSettingsNewPinCode.text.toString() -> {
+                    textInputLayoutSettingsNewPinCode.error = getString(R.string.pin_codes_equals)
+                    textInputLayoutSettingsCurrentPinCode.error =
+                        getString(R.string.pin_codes_equals)
+                }
 
                 else -> {
                     try {
@@ -135,13 +140,28 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                         )
                         Toast.makeText(
                             requireContext(),
-                            R.string.pin_save,
+                            R.string.pin_code_has_been_save,
                             Toast.LENGTH_SHORT
                         ).show()
                     } catch (e: Exception) {
-                        textInputLayoutSettingsNewPinCode.error = getString(R.string.only_number_pin_code)
+                        textInputLayoutSettingsNewPinCode.error =
+                            getString(R.string.only_number_pin_code)
                     }
                 }
+            }
+        }
+    }
+
+    private fun initWorkWithPinCode() {
+        binding.apply {
+            buttonActionToChangePinCode.setOnClickListener {
+                cardChangePinCode.isVisible = true
+                buttonActionToChangePinCode.isVisible = false
+            }
+            buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
+            buttonActionCancelChangePinCode.setOnClickListener {
+                cardChangePinCode.isVisible = false
+                buttonActionToChangePinCode.isVisible = true
             }
         }
     }
@@ -195,7 +215,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                     settingsChangeFlag = true
                 }
 
-                // email settings
+                // email settingsa
                 currentUserSettings[USER_EMAIL] != editTextUserEmail.text.toString() -> {
                     settingsScreenViewModel.changeSettings(
                         USER_EMAIL,

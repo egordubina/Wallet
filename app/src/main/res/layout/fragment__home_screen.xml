@@ -26,9 +26,9 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/linear_progress_indicator__home"
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="@id/constraint_end"
                 app:layout_constraintHorizontal_bias="0"
@@ -66,10 +66,12 @@
                 tools:text="Good morning, Egor!" />
 
             <LinearLayout
+                android:id="@+id/layout__no_transaction"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/xlarge_margin"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/constraint_end"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
@@ -92,6 +94,30 @@
                     android:textColor="?attr/colorPrimary" />
 
             </LinearLayout>
+
+            <TextView
+                android:text="@string/latest_transaction"
+                android:id="@+id/text_view__latest_transaction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                app:layout_constraintEnd_toEndOf="@id/constraint_end"
+                app:layout_constraintStart_toStartOf="@id/constraint_start"
+                app:layout_constraintTop_toBottomOf="@id/text_view__welcome" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view__home_all_transaction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/constraint_end"
+                app:layout_constraintStart_toStartOf="@id/constraint_start"
+                app:layout_constraintTop_toBottomOf="@id/text_view__latest_transaction"
+                tools:itemCount="20"
+                tools:listitem="@layout/list_item__transaction" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.databinding.FragmentHomeScreenBinding
+import com.example.wallet.ui.adapters.HomeTransactionAdapter
+import com.example.wallet.ui.models.Transaction
 import com.example.wallet.ui.uistate.HomeScreenUiState
 import com.example.wallet.ui.viewmodels.HomeScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
@@ -26,6 +28,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
@@ -41,7 +45,6 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // todo пофиксить проверку на логин
         if (userViewModel.isFirstLogin)
             findNavController().navigate(R.id.action_homeScreen_to_welcome)
         else
@@ -51,7 +54,10 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is HomeScreenUiState.Error -> showErrorUi()
-                is HomeScreenUiState.Content -> showContentUi(uiState.userName)
+                is HomeScreenUiState.Content -> showContentUi(
+                    uiState.userName,
+                    uiState.transactionsList
+                )
 
                 HomeScreenUiState.Loading -> showLoadingUi()
             }
@@ -78,11 +84,21 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         binding.linearProgressIndicatorHome.isVisible = true
     }
 
-    private fun showContentUi(userName: String) {
+    private fun showContentUi(
+        userName: String,
+        transactionList: List<Transaction>
+    ) {
         hideLoading()
         binding.apply {
             textViewWelcome.text = getWelcomeMessage(userName)
             fabAddTransaction.setOnClickListener { actionToAddTransaction() }
+            layoutNoTransaction.isVisible = transactionList.isEmpty()
+            textViewLatestTransaction.isVisible = transactionList.isNotEmpty()
+            recyclerViewHomeAllTransaction.apply {
+                isVisible = transactionList.isNotEmpty()
+                if (isVisible)
+                    adapter = HomeTransactionAdapter(transactionList.asReversed())
+            }
         }
     }
 
@@ -100,7 +116,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     }
 
     private fun actionToAddTransaction() {
-        Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_homeScreen_to_addTransaction)
     }
 
     private fun getWelcomeMessage(userName: String): String {

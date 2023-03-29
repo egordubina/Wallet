@@ -6,22 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.databinding.FragmentRegistrationScreenBinding
 import com.example.wallet.ui.uistate.RegistrationScreenUiState
 import com.example.wallet.ui.viewmodels.RegistrationScreenViewModel
+import com.example.wallet.ui.viewmodels.UserViewModel
+import com.example.wallet.utils.CheckUtils
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Registration : Fragment(R.layout.fragment__registration_screen) {
     private var _binding: FragmentRegistrationScreenBinding? = null
     private val binding get() = _binding!!
     private val registrationScreeViewModel: RegistrationScreenViewModel by viewModels { RegistrationScreenViewModel.Factory }
+    private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun onCreateView(
@@ -43,7 +49,6 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
                 RegistrationScreenUiState.RegistrationSuccessful -> showSuccessfulUi()
             }
         }
-        // Клик по navigateUp
         binding.toolbarRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
@@ -58,6 +63,7 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
                         email = editTextRegistrationUserEmail.text.toString(),
                         pin = editTextRegistrationUserPinCode.text.toString().toInt()
                     )
+                    userViewModel.userIsLogin = true
                 }
             }
         }
@@ -94,39 +100,53 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
         }
     }
 
-    // todo переписать на when
     private fun checkUserDataForRegistration(): Boolean {
         binding.apply {
             textInputLayoutRegistrationUserName.error = null
             textInputLayoutRegistrationUserEmail.error = null
             textInputLayoutRegistrationUserPinCode.error = null
+            val userName = editTextRegistrationUserName.text.toString()
+            val userEmail = editTextRegistrationUserEmail.text.toString()
+            val userPinCode = editTextRegistrationUserPinCode.text.toString()
             when {
-                editTextRegistrationUserName.text.toString().isEmpty() -> {
-                    textInputLayoutRegistrationUserName.error = getString(R.string.reg_help_text_name)
+                userName.isEmpty() -> {
+                    textInputLayoutRegistrationUserName.error =
+                        getString(R.string.reg_help_text_name)
                     return false
                 }
-                editTextRegistrationUserEmail.text.toString().isEmpty() -> {
-                    textInputLayoutRegistrationUserEmail.error = getString(R.string.reg_help_text_email)
+
+//                userEmail.isEmpty() -> {
+//                    textInputLayoutRegistrationUserEmail.error =
+//                        getString(R.string.reg_help_text_email)
+//                    return false
+//                }
+                !CheckUtils().checkEmail(userEmail) -> {
+                    textInputLayoutRegistrationUserEmail.error =
+                        getString(R.string.reg_help_text_email)
                     return false
                 }
-                editTextRegistrationUserPinCode.text.toString().isEmpty() -> {
+
+                userPinCode.isEmpty() -> {
                     textInputLayoutRegistrationUserPinCode.error =
                         getString(R.string.reg_help_text_pin_code)
                     return false
                 }
-                editTextRegistrationUserPinCode.text.toString().length !in 4..8 -> {
+
+                userPinCode.length !in 4..8 -> {
                     textInputLayoutRegistrationUserPinCode.error =
                         getString(R.string.reg_help_text_pin_code)
                     return false
                 }
+
                 else -> {
-                    try {
-                        editTextRegistrationUserPinCode.text.toString().toInt()
+                    return try {
+                        userPinCode.toInt()
+                        true
                     } catch (e: Exception) {
-                        textInputLayoutRegistrationUserPinCode.error = getString(R.string.only_number_pin_code)
-                        return false
+                        textInputLayoutRegistrationUserPinCode.error =
+                            getString(R.string.only_number_pin_code)
+                        false
                     }
-                    return true
                 }
             }
         }

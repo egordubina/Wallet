@@ -10,6 +10,7 @@
     <string name="settings">Настройки</string>
     <string name="user_name">Имя</string>
     <string name="save">Сохранить</string>
+    <string name="cancel">Отменить</string>
     <string name="app_description">С помощью кошелька вы сможете эффективно вести учет своих средств</string>
     <string name="action_change_photo_help_text">Нажмите на лицо, чтобы поставить свою замечательную фотографию</string>
     <string name="no_transaction">Транзакций нет</string>
@@ -30,11 +31,24 @@
     <string name="retry_action">Повторить</string>
     <string name="unsaved_changes">Несохранённые настройки</string>
     <string name="i_forgot_pin_code">Я забыл пин код</string>
-    <string name="action_save_pin_code">Сохранить пин код</string>
     <string name="change_pin_code">Изменение пин кода</string>
     <string name="hint_new_pin_code">Новый пин код</string>
     <string name="hint_current_pin_code">Текущий пин код</string>
     <string name="incorrect_pin_code">Неверный пин код</string>
     <string name="only_number_pin_code">Пин код должен быть из цифр</string>
-    <string name="pin_save">Пин код сохранен</string>
+    <string name="pin_code_has_been_save">Пин код сохранен</string>
+    <string name="personal_info">Личные данные</string>
+    <string name="security_info">Безопасность</string>
+    <string name="add">Добавить</string>
+    <string name="category">Категория</string>
+    <string name="price">Стоимость</string>
+    <string name="description">Описание</string>
+    <string name="type">Тип</string>
+    <string name="income">Доходы</string>
+    <string name="expenses">Расходы</string>
+    <string name="pin_codes_equals">Пин коды одинаковы</string>
+    <string name="add_transaction">Добавить транзакцию</string>
+    <string name="transaction_date">Дата: %s</string>
+    <string name="select_date">Выбрать дату</string>
+    <string name="latest_transaction">Последнии транзакции</string>
 </resources>
