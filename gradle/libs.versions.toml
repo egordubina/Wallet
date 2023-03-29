@@ -1,5 +1,6 @@
 [versions]
 activity-ktx = "1.7.0"
+biometric-ktx = "1.2.0-alpha05"
 cardview = "1.0.0"
 coil = "2.3.0"
 com-android-application = "8.1.0-alpha10"
@@ -18,6 +19,7 @@ work-runtime-ktx = "2.8.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity-ktx" }
+androidx-biometric-ktx = { module = "androidx.biometric:biometric-ktx", version.ref = "biometric-ktx" }
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation-fragment-ktx" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preference-ktx" }
