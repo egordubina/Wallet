@@ -73,7 +73,11 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
                     .setTitleText(R.string.select_date)
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
-                datePicker.show(requireActivity().supportFragmentManager, "TAG")
+                datePicker.show(requireActivity().supportFragmentManager, "DATE PICKER")
+                datePicker.addOnPositiveButtonClickListener {
+                    // todo update date from date picker
+//                    textViewTransactionDate.text = getString(R.string.transaction_date, formatDate)
+                }
             }
         }
     }
