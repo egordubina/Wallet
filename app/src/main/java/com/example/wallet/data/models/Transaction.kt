@@ -10,4 +10,5 @@ data class Transaction(
     val description: String,
     val price: Int,
     val date: String,
+    val type: TransactionType
 )

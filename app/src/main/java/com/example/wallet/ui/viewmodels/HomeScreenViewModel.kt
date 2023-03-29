@@ -26,7 +26,7 @@ class HomeScreenViewModel(walletPreferences: WalletPreferences) : ViewModel() {
         job = viewModelScope.launch {
             try {
                 val result = LoadHomeScreenUseCase(walletPreferences).loadHomeScreen()
-                _uiState.postValue(HomeScreenUiState.Content(userName = result))
+                _uiState.postValue(HomeScreenUiState.Content(userName = result, emptyList()))
             } catch (e: Exception) {
                 _uiState.postValue(HomeScreenUiState.Error(e.message.toString()))
             }

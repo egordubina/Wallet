@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/registration_app_bar_layout"
+            android:id="@+id/appbar_layout_registration"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 

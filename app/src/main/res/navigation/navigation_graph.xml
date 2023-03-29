@@ -24,6 +24,9 @@
             app:destination="@id/login"
             app:popUpTo="@id/homeScreen"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeScreen_to_addTransaction"
+            app:destination="@id/addTransaction" />
     </fragment>
     <fragment
         android:id="@+id/welcome"
@@ -54,11 +57,16 @@
         android:id="@+id/registration"
         android:name="com.example.wallet.ui.screens.Registration"
         android:label="Registration"
-        tools:layout="@layout/fragment__registration_screen" >
+        tools:layout="@layout/fragment__registration_screen">
         <action
             android:id="@+id/action_registration_to_homeScreen"
             app:destination="@id/homeScreen"
             app:popUpTo="@id/welcome"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        tools:layout="@layout/fragment__add_transaction"
+        android:id="@+id/addTransaction"
+        android:name="com.example.wallet.ui.screens.AddTransaction"
+        android:label="AddTransaction" />
 </navigation>

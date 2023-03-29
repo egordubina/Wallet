@@ -2,7 +2,11 @@ package com.example.wallet.data.preferences
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import com.example.wallet.data.models.SettingsIds.*
+import com.example.wallet.data.models.SettingsIds.USER_EMAIL
+import com.example.wallet.data.models.SettingsIds.USER_NAME
+import com.example.wallet.data.models.SettingsIds.USER_NEW
+import com.example.wallet.data.models.SettingsIds.USER_PIN
+import com.example.wallet.data.models.SettingsIds.USE_FINGERPRINT_TO_LOGIN
 
 class WalletPreferences(context: Context) {
     private val preferencesManager =
@@ -12,9 +16,6 @@ class WalletPreferences(context: Context) {
     var isFirstLogin: Boolean
         get() = preferencesManager.getBoolean(USER_NEW.id, true)
         set(value) = editPreferences.putBoolean(USER_NEW.id, value).apply()
-    var userIsLogin: Boolean
-        get() = preferencesManager.getBoolean(USER_IS_LOGIN.id, false)
-        set(value) = editPreferences.putBoolean(USER_IS_LOGIN.id, value).apply()
     var fingerPrintLogin: Boolean
         get() = preferencesManager.getBoolean(USE_FINGERPRINT_TO_LOGIN.id, true)
         set(value) = editPreferences.putBoolean(USE_FINGERPRINT_TO_LOGIN.id, value)
@@ -32,7 +33,6 @@ class WalletPreferences(context: Context) {
     fun registrationUser(name: String, email: String, pin: Int) {
         with(editPreferences) {
             putBoolean(USER_NEW.id, false)
-            putBoolean(USER_IS_LOGIN.id, true)
             putString(USER_NAME.id, name)
             putString(USER_EMAIL.id, email)
             putInt(USER_PIN.id, pin)
