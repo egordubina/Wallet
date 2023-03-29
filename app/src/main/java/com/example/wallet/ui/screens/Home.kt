@@ -26,6 +26,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
@@ -51,7 +53,10 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 is HomeScreenUiState.Error -> showErrorUi()
-                is HomeScreenUiState.Content -> showContentUi(uiState.userName)
+                is HomeScreenUiState.Content -> showContentUi(
+                    uiState.userName,
+                    uiState.transactionsList
+                )
 
                 HomeScreenUiState.Loading -> showLoadingUi()
             }
@@ -78,11 +83,15 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         binding.linearProgressIndicatorHome.isVisible = true
     }
 
-    private fun showContentUi(userName: String) {
+    private fun showContentUi(
+        userName: String,
+        transactionList: List<String>
+    ) {
         hideLoading()
         binding.apply {
             textViewWelcome.text = getWelcomeMessage(userName)
             fabAddTransaction.setOnClickListener { actionToAddTransaction() }
+            layoutNoTransaction.isVisible = transactionList.isEmpty()
         }
     }
 
@@ -100,7 +109,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     }
 
     private fun actionToAddTransaction() {
-        Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_homeScreen_to_addTransaction)
     }
 
     private fun getWelcomeMessage(userName: String): String {

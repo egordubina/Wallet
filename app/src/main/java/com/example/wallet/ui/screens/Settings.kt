@@ -42,7 +42,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             if (uri != null)
                 binding.imageUserPhoto.load(uri) { crossfade(true) }
         }
-
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
@@ -92,6 +91,10 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     ) {
         hideLoading()
         binding.apply {
+            editTextUserName.setText(name)
+            editTextUserEmail.setText(email)
+            switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
+
             toolbarSettings.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_item__save_settings -> {
@@ -106,12 +109,14 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             buttonActionToChangePinCode.setOnClickListener {
-                cardChangePinCode.isVisible = !cardChangePinCode.isVisible
+                cardChangePinCode.isVisible = true
+                buttonActionToChangePinCode.isVisible = false
             }
             buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
-            editTextUserName.setText(name)
-            switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
-            editTextUserEmail.setText(email)
+            buttonActionCancelChangePinCode.setOnClickListener {
+                cardChangePinCode.isVisible = false
+                buttonActionToChangePinCode.isVisible = true
+            }
         }
     }
 
@@ -135,7 +140,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                         )
                         Toast.makeText(
                             requireContext(),
-                            R.string.pin_save,
+                            R.string.pin_code_has_been_save,
                             Toast.LENGTH_SHORT
                         ).show()
                     } catch (e: Exception) {

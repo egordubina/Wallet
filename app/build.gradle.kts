@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.coil.ktx)
     implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.activity.ktx)
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)

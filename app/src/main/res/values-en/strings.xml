@@ -30,11 +30,20 @@
     <string name="retry_action">Retry</string>
     <string name="unsaved_changes">Unsaved settings</string>
     <string name="i_forgot_pin_code">I forgot my pin code</string>
-    <string name="action_save_pin_code">Save pin code</string>
     <string name="change_pin_code">Change pin code</string>
     <string name="hint_new_pin_code">New pin code</string>
     <string name="hint_current_pin_code">Current pin code</string>
     <string name="incorrect_pin_code">Incorret pin code</string>
     <string name="only_number_pin_code">Pin code must be numeric</string>
-    <string name="pin_save">Pin code have been saved</string>
+    <string name="pin_code_has_been_save">Pin code have been saved</string>
+    <string name="cancel">Cancel</string>
+    <string name="personal_info">Personal info</string>
+    <string name="security_info">Security info</string>
+    <string name="add">Add</string>
+    <string name="category">Category</string>
+    <string name="price">Price</string>
+    <string name="description">Description</string>
+    <string name="type">Type</string>
+    <string name="income">Incomes</string>
+    <string name="expenses">Expenses</string>
 </resources>
