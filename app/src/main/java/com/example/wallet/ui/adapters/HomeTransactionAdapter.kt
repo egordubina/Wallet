@@ -15,7 +15,8 @@ class HomeTransactionAdapter(private val transactionList: List<Transaction>) :
         fun bind(item: Transaction.Income) {
             binding.apply {
                 itemTransactionDescription.text = item.description
-                itemTransactionCategory.text = item.category.categoryName
+                itemTransactionCategory.text =
+                    itemView.resources.getString(item.category.categoryName)
                 itemTransactionCost.text =
                     itemView.resources.getString(R.string.cost_income, item.price.toString())
                 itemTransactionDate.text = item.date
@@ -28,7 +29,8 @@ class HomeTransactionAdapter(private val transactionList: List<Transaction>) :
         fun bind(item: Transaction.Expanse) {
             binding.apply {
                 itemTransactionDescription.text = item.description
-                itemTransactionCategory.text = item.category.categoryName
+                itemTransactionCategory.text =
+                    itemView.resources.getString(item.category.categoryName)
                 itemTransactionCost.text =
                     itemView.resources.getString(R.string.cost_expanse, item.price.toString())
                 itemTransactionDate.text = item.date

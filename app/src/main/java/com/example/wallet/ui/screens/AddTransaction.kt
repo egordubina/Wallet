@@ -43,11 +43,15 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val types: MutableList<String> = mutableListOf()
-        TransactionCategory.values().forEach { types.add(it.categoryName) }
-        val adapter = ArrayAdapter(requireContext(), R.layout.list_item__transaction_type, types)
         binding.apply {
+
+            var adapter = ArrayAdapter(
+                requireContext(),
+                R.layout.list_item__transaction_type,
+                initTypesCategory(false)
+            )
             (textInputEditTextTransactionType as? AutoCompleteTextView)?.setAdapter(adapter)
+
             var transactionDate: String? = null
             val todayDate = LocalDate.now()
             val formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy").format(todayDate)
@@ -66,6 +70,7 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
                     textViewTransactionDate.text = getString(R.string.transaction_date, date)
                 }
             }
+
             toolbarAddTransaction.setNavigationOnClickListener { findNavController().navigateUp() }
             buttonActionSaveTransaction.setOnClickListener {
                 textInputLayoutTransactionPrice.error = null
@@ -93,17 +98,45 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
             radioButtonIncome.setOnClickListener {
                 radioButtonIncome.isChecked = true
                 radioButtonExpenses.isChecked = false
+                adapter = ArrayAdapter(
+                    requireContext(),
+                    R.layout.list_item__transaction_type,
+                    initTypesCategory(true)
+                )
+                (textInputEditTextTransactionType as? AutoCompleteTextView)?.setAdapter(adapter)
             }
             radioButtonExpenses.setOnClickListener {
                 radioButtonIncome.isChecked = false
                 radioButtonExpenses.isChecked = true
+                adapter = ArrayAdapter(
+                    requireContext(),
+                    R.layout.list_item__transaction_type,
+                    initTypesCategory(false)
+                )
+                (textInputEditTextTransactionType as? AutoCompleteTextView)?.setAdapter(adapter)
             }
         }
     }
 
+    private fun initTypesCategory(incomes: Boolean): List<String> {
+        val types: MutableList<String> = mutableListOf()
+        if (incomes) {
+            TransactionCategory.values().forEach {
+                if (it.type == 0 || it.type == 1)
+                    types.add(getString(it.categoryName))
+            }
+        } else {
+            TransactionCategory.values().forEach {
+                if (it.type == 0 || it.type == 2)
+                    types.add(getString(it.categoryName))
+            }
+        }
+        return types
+    }
+
     private fun getTransactionCategory(string: String): TransactionCategory {
         TransactionCategory.values().forEach {
-            if (it.categoryName == string)
+            if (getString(it.categoryName) == string)
                 return it
         }
         return TransactionCategory.OTHER

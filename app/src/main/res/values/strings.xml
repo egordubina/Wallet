@@ -55,4 +55,18 @@
     <string name="cost_income" translatable="false">+ %s₽</string>
     <string name="cost_expanse" translatable="false">- %s₽</string>
     <string name="input_cost">Введите стоимость</string>
+    <string name="transaction_category_other">Прочее</string>
+    <string name="transaction_category_clothes">Одежда</string>
+    <string name="transaction_category_rest">Отдых</string>
+    <string name="transaction_category_fast_food">Фаст фуд</string>
+    <string name="transaction_category_cafe">Кафе</string>
+    <string name="transaction_category_subscribers">Подписки</string>
+    <string name="transaction_category_sport">Спорт товары</string>
+    <string name="transaction_category_products">Продукты</string>
+    <string name="transaction_category_car">Товары для авто</string>
+    <string name="transaction_category_home">Товары для дома</string>
+    <string name="transaction_category_health">Здоровье</string>
+    <string name="transaction_category_services">Услуги</string>
+    <string name="transaction_category_salary">Зарплата</string>
+    <string name="transaction_category_transfer">Переводы</string>
 </resources>

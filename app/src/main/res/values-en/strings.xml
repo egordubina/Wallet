@@ -53,4 +53,18 @@
     <string name="latest_transaction">Latest 20 transaction</string>
     <string name="allow_notification">Allow post notification</string>
     <string name="input_cost">Enter cost</string>
+    <string name="transaction_category_other">Other</string>
+    <string name="transaction_category_clothes">Clothes</string>
+    <string name="transaction_category_rest">Rest</string>
+    <string name="transaction_category_fast_food">Fast food</string>
+    <string name="transaction_category_cafe">Cafe</string>
+    <string name="transaction_category_subscribers">Subscribers</string>
+    <string name="transaction_category_sport">Sport</string>
+    <string name="transaction_category_products">Products</string>
+    <string name="transaction_category_car">Goods for car</string>
+    <string name="transaction_category_home">Goods for home</string>
+    <string name="transaction_category_health">Health</string>
+    <string name="transaction_category_services">Services</string>
+    <string name="transaction_category_salary">Salary</string>
+    <string name="transaction_category_transfer">Transfers</string>
 </resources>
