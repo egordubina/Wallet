@@ -109,15 +109,11 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             }
             nestedScrollViewHome
             nestedScrollViewHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY > 400) {
+                if (scrollY > 0) {
                     toolbarHome.setTitle(R.string.latest_transaction)
                 } else {
                     toolbarHome.setTitle(R.string.app_name)
                 }
-//                Log.d(
-//                    "Scroll Listener",
-//                    "Scroll X : $scrollX | Scroll Y: $scrollY | old Scroll X: $oldScrollX | old Scroll Y: $oldScrollY"
-//                )
             })
         }
     }

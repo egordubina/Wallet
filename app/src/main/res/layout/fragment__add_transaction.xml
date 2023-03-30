@@ -157,6 +157,7 @@
                         android:src="@drawable/arrow_downward_fill0_wght400_grad0_opsz24" />
 
                     <RadioButton
+                        android:checked="true"
                         android:id="@+id/radio_button__expenses"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
