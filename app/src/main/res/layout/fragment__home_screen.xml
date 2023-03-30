@@ -104,13 +104,14 @@
                 android:drawablePadding="8dp"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                 app:drawableStartCompat="@drawable/trending_up_fill0_wght400_grad0_opsz24"
+                app:layout_constraintBottom_toBottomOf="@+id/text_view__all_expanses"
                 app:layout_constraintEnd_toStartOf="@id/text_view__all_expanses"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
                 app:layout_constraintTop_toBottomOf="@id/text_view__welcome"
-                tools:layout_editor_absoluteY="98dp"
                 tools:text="@string/incomes_home_screen" />
 
             <TextView
+                app:layout_constraintBottom_toBottomOf="@id/text_view__all_incomes"
                 android:id="@+id/text_view__all_expanses"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -125,11 +126,11 @@
                 tools:text="@string/expanses_home_screen" />
 
             <HorizontalScrollView
-                android:scrollbars="none"
                 android:id="@+id/budget_buttons"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
+                android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="@id/constraint_end"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
                 app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes">

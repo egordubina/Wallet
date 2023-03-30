@@ -14,7 +14,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 class Welcome : Fragment(R.layout.fragment__welcome_screen) {
     private lateinit var walletPreferences: WalletPreferences
     private var _binding: FragmentWelcomeScreenBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)

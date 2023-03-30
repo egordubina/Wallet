@@ -25,7 +25,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     private val homeScreenViewModel: HomeScreenViewModel by viewModels { HomeScreenViewModel.Factory }
     private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     private var _binding: FragmentHomeScreenBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
 
 //    private val requestNotificationPermissionLauncher =
 //        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -106,8 +106,9 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                 if (isVisible)
                     adapter = HomeTransactionAdapter(transactionList.asReversed())
             }
+//            val h = textViewLatestTransaction.top
             nestedScrollViewHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY > 0) {
+                if (scrollY > textViewLatestTransaction.bottom) {
                     toolbarHome.setTitle(R.string.latest_transaction)
                 } else {
                     toolbarHome.setTitle(R.string.app_name)

@@ -67,7 +67,8 @@
     <string name="transaction_category_services">Services</string>
     <string name="transaction_category_salary">Salary</string>
     <string name="transaction_category_transfer">Transfers</string>
-    <string name="incomes_home_screen">Incomes: %d₽</string>
-    <string name="expanses_home_screen">Expanses: %d₽</string>
+    <string name="incomes_home_screen">Incomes\n%d₽</string>
+    <string name="expanses_home_screen">Expanses\n%d₽</string>
     <string name="budget_plan">Budget planning</string>
+    <string name="incorrect_cost">Too much cost</string>
 </resources>

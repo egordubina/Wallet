@@ -27,7 +27,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     private val currentUserSettings: MutableMap<SettingsIds, Any> = mutableMapOf()
     private var settingsChangeFlag: Boolean = false
     private var _binding: FragmentSettingsScreenBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

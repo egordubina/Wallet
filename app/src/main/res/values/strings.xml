@@ -45,9 +45,9 @@
     <string name="description">Описание</string>
     <string name="type">Тип</string>
     <string name="incomes">Доходы</string>
-    <string name="incomes_home_screen">Доходы: %d₽</string>
+    <string name="incomes_home_screen">Доходы\n%d₽</string>
     <string name="expanses">Расходы</string>
-    <string name="expanses_home_screen">Расходы: %d₽</string>
+    <string name="expanses_home_screen">Расходы\n%d₽</string>
     <string name="pin_codes_equals">Пин коды одинаковы</string>
     <string name="add_transaction">Добавить транзакцию</string>
     <string name="transaction_date">Дата: %s</string>
@@ -72,4 +72,5 @@
     <string name="transaction_category_salary">Зарплата</string>
     <string name="transaction_category_transfer">Переводы</string>
     <string name="budget_plan">Планирование бюджета</string>
+    <string name="incorrect_cost">Слишком большая стоимость</string>
 </resources>

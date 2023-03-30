@@ -20,7 +20,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 
 class Registration : Fragment(R.layout.fragment__registration_screen) {
     private var _binding: FragmentRegistrationScreenBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
     private val registrationScreeViewModel: RegistrationScreenViewModel by viewModels { RegistrationScreenViewModel.Factory }
     private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {

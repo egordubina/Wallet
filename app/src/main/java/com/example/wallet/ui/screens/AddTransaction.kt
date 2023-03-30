@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter
 
 class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
     private var _binding: FragmentAddTransactionBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
     private val addTransactionViewModel: AddTransactionViewModel by viewModels { AddTransactionViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,9 +74,21 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
             toolbarAddTransaction.setNavigationOnClickListener { findNavController().navigateUp() }
             buttonActionSaveTransaction.setOnClickListener {
                 textInputLayoutTransactionPrice.error = null
-                if (editTextAddTransactionPrice.text.toString().isEmpty()) {
-                    textInputLayoutTransactionPrice.error = getString(R.string.input_cost)
-                    return@setOnClickListener
+                when {
+                    editTextAddTransactionPrice.text.toString().isEmpty() -> {
+                        textInputLayoutTransactionPrice.error = getString(R.string.input_cost)
+                        return@setOnClickListener
+                    }
+
+                    else -> {
+                        try {
+                            editTextAddTransactionPrice.text.toString().toInt()
+                        } catch (e: Exception) {
+                            textInputLayoutTransactionPrice.error =
+                                getString(R.string.incorrect_cost)
+                            return@setOnClickListener
+                        }
+                    }
                 }
                 val description = editTextAddTransactionDescription.text.toString().ifEmpty {
                     if (radioButtonIncome.isChecked) getString(R.string.incomes) else getString(R.string.expanses)

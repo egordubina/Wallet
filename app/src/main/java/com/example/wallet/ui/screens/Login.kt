@@ -15,7 +15,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 
 class Login : Fragment(R.layout.fragment__login_screen) {
     private var _binding: FragmentLoginScreenBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
     private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
