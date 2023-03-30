@@ -51,4 +51,5 @@
     <string name="transaction_date">Date: %s</string>
     <string name="select_date">Select date</string>
     <string name="latest_transaction">Latest transaction</string>
+    <string name="allow_notification">Allow post notification</string>
 </resources>

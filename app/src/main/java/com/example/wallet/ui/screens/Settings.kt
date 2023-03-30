@@ -6,14 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.example.wallet.R
 import com.example.wallet.data.models.SettingsIds
 import com.example.wallet.data.models.SettingsIds.USER_EMAIL
@@ -31,17 +27,13 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     private var settingsChangeFlag: Boolean = false
     private var _binding: FragmentSettingsScreenBinding? = null
     private val binding get() = _binding!!
-    private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val backPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             checkUserSettings()
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
-        pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null)
-                binding.imageUserPhoto.load(uri) { crossfade(true) }
-        }
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
@@ -104,9 +96,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 
                     else -> false
                 }
-            }
-            imageUserPhoto.setOnClickListener {
-                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             initWorkWithPinCode()
         }

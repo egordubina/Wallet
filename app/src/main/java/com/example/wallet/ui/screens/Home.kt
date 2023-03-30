@@ -26,6 +26,11 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     private var _binding: FragmentHomeScreenBinding? = null
     private val binding get() = _binding!!
 
+//    private val requestNotificationPermissionLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+//            Log.d("Notification permission", "$it")
+//        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
@@ -89,6 +94,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         transactionList: List<Transaction>
     ) {
         hideLoading()
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+//            requestNotificationPermission()
         binding.apply {
             textViewWelcome.text = getWelcomeMessage(userName)
             fabAddTransaction.setOnClickListener { actionToAddTransaction() }
@@ -127,6 +134,19 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             else -> getString(R.string.welcome_good_night, userName)
         }
     }
+
+//    private fun requestNotificationPermission() {
+//        val notificationAlertDialog = MaterialAlertDialogBuilder(requireContext())
+//            .setTitle(R.string.allow_notification)
+//            .setMessage("Получайте уведомления, чтобы получать полезные сводки по бюджету и не забывать о постоянных тратах ")
+//            .setPositiveButton("Разрешить") { _, _ ->
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+//                    requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+//            }
+//            .setNegativeButton("Нет") { dialog, _ ->
+//                dialog.cancel()
+//            }.show()
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

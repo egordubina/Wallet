@@ -54,25 +54,25 @@
                 app:dividerInsetEnd="@dimen/default_margin"
                 app:dividerInsetStart="@dimen/default_margin" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/image__user_photo"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/default_margin"
-                android:scaleType="centerCrop"
-                android:src="@drawable/face_fill1_wght400_grad0_opsz24"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge" />
+            <!--            <com.google.android.material.imageview.ShapeableImageView-->
+            <!--                android:id="@+id/image__user_photo"-->
+            <!--                android:layout_width="128dp"-->
+            <!--                android:layout_height="128dp"-->
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                android:layout_marginTop="@dimen/default_margin"-->
+            <!--                android:scaleType="centerCrop"-->
+            <!--                android:src="@drawable/face_fill1_wght400_grad0_opsz24"-->
+            <!--                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge" />-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginBottom="@dimen/large_margin"
-                android:text="@string/action_change_photo_help_text"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginHorizontal="@dimen/default_margin"-->
+            <!--                android:layout_marginTop="@dimen/default_margin"-->
+            <!--                android:layout_marginBottom="@dimen/large_margin"-->
+            <!--                android:text="@string/action_change_photo_help_text"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout__user_name"

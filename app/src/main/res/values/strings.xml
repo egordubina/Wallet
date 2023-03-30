@@ -51,4 +51,5 @@
     <string name="transaction_date">Дата: %s</string>
     <string name="select_date">Выбрать дату</string>
     <string name="latest_transaction">Последнии транзакции</string>
+    <string name="allow_notification">Разрешить отправку уведомений</string>
 </resources>
