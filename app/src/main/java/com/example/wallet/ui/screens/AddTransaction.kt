@@ -11,12 +11,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.data.models.Transaction
+import com.example.wallet.data.models.TransactionCategory
 import com.example.wallet.data.models.TransactionType
 import com.example.wallet.databinding.FragmentAddTransactionBinding
 import com.example.wallet.ui.viewmodels.AddTransactionViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.transition.MaterialSharedAxis
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
@@ -41,10 +44,11 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val types: MutableList<String> = mutableListOf()
-        TransactionType.values().forEach { types.add(it.title) }
+        TransactionCategory.values().forEach { types.add(it.categoryName) }
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item__transaction_type, types)
         binding.apply {
             (textInputEditTextTransactionType as? AutoCompleteTextView)?.setAdapter(adapter)
+            var transactionDate: String? = null
             val todayDate = LocalDate.now()
             val formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy").format(todayDate)
             textViewTransactionDate.text = getString(R.string.transaction_date, formatDate)
@@ -55,8 +59,11 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
                     .build()
                 datePicker.show(requireActivity().supportFragmentManager, "DATE PICKER")
                 datePicker.addOnPositiveButtonClickListener {
-                    // todo update date from date picker
-//                    textViewTransactionDate.text = getString(R.string.transaction_date, formatDate)
+                    val selectionDate =
+                        LocalDateTime.ofEpochSecond(it / 1000, 0, ZoneOffset.UTC).toLocalDate()
+                    val date = DateTimeFormatter.ofPattern("d MMMM yyyy").format(selectionDate)
+                    transactionDate = selectionDate.toString()
+                    textViewTransactionDate.text = getString(R.string.transaction_date, date)
                 }
             }
             toolbarAddTransaction.setNavigationOnClickListener { findNavController().navigateUp() }
@@ -65,8 +72,9 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
                     Transaction(
                         description = editTextAddTransactionDescription.text.toString(),
                         price = editTextAddTransactionPrice.text.toString().toInt(),
-                        date = formatDate,
-                        type = getTransactionType(textInputEditTextTransactionType.text.toString())
+                        date = transactionDate ?: todayDate.toString(),
+                        category = getTransactionCategory(textInputEditTextTransactionType.text.toString()),
+                        type = if (radioButtonIncome.isChecked) TransactionType.INCOME else TransactionType.EXPENSES
                     )
                 )
                 findNavController().navigateUp()
@@ -82,12 +90,12 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
         }
     }
 
-    private fun getTransactionType(string: String): TransactionType {
-        TransactionType.values().forEach {
-            if (it.title == string)
+    private fun getTransactionCategory(string: String): TransactionCategory {
+        TransactionCategory.values().forEach {
+            if (it.categoryName == string)
                 return it
         }
-        return TransactionType.OTHER
+        return TransactionCategory.OTHER
     }
 
     override fun onDestroy() {

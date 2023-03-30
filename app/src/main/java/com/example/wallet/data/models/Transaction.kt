@@ -10,7 +10,8 @@ data class Transaction(
     val description: String,
     val price: Int,
     val date: String,
-    val type: TransactionType
+    val category: TransactionCategory,
+    val type: TransactionType,
 )
 
 fun List<Transaction>.asDomain(): List<TransactionDomain> {
@@ -20,6 +21,7 @@ fun List<Transaction>.asDomain(): List<TransactionDomain> {
             description = it.description,
             price = it.price,
             date = it.date,
+            category = it.category,
             type = it.type
         )
     }

@@ -23,19 +23,19 @@ class WalletPreferences(context: Context) {
     var userName: String
         get() = preferencesManager.getString(USER_NAME.id, "").toString()
         set(value) = editPreferences.putString(USER_NAME.id, value).apply()
-    var userPin: Int
-        get() = preferencesManager.getInt(USER_PIN.id, -1)
-        set(value) = editPreferences.putInt(USER_PIN.id, value).apply()
+    var userPin: String
+        get() = preferencesManager.getString(USER_PIN.id, "").toString()
+        set(value) = editPreferences.putString(USER_PIN.id, value).apply()
     var userEmail: String
         get() = preferencesManager.getString(USER_EMAIL.id, "").toString()
         set(value) = editPreferences.putString(USER_EMAIL.id, value).apply()
 
-    fun registrationUser(name: String, email: String, pin: Int) {
+    fun registrationUser(name: String, email: String, pin: String) {
         with(editPreferences) {
             putBoolean(USER_NEW.id, false)
             putString(USER_NAME.id, name)
             putString(USER_EMAIL.id, email)
-            putInt(USER_PIN.id, pin)
+            putString(USER_PIN.id, pin)
             apply()
         }
     }

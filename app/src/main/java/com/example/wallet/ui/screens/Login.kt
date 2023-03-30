@@ -50,15 +50,17 @@ class Login : Fragment(R.layout.fragment__login_screen) {
                     editTextLoginPinCode.text.toString().length !in 4..8 ->
                         textInputLayoutLoginPinCode.error = textInputLayoutLoginPinCode.helperText
 
+                    editTextLoginPinCode.text.toString() != userViewModel.pinCode ->
+                        textInputLayoutLoginPinCode.error = getString(R.string.incorrect_pin_code)
+
                     else -> {
                         try {
-                            if (editTextLoginPinCode.text.toString().toInt() == userViewModel.pinCode) {
-                                userViewModel.userIsLogin = true
-                                findNavController().navigate(R.id.action_login_to_homeScreen)
-                            } else
-                                textInputLayoutLoginPinCode.error = getString(R.string.incorrect_pin_code)
+                            editTextLoginPinCode.text.toString().toInt()
+                            userViewModel.userIsLogin = true
+                            findNavController().navigate(R.id.action_login_to_homeScreen)
                         } catch (e: Exception) {
-                            textInputLayoutLoginPinCode.error = getString(R.string.only_number_pin_code)
+                            textInputLayoutLoginPinCode.error =
+                                getString(R.string.only_number_pin_code)
                         }
                     }
                 }

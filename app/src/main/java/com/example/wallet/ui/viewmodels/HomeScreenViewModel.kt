@@ -28,6 +28,7 @@ class HomeScreenViewModel(
 
     init {
         job?.cancel()
+        _uiState.value = HomeScreenUiState.Loading
         job = viewModelScope.launch {
             try {
                 val userName =

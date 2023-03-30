@@ -1,5 +1,6 @@
 package com.example.wallet.domain.models
 
+import com.example.wallet.data.models.TransactionCategory
 import com.example.wallet.data.models.TransactionType
 import com.example.wallet.ui.models.Transaction as TransactionUi
 
@@ -8,7 +9,8 @@ data class Transaction(
     val description: String,
     val price: Int,
     val date: String,
-    val type: TransactionType
+    val category: TransactionCategory,
+    val type: TransactionType,
 )
 
 fun List<Transaction>.asUi(): List<TransactionUi> {
@@ -18,6 +20,7 @@ fun List<Transaction>.asUi(): List<TransactionUi> {
             description = it.description,
             price = it.price,
             date = it.date,
+            category = it.category,
             type = it.type
         )
     }

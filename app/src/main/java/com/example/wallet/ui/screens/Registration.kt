@@ -61,7 +61,7 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
                     registrationScreeViewModel.registrationUser(
                         name = editTextRegistrationUserName.text.toString(),
                         email = editTextRegistrationUserEmail.text.toString(),
-                        pin = editTextRegistrationUserPinCode.text.toString().toInt()
+                        pin = editTextRegistrationUserPinCode.text.toString()
                     )
                     userViewModel.userIsLogin = true
                 }

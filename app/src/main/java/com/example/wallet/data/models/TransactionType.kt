@@ -1,12 +1,9 @@
 package com.example.wallet.data.models
 
-enum class TransactionType(val title: String) {
-    PRODUCT_SHOP("Продукты"),
-    SPORT_GOODS("Спортивные товары"),
-    SUBSCRIBERS("Подписки"),
-    CAFES("Кафе"),
-    FAST_FOOD("Фаст фуд"),
-    REST("Отдых"),
-    CLOTHES("Одежда"),
-    OTHER("Прочее")
+import androidx.annotation.StringRes
+import com.example.wallet.R
+
+enum class TransactionType(@StringRes val typeName: Int) {
+    INCOME(R.string.income),
+    EXPENSES(R.string.expenses)
 }
