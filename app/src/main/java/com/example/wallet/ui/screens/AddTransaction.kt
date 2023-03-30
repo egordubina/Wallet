@@ -83,11 +83,11 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
     }
 
     private fun getTransactionType(string: String): TransactionType {
-        return when (string) {
-            TransactionType.OTHER.title -> TransactionType.OTHER
-            TransactionType.CAFES.title -> TransactionType.CAFES
-            else -> TransactionType.OTHER
+        TransactionType.values().forEach {
+            if (it.title == string)
+                return it
         }
+        return TransactionType.OTHER
     }
 
     override fun onDestroy() {
