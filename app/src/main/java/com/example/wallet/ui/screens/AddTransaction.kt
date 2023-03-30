@@ -68,13 +68,24 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
             }
             toolbarAddTransaction.setNavigationOnClickListener { findNavController().navigateUp() }
             buttonActionSaveTransaction.setOnClickListener {
+                textInputLayoutTransactionPrice.error = null
+                if (editTextAddTransactionPrice.text.toString().isEmpty()) {
+                    textInputLayoutTransactionPrice.error = getString(R.string.input_cost)
+                    return@setOnClickListener
+                }
+                val description = editTextAddTransactionDescription.text.toString().ifEmpty {
+                    if (radioButtonIncome.isChecked) getString(R.string.income) else getString(R.string.expanses)
+                }
+                val date = transactionDate ?: todayDate.toString()
+                val type =
+                    if (radioButtonIncome.isChecked) TransactionType.INCOME else TransactionType.EXPENSES
                 addTransactionViewModel.addTransaction(
                     Transaction(
-                        description = editTextAddTransactionDescription.text.toString(),
+                        description = description,
                         price = editTextAddTransactionPrice.text.toString().toInt(),
-                        date = transactionDate ?: todayDate.toString(),
+                        date = date,
                         category = getTransactionCategory(textInputEditTextTransactionType.text.toString()),
-                        type = if (radioButtonIncome.isChecked) TransactionType.INCOME else TransactionType.EXPENSES
+                        type = type
                     )
                 )
                 findNavController().navigateUp()

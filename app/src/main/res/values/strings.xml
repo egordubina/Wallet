@@ -45,7 +45,7 @@
     <string name="description">Описание</string>
     <string name="type">Тип</string>
     <string name="income">Доходы</string>
-    <string name="expenses">Расходы</string>
+    <string name="expanses">Расходы</string>
     <string name="pin_codes_equals">Пин коды одинаковы</string>
     <string name="add_transaction">Добавить транзакцию</string>
     <string name="transaction_date">Дата: %s</string>
@@ -54,4 +54,5 @@
     <string name="allow_notification">Разрешить отправку уведомений</string>
     <string name="cost_income" translatable="false">+ %s₽</string>
     <string name="cost_expanse" translatable="false">- %s₽</string>
+    <string name="input_cost">Введите стоимость</string>
 </resources>

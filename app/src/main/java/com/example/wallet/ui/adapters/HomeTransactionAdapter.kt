@@ -13,22 +13,26 @@ class HomeTransactionAdapter(private val transactionList: List<Transaction>) :
     class TransactionIncomeViewHolder(private val binding: ListItemTransactionIncomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Transaction.Income) {
-            binding.itemTransactionDescription.text = item.description
-            binding.itemTransactionCategory.text = item.category.categoryName
-            binding.itemTransactionCost.text =
-                itemView.resources.getString(R.string.cost_income, item.price.toString())
-            binding.itemTransactionDate.text = item.date
+            binding.apply {
+                itemTransactionDescription.text = item.description
+                itemTransactionCategory.text = item.category.categoryName
+                itemTransactionCost.text =
+                    itemView.resources.getString(R.string.cost_income, item.price.toString())
+                itemTransactionDate.text = item.date
+            }
         }
     }
 
     class TransactionExpanseViewHolder(private val binding: ListItemTransactionExpanseBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Transaction.Expanse) {
-            binding.itemTransactionDescription.text = item.description
-            binding.itemTransactionCategory.text = item.category.categoryName
-            binding.itemTransactionCost.text =
-                itemView.resources.getString(R.string.cost_expanse, item.price.toString())
-            binding.itemTransactionDate.text = item.date
+            binding.apply {
+                itemTransactionDescription.text = item.description
+                itemTransactionCategory.text = item.category.categoryName
+                itemTransactionCost.text =
+                    itemView.resources.getString(R.string.cost_expanse, item.price.toString())
+                itemTransactionDate.text = item.date
+            }
         }
     }
 

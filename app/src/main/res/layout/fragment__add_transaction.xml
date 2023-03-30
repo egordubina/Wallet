@@ -97,7 +97,7 @@
                 <TextView
                     tools:text="@tools:sample/date/ddmmyy"
                     android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/large_margin"
                     android:layout_marginHorizontal="@dimen/default_margin"
                     android:id="@+id/text_view__transaction_date"
                     android:layout_width="match_parent"
@@ -132,7 +132,7 @@
                         android:id="@+id/image_view__upward"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_upward_fill0_wght400_grad0_opsz24" />
+                        android:src="@drawable/trending_up_fill0_wght400_grad0_opsz24" />
 
                     <RadioButton
                         android:id="@+id/radio_button__income"
@@ -150,11 +150,11 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:contentDescription="@string/expenses"
+                        android:contentDescription="@string/expanses"
                         android:id="@+id/image_view__downward"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_downward_fill0_wght400_grad0_opsz24" />
+                        android:src="@drawable/trending_down_fill0_wght400_grad0_opsz24" />
 
                     <RadioButton
                         android:checked="true"
@@ -162,7 +162,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="@string/expenses" />
+                        android:text="@string/expanses" />
 
                 </LinearLayout>
 
