@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -106,6 +107,18 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                 if (isVisible)
                     adapter = HomeTransactionAdapter(transactionList.asReversed())
             }
+            nestedScrollViewHome
+            nestedScrollViewHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if (scrollY > 400) {
+                    toolbarHome.setTitle(R.string.latest_transaction)
+                } else {
+                    toolbarHome.setTitle(R.string.app_name)
+                }
+//                Log.d(
+//                    "Scroll Listener",
+//                    "Scroll X : $scrollX | Scroll Y: $scrollY | old Scroll X: $oldScrollX | old Scroll Y: $oldScrollY"
+//                )
+            })
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.wallet.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,6 +40,8 @@ class HomeScreenViewModel(
                     _uiState.postValue(HomeScreenUiState.Content(userName = userName, it.asUi()))
                 }
             } catch (e: Exception) {
+                Log.e("Error Application", e.toString())
+                Log.e("Error Application", e.message.toString())
                 _uiState.postValue(HomeScreenUiState.Error(e.message.toString()))
             }
         }

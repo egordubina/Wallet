@@ -2,6 +2,8 @@ package com.example.wallet.domain.models
 
 import com.example.wallet.data.models.TransactionCategory
 import com.example.wallet.data.models.TransactionType
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import com.example.wallet.ui.models.Transaction as TransactionUi
 
 data class Transaction(
@@ -15,11 +17,18 @@ data class Transaction(
 
 fun List<Transaction>.asUi(): List<TransactionUi> {
     return map {
+        val entityDate = it.date // 2023-03-30
+        val date = LocalDate.of(
+            entityDate.substring(0, 4).toInt(),
+            entityDate.substring(5, 7).toInt(),
+            entityDate.substring(8, 10).toInt()
+        )
+        val formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy").format(date)
         TransactionUi(
             id = it.id,
             description = it.description,
             price = it.price,
-            date = it.date,
+            date = formatDate,
             category = it.category,
             type = it.type
         )
