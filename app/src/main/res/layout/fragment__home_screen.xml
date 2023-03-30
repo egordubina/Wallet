@@ -96,11 +96,11 @@
             </LinearLayout>
 
             <TextView
-                android:text="@string/latest_transaction"
                 android:id="@+id/text_view__latest_transaction"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_margin"
+                android:text="@string/latest_transaction"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 app:layout_constraintEnd_toEndOf="@id/constraint_end"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
@@ -117,7 +117,7 @@
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
                 app:layout_constraintTop_toBottomOf="@id/text_view__latest_transaction"
                 tools:itemCount="20"
-                tools:listitem="@layout/list_item__transaction" />
+                tools:listitem="@layout/list_item__transaction_income" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

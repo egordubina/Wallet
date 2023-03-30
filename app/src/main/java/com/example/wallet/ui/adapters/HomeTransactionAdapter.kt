@@ -3,32 +3,73 @@ package com.example.wallet.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wallet.data.models.TransactionType
-import com.example.wallet.databinding.ListItemTransactionBinding
+import com.example.wallet.R
+import com.example.wallet.databinding.ListItemTransactionExpanseBinding
+import com.example.wallet.databinding.ListItemTransactionIncomeBinding
 import com.example.wallet.ui.models.Transaction
 
 class HomeTransactionAdapter(private val transactionList: List<Transaction>) :
-    RecyclerView.Adapter<HomeTransactionAdapter.ViewHolder>() {
-    class ViewHolder(val binding: ListItemTransactionBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ListItemTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    class TransactionIncomeViewHolder(private val binding: ListItemTransactionIncomeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Transaction.Income) {
+            binding.itemTransactionDescription.text = item.description
+            binding.itemTransactionCategory.text = item.category.categoryName
+            binding.itemTransactionCost.text =
+                itemView.resources.getString(R.string.cost_income, item.price.toString())
+            binding.itemTransactionDate.text = item.date
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.apply {
-            with(transactionList[position]) {
-                itemTransactionCategory.text = category.categoryName
-                itemTransactionDescription.text = description
-                itemTransactionCost.text =
-                    if (this.type == TransactionType.INCOME) "+ $price" else "- $price"
-                itemTransactionDate.text = date
-            }
+    class TransactionExpanseViewHolder(private val binding: ListItemTransactionExpanseBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Transaction.Expanse) {
+            binding.itemTransactionDescription.text = item.description
+            binding.itemTransactionCategory.text = item.category.categoryName
+            binding.itemTransactionCost.text =
+                itemView.resources.getString(R.string.cost_expanse, item.price.toString())
+            binding.itemTransactionDate.text = item.date
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            TYPE_INCOME ->
+                TransactionIncomeViewHolder(
+                    ListItemTransactionIncomeBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+
+            TYPE_EXPANSE ->
+                TransactionExpanseViewHolder(
+                    ListItemTransactionExpanseBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+
+            else -> throw RuntimeException("Invalid type")
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is TransactionExpanseViewHolder -> holder.bind(transactionList[position] as Transaction.Expanse)
+            is TransactionIncomeViewHolder -> holder.bind(transactionList[position] as Transaction.Income)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (transactionList[position]) {
+            is Transaction.Expanse -> TYPE_EXPANSE
+            is Transaction.Income -> TYPE_INCOME
         }
     }
 
     override fun getItemCount(): Int = transactionList.size
+
+    companion object {
+        private const val TYPE_INCOME = 0
+        private const val TYPE_EXPANSE = 1
+    }
 }

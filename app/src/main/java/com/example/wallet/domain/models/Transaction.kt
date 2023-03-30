@@ -24,13 +24,23 @@ fun List<Transaction>.asUi(): List<TransactionUi> {
             entityDate.substring(8, 10).toInt()
         )
         val formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy").format(date)
-        TransactionUi(
-            id = it.id,
-            description = it.description,
-            price = it.price,
-            date = formatDate,
-            category = it.category,
-            type = it.type
-        )
+        if (it.type == TransactionType.EXPENSES)
+            TransactionUi.Expanse(
+                id = it.id,
+                description = it.description,
+                price = it.price,
+                date = formatDate,
+                category = it.category,
+                type = it.type
+            )
+        else
+            TransactionUi.Income(
+                id = it.id,
+                description = it.description,
+                price = it.price,
+                date = formatDate,
+                category = it.category,
+                type = it.type
+            )
     }
 }
