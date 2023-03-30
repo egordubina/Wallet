@@ -14,7 +14,7 @@
     <string name="action_change_photo_help_text">Tap on face to set your beautiful photo</string>
     <string name="no_transaction">No transaction</string>
     <string name="fab_action_to_add_transaction">Add transaction</string>
-    <string name="no_transaction_detailed_info">" There are no transactions.\n\n You can add them manually by clicking on + or link the card in the settings"</string>
+    <string name="no_transaction_detailed_info">" There are no transactions.\n\n You can add them manually by clicking on +"</string>
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="next">Next</string>
@@ -50,7 +50,7 @@
     <string name="add_transaction">Add transaction</string>
     <string name="transaction_date">Date: %s</string>
     <string name="select_date">Select date</string>
-    <string name="latest_transaction">Latest 20 transaction</string>
+    <string name="latest_transaction">Latest transaction</string>
     <string name="allow_notification">Allow post notification</string>
     <string name="input_cost">Enter cost</string>
     <string name="transaction_category_other">Other</string>
@@ -67,6 +67,7 @@
     <string name="transaction_category_services">Services</string>
     <string name="transaction_category_salary">Salary</string>
     <string name="transaction_category_transfer">Transfers</string>
-    <string name="incomes_home_screen">Incomes</string>
-    <string name="expanses_home_screen">Expanses</string>
+    <string name="incomes_home_screen">Incomes: %d₽</string>
+    <string name="expanses_home_screen">Expanses: %d₽</string>
+    <string name="budget_plan">Budget planning</string>
 </resources>

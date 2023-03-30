@@ -16,7 +16,7 @@ interface TransactionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(transaction: Transaction)
 
-    @Query("select * from `transaction` limit 20")
+    @Query("select * from `transaction`")
     fun getLatestTransactions(): Flow<List<Transaction>>
 }
 

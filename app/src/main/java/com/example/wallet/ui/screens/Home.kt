@@ -61,8 +61,10 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             when (uiState) {
                 is HomeScreenUiState.Error -> showErrorUi()
                 is HomeScreenUiState.Content -> showContentUi(
-                    uiState.userName,
-                    uiState.transactionsList
+                    userName = uiState.userName,
+                    transactionList = uiState.transactionsList,
+                    currentMonthIncomes = uiState.currentMonthIncomes,
+                    currentMonthExpanses = uiState.currentMonthExpanses
                 )
 
                 HomeScreenUiState.Loading -> showLoadingUi()
@@ -84,7 +86,9 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     private fun showContentUi(
         userName: String,
-        transactionList: List<Transaction>
+        transactionList: List<Transaction>,
+        currentMonthExpanses: Int,
+        currentMonthIncomes: Int
     ) {
         hideLoading()
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -92,6 +96,9 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         binding.apply {
             textViewWelcome.text = getWelcomeMessage(userName)
             fabAddTransaction.setOnClickListener { findNavController().navigate(R.id.action_homeScreen_to_addTransaction) }
+            textViewAllExpanses.text =
+                getString(R.string.expanses_home_screen, currentMonthExpanses)
+            textViewAllIncomes.text = getString(R.string.incomes_home_screen, currentMonthIncomes)
             layoutNoTransaction.isVisible = transactionList.isEmpty()
             textViewLatestTransaction.isVisible = transactionList.isNotEmpty()
             recyclerViewHomeAllTransaction.apply {

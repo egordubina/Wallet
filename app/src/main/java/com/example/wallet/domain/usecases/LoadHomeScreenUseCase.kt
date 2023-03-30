@@ -15,4 +15,10 @@ class LoadHomeScreenUseCase(
         transactionRepository.lastTransaction.map { it.asDomain() }
     val userName: String
         get() = walletPreferences.userName
+
+    // Бюджет
+    val currentMonthExpanses: Int
+        get() = walletPreferences.currentMonthExpanses
+    val currentMonthIncomes: Int
+        get() = walletPreferences.currentMonthIncomes
 }

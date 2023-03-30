@@ -18,8 +18,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class HomeScreenViewModel(
-    walletPreferences: WalletPreferences,
-    transactionRepository: TransactionRepository
+    private val walletPreferences: WalletPreferences,
+    private val transactionRepository: TransactionRepository
 ) : ViewModel() {
     private val _uiState: MutableLiveData<HomeScreenUiState> =
         MutableLiveData(HomeScreenUiState.Loading)
@@ -28,16 +28,28 @@ class HomeScreenViewModel(
     private var job: Job? = null
 
     init {
+        fetchData()
+    }
+
+    private fun fetchData() {
         job?.cancel()
         _uiState.value = HomeScreenUiState.Loading
+        val useCase = LoadHomeScreenUseCase(walletPreferences, transactionRepository)
         job = viewModelScope.launch {
             try {
-                val userName =
-                    LoadHomeScreenUseCase(walletPreferences, transactionRepository).userName
-                val transactionList =
-                    LoadHomeScreenUseCase(walletPreferences, transactionRepository).allTransaction
+                val currentMonthIncomes = useCase.currentMonthIncomes
+                val currentMonthExpanses = useCase.currentMonthExpanses
+                val userName = useCase.userName
+                val transactionList = useCase.allTransaction
                 transactionList.collect {
-                    _uiState.postValue(HomeScreenUiState.Content(userName = userName, it.asUi()))
+                    _uiState.postValue(
+                        HomeScreenUiState.Content(
+                            userName = userName,
+                            transactionsList = it.asUi(),
+                            currentMonthExpanses = currentMonthExpanses,
+                            currentMonthIncomes = currentMonthIncomes
+                        )
+                    )
                 }
             } catch (e: Exception) {
                 Log.e("Error Application", e.toString())
