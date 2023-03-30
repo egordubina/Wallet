@@ -26,13 +26,11 @@
 ## Оглавление
 
 - [Введение](#introduction)
-- [Features](#features)
-- [Feedback](#feedback)
-- [Contributors](#contributors)
-- [Build Process](#build-process)
-- [Backers](#backers-)
-- [Sponsors](#sponsors-)
-- [Acknowledgments](#acknowledgments)
+- [Особенности](#features)
+- [Обратная связь](#feedback)
+- [Контрибьюторы](#contributors)
+- [Процесс сборки](#build-process)
+- [Благодарности](#acknowledgments)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -43,29 +41,27 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](./CONTRIBUTORS.md)
 [![Languages](https://img.shields.io/github/languages/count/belochka200/Wallet)](http://makeapullrequest.com)
 [![License](https://img.shields.io/github/license/belochka200/Wallet)](http://commitizen.github.io/cz-cli/)
-[![Gitter chat](https://img.shields.io/badge/chat-on_gitter-008080.svg?style=flat-square)](https://gitter.im/git-point)
 
-View repository and user information, control your notifications and even manage your issues and pull requests. Built with React Native, GitPoint is one of the most feature-rich unofficial GitHub clients that is 100% free.
+В наши дни финансовая грамотность - основополагающая дисциплина, владеть которой означает - всегда знать что происходит с твоими деньгами.
 
-**Available for both iOS and Android.**
+Мы надеемся, что наше мобильное приложение <b>«Кошелек»</b> поможет Вам удобно контролировать собственные финансовые расходы, а также станет Вашим персональным инструментом для улучшения навыков финансовой грамотности. 
+
+**Уже доступно на Android!**
 
 <p align="center">
   <img src = "http://i.imgur.com/HowF6aM.png" width=350>
 </p>
 
-## Features
+## Особенности
 
-A few of the things you can do with GitPoint:
+Вот несколько вещей, которые вы можете сделать с помощью <b>«Кошелька»</b>:
 
-* View user activity feed
-* Communicate on your issue and pull request conversations
-* Close or lock issues
-* Apply labels and assignees
-* Review and merge pull requests
-* Create new issues
-* Star, watch and fork repositories
-* Control your unread and participating notifications
-* Easily search for any user or repository
+* Добавлять свои финансовые операции
+* Вести учет доходов и расходов 
+* Просматривать отчетность
+* Следить за своими денежными потоками
+* Наблюдать визуализированный анализ ваших затрат
+* И многое другое!
 
 <p align="center">
   <img src = "http://i.imgur.com/IkSnFRL.png" width=700>
@@ -75,50 +71,40 @@ A few of the things you can do with GitPoint:
   <img src = "http://i.imgur.com/0iorG20.png" width=700>
 </p>
 
-## Feedback
+## Обратная связь
 
-Feel free to send us feedback on [Twitter](https://twitter.com/gitpointapp) or [file an issue](https://github.com/gitpoint/git-point/issues/new). Feature requests are always welcome. If you wish to contribute, please take a quick look at the [guidelines](./CONTRIBUTING.md)!
+Если Вы хотели бы связаться c нашей командой, то вы можете написать нам на любые ресурсы каждого участника нашего коллектива:
 
-If there's anything you'd like to chat about, please feel free to join our [Gitter chat](https://gitter.im/git-point)!
 
-## Contributors
+| Участник                                                                                                                                                                    | Мультиссылка на ресурсы 🔗                                          |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| <center>[<img src="https://avatars.githubusercontent.com/u/90848780?v=4" width="100px;"/><br /><sub><b>Egor Dubina</b></sub>](https://github.com/belochka200)</center>      | <center>[Link 🔗]()</center>                                        |
+| <center>[<img src="https://avatars.githubusercontent.com/u/70071149?v=4" width="100px;"/><br /><sub><b>Aleksandr Kuvaldin</b></sub>](https://github.com/seldomos)</center>  | <center>[Link 🔗](https://socprofile.com/seldom)</center>           |
+| <center>[<img src="https://avatars.githubusercontent.com/u/81908442?v=4" width="100px;"/><br /><sub><b>Leonid Kopotilov</b></sub>](https://github.com/lkopik)</center>      | <center>[Link 🔗](https://socprofile.com/leonid_kopotilov)</center> |
+| <center>[<img src="https://avatars.githubusercontent.com/u/56026614?v=4" width="100px;"/><br /><sub><b>Sergei Ivashishin</b></sub>](https://github.com/abbat1081)</center>  | <center>[Link 🔗](https://socprofile.com/abbat1081)</center>        |
 
-This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification and is brought to you by these [awesome contributors](./CONTRIBUTORS.md).
+## Контрибьюторы
 
-## Build Process
+Этот проект следует спецификации [all-contributors](https://github.com/kentcdodds/all-contributors) и представлен соответствующим списком [контрибьюторов](./CONTRIBUTORS.md).
 
-- Follow the [React Native Guide](https://facebook.github.io/react-native/docs/getting-started.html) for getting started building a project with native code. **A Mac is required if you wish to develop for iOS.**
-- Clone or download the repo
-- `yarn` to install dependencies
-- `yarn run link` to link react-native dependencies
-- `yarn start:ios` to start the packager and run the app in the iOS simulator (`yarn start:ios:logger` will boot the application with [redux-logger](<https://github.com/evgenyrodionov/redux-logger>))
-- `yarn start:android` to start the packager and run the app in the the Android device/emulator (`yarn start:android:logger` will boot the application with [redux-logger](https://github.com/evgenyrodionov/redux-logger))
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars.githubusercontent.com/u/90848780?v=4" width="100px;"/><br /><sub><b>Egor Dubina</b></sub>](https://github.com/belochka200)<br /><u>Chief Developer</u> <br />💻  | [<img src="https://avatars.githubusercontent.com/u/70071149?v=4" width="100px;"/><br /><sub><b>Aleksandr Kuvaldin</b></sub>](https://github.com/seldomos)<br /><u>Engineering/Design</u><br />🎨📖 | [<img src="https://avatars.githubusercontent.com/u/81908442?v=4" width="100px;"/><br /><sub><b>Leonid Kopotilov</b></sub>](https://github.com/lkopik)<br /><u>Assistant/Helper</u> <br />📖 | [<img src="https://avatars.githubusercontent.com/u/56026614?v=4" width="100px;"/><br /><sub><b>Sergei Ivashishin</b></sub>](https://github.com/abbat1081)<br /><u>Mentor</u><br /> 👀 |    
+|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-Please take a look at the [contributing guidelines](./CONTRIBUTING.md) for a detailed process on how to build your application as well as troubleshooting information.
+## Процесс сборки
 
-**Development Keys**: The `CLIENT_ID` and `CLIENT_SECRET` in `api/index.js` are for development purposes and do not represent the actual application keys. Feel free to use them or use a new set of keys by creating an [OAuth application](https://github.com/settings/applications/new) of your own. Set the "Authorization callback URL" to `gitpoint://welcome`.
+- Для самостоятельной сборки проекта необходимо установить [Android Studio(Canary Build)](https://developer.android.com/studio/preview)
+- Клонировать или скачать наш репозиторий
+- Установить [JDK v19](https://jdk.java.net/19/) и применить его в открытом проекте в IDE в разделе <i>File -> Project Structure -> Gradle Settings</i>
+- Собрать проект внутри IDE с помощью `Make Project [Ctrl+F9]`
+- Тестировать проект!
 
-## Backers [![Backers on Open Collective](https://opencollective.com/git-point/backers/badge.svg)](#backers)
+Также, внутри нашего репозитория находиться финальное **APK-приложение** нашего проекта, вы можете установить его на свой смартфон используя стандартные инструкции установки APK в **Android**.
 
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/git-point#backer)]
+В случае возникновения проблем с тестированием или сборкой приложения просим вас написать нам [тут](#feedback).
 
-<a href="https://opencollective.com/git-point#backers" target="_blank"><img src="https://opencollective.com/git-point/backers.svg?width=890"></a>
+## Благодарности
 
-## Sponsors [![Sponsors on Open Collective](https://opencollective.com/git-point/sponsors/badge.svg)](#sponsors)
-
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/git-point#sponsor)]
-
-<a href="https://opencollective.com/git-point/sponsor/0/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/1/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/2/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/3/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/4/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/5/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/6/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/7/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/8/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/git-point/sponsor/9/website" target="_blank"><img src="https://opencollective.com/git-point/sponsor/9/avatar.svg"></a>
-
-## Acknowledgments
-
-Thanks to [JetBrains](https://www.jetbrains.com) for supporting us with a [free Open Source License](https://www.jetbrains.com/buy/opensource).
+Спасибо организаторам международного фестиваля [Технострелка](https://tehnostrelka52.ru/) за возможность участие в вашем мероприятиии, а также спасибо [JetBrains](https://www.jetbrains.com) за поддержку [свободной лицензии Open Source License](https://www.jetbrains.com/buy/opensource)
