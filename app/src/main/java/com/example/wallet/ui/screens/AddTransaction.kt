@@ -122,12 +122,12 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
         val types: MutableList<String> = mutableListOf()
         if (incomes) {
             TransactionCategory.values().forEach {
-                if (it.type == 0 || it.type == 1)
+                if (it.type == 0 || it.type == 2)
                     types.add(getString(it.categoryName))
             }
         } else {
             TransactionCategory.values().forEach {
-                if (it.type == 0 || it.type == 2)
+                if (it.type == 0 || it.type == 1)
                     types.add(getString(it.categoryName))
             }
         }
