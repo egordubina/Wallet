@@ -17,7 +17,7 @@ data class Transaction(
 
 fun List<Transaction>.asUi(): List<TransactionUi> {
     return map {
-        val entityDate = it.date // 2023-03-30
+        val entityDate = it.date
         val date = LocalDate.of(
             entityDate.substring(0, 4).toInt(),
             entityDate.substring(5, 7).toInt(),

@@ -50,7 +50,7 @@
     <string name="add_transaction">Add transaction</string>
     <string name="transaction_date">Date: %s</string>
     <string name="select_date">Select date</string>
-    <string name="latest_transaction">Latest transaction</string>
+    <string name="latest_transaction">Latest 20 transaction</string>
     <string name="allow_notification">Allow post notification</string>
     <string name="input_cost">Enter cost</string>
 </resources>

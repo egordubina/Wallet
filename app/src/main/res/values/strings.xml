@@ -50,7 +50,7 @@
     <string name="add_transaction">Добавить транзакцию</string>
     <string name="transaction_date">Дата: %s</string>
     <string name="select_date">Выбрать дату</string>
-    <string name="latest_transaction">Последнии транзакции</string>
+    <string name="latest_transaction">Последнии 20 транзакций</string>
     <string name="allow_notification">Разрешить отправку уведомений</string>
     <string name="cost_income" translatable="false">+ %s₽</string>
     <string name="cost_expanse" translatable="false">- %s₽</string>
