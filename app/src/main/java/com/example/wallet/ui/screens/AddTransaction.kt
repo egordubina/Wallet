@@ -79,7 +79,7 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
                     return@setOnClickListener
                 }
                 val description = editTextAddTransactionDescription.text.toString().ifEmpty {
-                    if (radioButtonIncome.isChecked) getString(R.string.income) else getString(R.string.expanses)
+                    if (radioButtonIncome.isChecked) getString(R.string.incomes) else getString(R.string.expanses)
                 }
                 val date = transactionDate ?: todayDate.toString()
                 val type =

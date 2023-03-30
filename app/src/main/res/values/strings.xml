@@ -21,7 +21,7 @@
     <string name="next">Дальше</string>
     <string name="email">E-mail</string>
     <string name="pin_code">Пин код</string>
-    <string name="error_message">Ошибка</string>
+    <string name="error_message">Что-то пошло не так...</string>
     <string name="reg_help_text_name">Введите своё имя, чтобы мы знали, как к вам обращаться</string>
     <string name="reg_help_text_email">Введите почту, чтобы не потерять доступ к аккаунту</string>
     <string name="reg_help_text_pin_code">Пин-код должен быть длиной от 4 до 8 цифр</string>
@@ -44,16 +44,18 @@
     <string name="price">Сумма</string>
     <string name="description">Описание</string>
     <string name="type">Тип</string>
-    <string name="income">Доходы</string>
+    <string name="incomes">Доходы</string>
+    <string name="incomes_home_screen">Доходы: %d₽</string>
     <string name="expanses">Расходы</string>
+    <string name="expanses_home_screen">Расходы: %d₽</string>
     <string name="pin_codes_equals">Пин коды одинаковы</string>
     <string name="add_transaction">Добавить транзакцию</string>
     <string name="transaction_date">Дата: %s</string>
     <string name="select_date">Выбрать дату</string>
     <string name="latest_transaction">Последнии 20 транзакций</string>
     <string name="allow_notification">Разрешить отправку уведомений</string>
-    <string name="cost_income" translatable="false">+ %s₽</string>
-    <string name="cost_expanse" translatable="false">- %s₽</string>
+    <string name="cost_income" translatable="false">+ %d₽</string>
+    <string name="cost_expanse" translatable="false">- %d₽</string>
     <string name="input_cost">Введите стоимость</string>
     <string name="transaction_category_other">Прочее</string>
     <string name="transaction_category_clothes">Одежда</string>
@@ -69,4 +71,5 @@
     <string name="transaction_category_services">Услуги</string>
     <string name="transaction_category_salary">Зарплата</string>
     <string name="transaction_category_transfer">Переводы</string>
+    <string name="budget_plan">Планирование бюджета</string>
 </resources>

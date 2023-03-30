@@ -20,7 +20,7 @@
     <string name="next">Next</string>
     <string name="email">E-mail</string>
     <string name="pin_code">Pin code</string>
-    <string name="error_message">Error</string>
+    <string name="error_message">Something went wrong</string>
     <string name="reg_help_text_name">" Enter your name so we know how to contact you"</string>
     <string name="reg_help_text_email">" Enter your email so you don't lose access to your account"</string>
     <string name="reg_help_text_pin_code">PIN code must be 4 to 8 digits long</string>
@@ -44,7 +44,7 @@
     <string name="price">Cost</string>
     <string name="description">Description</string>
     <string name="type">Type</string>
-    <string name="income">Incomes</string>
+    <string name="incomes">Incomes</string>
     <string name="expanses">Expenses</string>
     <string name="pin_codes_equals">Pin codes are the same</string>
     <string name="add_transaction">Add transaction</string>
@@ -67,4 +67,6 @@
     <string name="transaction_category_services">Services</string>
     <string name="transaction_category_salary">Salary</string>
     <string name="transaction_category_transfer">Transfers</string>
+    <string name="incomes_home_screen">Incomes</string>
+    <string name="expanses_home_screen">Expanses</string>
 </resources>

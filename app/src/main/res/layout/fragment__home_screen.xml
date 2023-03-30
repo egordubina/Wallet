@@ -28,7 +28,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/linear_progress_indicator__home"
@@ -96,42 +97,60 @@
             </LinearLayout>
 
             <TextView
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:drawablePadding="8dp"
-                app:layout_constraintTop_toTopOf="@id/button__show_chart"
-                app:layout_constraintBottom_toBottomOf="@id/button__show_chart"
                 android:id="@+id/text_view__all_incomes"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:drawablePadding="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                app:drawableStartCompat="@drawable/trending_up_fill0_wght400_grad0_opsz24"
+                app:layout_constraintEnd_toStartOf="@id/text_view__all_expanses"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
-                tools:layout_editor_absoluteY="58dp"
-                tools:text="@string/income"
-                app:drawableStartCompat="@drawable/trending_up_fill0_wght400_grad0_opsz24" />
+                app:layout_constraintTop_toBottomOf="@id/text_view__welcome"
+                tools:layout_editor_absoluteY="98dp"
+                tools:text="@string/incomes_home_screen" />
 
             <TextView
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:drawablePadding="8dp"
-                android:layout_marginStart="@dimen/default_margin"
-                app:layout_constraintTop_toTopOf="@id/button__show_chart"
-                app:layout_constraintBottom_toBottomOf="@id/button__show_chart"
-                android:layout_width="wrap_content"
+                android:id="@+id/text_view__all_expanses"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:drawablePadding="8dp"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                app:drawableStartCompat="@drawable/trending_down_fill0_wght400_grad0_opsz24"
+                app:layout_constraintEnd_toStartOf="@+id/constraint_end"
                 app:layout_constraintStart_toEndOf="@id/text_view__all_incomes"
-                tools:layout_editor_absoluteY="58dp"
-                tools:text="@string/expanses"
-                app:drawableStartCompat="@drawable/trending_down_fill0_wght400_grad0_opsz24" />
+                app:layout_constraintTop_toBottomOf="@id/text_view__welcome"
+                tools:text="@string/expanses_home_screen" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/button__to_chart"
+                style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:id="@+id/button__show_chart"
-                app:layout_constraintEnd_toEndOf="@id/constraint_end"
-                app:layout_constraintTop_toBottomOf="@id/text_view__welcome"
+                android:text="Анализ за месяц"
                 app:icon="@drawable/bar_chart_fill0_wght400_grad0_opsz24"
-                android:text="Анализ"
-                style="@style/Widget.Material3.Button.IconButton.Outlined"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                app:iconPadding="4dp"
+                app:layout_constraintStart_toStartOf="@id/constraint_start"
+                app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes"
+                tools:layout_editor_absoluteX="299dp"
+                tools:layout_editor_absoluteY="74dp" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button__to_set_plan"
+                style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="Планироваине"
+                app:icon="@drawable/notifications_fill0_wght400_grad0_opsz24"
+                app:iconPadding="4dp"
+                app:layout_constraintEnd_toEndOf="@id/constraint_end"
+                app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes"
+                tools:layout_editor_absoluteX="299dp"
+                tools:layout_editor_absoluteY="74dp" />
 
             <TextView
                 android:id="@+id/text_view__latest_transaction"
@@ -141,7 +160,7 @@
                 android:text="@string/latest_transaction"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
-                app:layout_constraintTop_toBottomOf="@id/button__show_chart" />
+                app:layout_constraintTop_toBottomOf="@id/button__to_chart" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view__home_all_transaction"
@@ -153,7 +172,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint_end"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
                 app:layout_constraintTop_toBottomOf="@id/text_view__latest_transaction"
-                tools:itemCount="20"
+                tools:itemCount="3"
                 tools:listitem="@layout/list_item__transaction_income" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

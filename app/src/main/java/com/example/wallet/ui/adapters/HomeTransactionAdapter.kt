@@ -18,7 +18,7 @@ class HomeTransactionAdapter(private val transactionList: List<Transaction>) :
                 itemTransactionCategory.text =
                     itemView.resources.getString(item.category.categoryName)
                 itemTransactionCost.text =
-                    itemView.resources.getString(R.string.cost_income, item.price.toString())
+                    itemView.resources.getString(R.string.cost_income, item.price)
                 itemTransactionDate.text = item.date
             }
         }
@@ -32,7 +32,7 @@ class HomeTransactionAdapter(private val transactionList: List<Transaction>) :
                 itemTransactionCategory.text =
                     itemView.resources.getString(item.category.categoryName)
                 itemTransactionCost.text =
-                    itemView.resources.getString(R.string.cost_expanse, item.price.toString())
+                    itemView.resources.getString(R.string.cost_expanse, item.price)
                 itemTransactionDate.text = item.date
             }
         }

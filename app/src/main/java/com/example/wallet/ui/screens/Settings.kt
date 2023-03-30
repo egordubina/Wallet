@@ -19,6 +19,7 @@ import com.example.wallet.data.models.SettingsIds.USE_FINGERPRINT_TO_LOGIN
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import com.example.wallet.ui.viewmodels.SettingsScreenViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Settings : Fragment(R.layout.fragment__settings_screen) {
@@ -156,6 +157,11 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     }
 
     private fun showFailedUi() {
+        Snackbar.make(
+            requireView(),
+            R.string.error_message,
+            Snackbar.LENGTH_SHORT
+        ).show()
         hideLoading()
     }
 

@@ -15,6 +15,7 @@ import com.example.wallet.ui.uistate.RegistrationScreenUiState
 import com.example.wallet.ui.viewmodels.RegistrationScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
 import com.example.wallet.utils.CheckUtils
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Registration : Fragment(R.layout.fragment__registration_screen) {
@@ -55,7 +56,6 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
     private fun showContentUi() {
         hideLoading()
         binding.apply {
-            // Клик по кнопке "Регистрация"
             buttonActionRegistration.setOnClickListener {
                 if (checkUserDataForRegistration()) {
                     registrationScreeViewModel.registrationUser(
@@ -75,6 +75,13 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
     }
 
     private fun showFailedUi() {
+        Snackbar.make(
+            requireView(),
+            R.string.error_message,
+            Snackbar.LENGTH_SHORT
+        )
+            .setAnchorView(binding.buttonActionRegistration)
+            .show()
         hideLoading()
     }
 

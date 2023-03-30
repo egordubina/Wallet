@@ -22,8 +22,8 @@ class RegistrationScreenViewModel(
 
     fun registrationUser(name: String, email: String, pin: String) {
         job?.cancel()
+        _uiState.value = RegistrationScreenUiState.Loading
         job = viewModelScope.launch {
-            _uiState.postValue(RegistrationScreenUiState.Loading)
             try {
                 RegistrationUserUseCase(walletPreferences).registrationUser(name, email, pin)
                 _uiState.postValue(RegistrationScreenUiState.RegistrationSuccessful)

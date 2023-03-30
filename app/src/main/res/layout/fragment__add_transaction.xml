@@ -128,7 +128,7 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:contentDescription="@string/income"
+                        android:contentDescription="@string/incomes"
                         android:id="@+id/image_view__upward"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="@string/income" />
+                        android:text="@string/incomes" />
 
                 </LinearLayout>
 
