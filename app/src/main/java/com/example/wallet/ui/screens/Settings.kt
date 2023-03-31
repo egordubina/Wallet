@@ -86,7 +86,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         binding.apply {
             editTextUserName.setText(name)
             editTextUserEmail.setText(email)
-            switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
+//            switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
 
             toolbarSettings.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -193,13 +193,13 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                 }
 
                 // fingerprint settings
-                currentUserSettings[USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked -> {
-                    settingsScreenViewModel.changeSettings(
-                        USE_FINGERPRINT_TO_LOGIN,
-                        switchUseFingerPrintToLogin.isChecked.toString()
-                    )
-                    settingsChangeFlag = true
-                }
+//                currentUserSettings[USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked -> {
+//                    settingsScreenViewModel.changeSettings(
+//                        USE_FINGERPRINT_TO_LOGIN,
+//                        switchUseFingerPrintToLogin.isChecked.toString()
+//                    )
+//                    settingsChangeFlag = true
+//                }
 
                 // name settings
                 currentUserSettings[USER_NAME] != editTextUserName.text.toString() -> {
