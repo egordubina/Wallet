@@ -114,7 +114,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                     toolbarHome.setTitle(R.string.app_name)
                 }
             })
-            buttonToSetPlan.setOnClickListener { findNavController().navigate(R.id.action_homeScreen_to_budgetPlan) }
+//            buttonToSetPlan.setOnClickListener { findNavController().navigate(R.id.action_homeScreen_to_budgetPlan) }
         }
     }
 
@@ -125,8 +125,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             textViewAllExpanses.isVisible = false
             textViewLatestTransaction.isVisible = false
             fabAddTransaction.isVisible = false
-            buttonToChart.isVisible = false
-            buttonToSetPlan.isVisible = false
+//            buttonToChart.isVisible = false
+//            buttonToSetPlan.isVisible = false
             textViewWelcome.isVisible = false
             recyclerViewHomeAllTransaction.isVisible = false
         }
@@ -139,8 +139,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             textViewAllExpanses.isVisible = true
             textViewLatestTransaction.isVisible = true
             fabAddTransaction.isVisible = true
-            buttonToChart.isVisible = true
-            buttonToSetPlan.isVisible = true
+//            buttonToChart.isVisible = true
+//            buttonToSetPlan.isVisible = true
             textViewWelcome.isVisible = true
             recyclerViewHomeAllTransaction.isVisible = true
         }
