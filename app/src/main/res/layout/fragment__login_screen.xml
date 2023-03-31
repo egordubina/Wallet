@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/default_margin"
-        app:layout_constraintBottom_toTopOf="@+id/textView__action_forgot_pin_code"
+        app:layout_constraintBottom_toTopOf="@+id/button__action_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -65,28 +65,28 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <TextView
-        android:id="@+id/textView__action_forgot_pin_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/default_margin"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:text="@string/i_forgot_pin_code"
-        app:layout_constraintBottom_toTopOf="@+id/button__action_use_fingerprint_to_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView__action_forgot_pin_code"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="@dimen/default_margin"-->
+    <!--        android:layout_marginBottom="@dimen/default_margin"-->
+    <!--        android:text="@string/i_forgot_pin_code"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/button__action_use_fingerprint_to_login"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button__action_use_fingerprint_to_login"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/default_margin"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:text="@string/use_fingerprint_to_login"
-        app:layout_constraintBottom_toTopOf="@+id/button__action_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--    <com.google.android.material.button.MaterialButton-->
+    <!--        android:id="@+id/button__action_use_fingerprint_to_login"-->
+    <!--        style="@style/Widget.Material3.Button.OutlinedButton"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="@dimen/default_margin"-->
+    <!--        android:layout_marginBottom="@dimen/default_margin"-->
+    <!--        android:text="@string/use_fingerprint_to_login"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/button__action_login"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button__action_login"

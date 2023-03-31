@@ -76,7 +76,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/constraint_end"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
-                app:layout_constraintTop_toBottomOf="@id/budget_buttons">
+                app:layout_constraintTop_toBottomOf="@id/text_view__welcome">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -125,60 +125,60 @@
                 app:layout_constraintTop_toBottomOf="@id/text_view__welcome"
                 tools:text="@string/expanses_home_screen" />
 
-            <HorizontalScrollView
-                android:id="@+id/budget_buttons"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
-                android:scrollbars="none"
-                app:layout_constraintEnd_toEndOf="@id/constraint_end"
-                app:layout_constraintStart_toStartOf="@id/constraint_start"
-                app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes">
+            <!--            <HorizontalScrollView-->
+            <!--                android:id="@+id/budget_buttons"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/default_margin"-->
+            <!--                android:scrollbars="none"-->
+            <!--                app:layout_constraintEnd_toEndOf="@id/constraint_end"-->
+            <!--                app:layout_constraintStart_toStartOf="@id/constraint_start"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes">-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="horizontal">-->
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button__to_chart"
-                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Анализ за месяц"
-                        app:icon="@drawable/bar_chart_fill0_wght400_grad0_opsz24"
-                        app:iconPadding="4dp"
-                        app:layout_constraintStart_toStartOf="@id/constraint_start"
-                        app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes" />
+            <!--                    <com.google.android.material.button.MaterialButton-->
+            <!--                        android:id="@+id/button__to_chart"-->
+            <!--                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="Анализ за месяц"-->
+            <!--                        app:icon="@drawable/bar_chart_fill0_wght400_grad0_opsz24"-->
+            <!--                        app:iconPadding="4dp"-->
+            <!--                        app:layout_constraintStart_toStartOf="@id/constraint_start"-->
+            <!--                        app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes" />-->
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button__to_set_plan"
-                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Планироваине"
-                        app:icon="@drawable/pie_chart_fill0_wght400_grad0_opsz48"
-                        app:iconPadding="4dp"
-                        app:layout_constraintStart_toEndOf="@+id/button__to_chart"
-                        app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes" />
+            <!--                    <com.google.android.material.button.MaterialButton-->
+            <!--                        android:id="@+id/button__to_set_plan"-->
+            <!--                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginStart="8dp"-->
+            <!--                        android:text="Планироваине"-->
+            <!--                        app:icon="@drawable/pie_chart_fill0_wght400_grad0_opsz48"-->
+            <!--                        app:iconPadding="4dp"-->
+            <!--                        app:layout_constraintStart_toEndOf="@+id/button__to_chart"-->
+            <!--                        app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes" />-->
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button__to_set_notification"
-                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Добавить напоминание"
-                        app:icon="@drawable/notifications_fill0_wght400_grad0_opsz24"
-                        app:iconPadding="4dp"
-                        app:layout_constraintStart_toEndOf="@+id/button__to_chart"
-                        app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes" />
+            <!--                    <com.google.android.material.button.MaterialButton-->
+            <!--                        android:id="@+id/button__to_set_notification"-->
+            <!--                        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginStart="8dp"-->
+            <!--                        android:text="Добавить напоминание"-->
+            <!--                        app:icon="@drawable/notifications_fill0_wght400_grad0_opsz24"-->
+            <!--                        app:iconPadding="4dp"-->
+            <!--                        app:layout_constraintStart_toEndOf="@+id/button__to_chart"-->
+            <!--                        app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes" />-->
 
 
-                </LinearLayout>
+            <!--                </LinearLayout>-->
 
-            </HorizontalScrollView>
+            <!--            </HorizontalScrollView>-->
 
             <TextView
                 android:id="@+id/text_view__latest_transaction"
@@ -188,7 +188,7 @@
                 android:text="@string/latest_transaction"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 app:layout_constraintStart_toStartOf="@id/constraint_start"
-                app:layout_constraintTop_toBottomOf="@id/budget_buttons" />
+                app:layout_constraintTop_toBottomOf="@id/text_view__all_incomes" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view__home_all_transaction"
