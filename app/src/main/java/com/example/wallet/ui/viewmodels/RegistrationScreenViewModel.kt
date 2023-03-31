@@ -10,11 +10,8 @@ import com.example.wallet.WalletApplication
 import com.example.wallet.data.preferences.WalletPreferences
 import com.example.wallet.domain.usecases.RegistrationUserUseCase
 import com.example.wallet.ui.uistate.RegistrationScreenUiState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class RegistrationScreenViewModel(
     private val walletPreferences: WalletPreferences
@@ -23,10 +20,10 @@ class RegistrationScreenViewModel(
     val uiState: LiveData<RegistrationScreenUiState> = _uiState
     private var job: Job? = null
 
-    fun registrationUser(name: String, email: String, pin: Int) {
+    fun registrationUser(name: String, email: String, pin: String) {
         job?.cancel()
+        _uiState.value = RegistrationScreenUiState.Loading
         job = viewModelScope.launch {
-            _uiState.postValue(RegistrationScreenUiState.Loading)
             try {
                 RegistrationUserUseCase(walletPreferences).registrationUser(name, email, pin)
                 _uiState.postValue(RegistrationScreenUiState.RegistrationSuccessful)

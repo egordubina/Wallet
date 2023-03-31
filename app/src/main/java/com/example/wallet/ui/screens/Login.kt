@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,7 +14,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 
 class Login : Fragment(R.layout.fragment__login_screen) {
     private var _binding: FragmentLoginScreenBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
     private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +37,9 @@ class Login : Fragment(R.layout.fragment__login_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            buttonActionUseFingerprintToLogin.setOnClickListener {
-                Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
-            }
+//            buttonActionUseFingerprintToLogin.setOnClickListener {
+//                Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
+//            }
             buttonActionLogin.setOnClickListener {
                 textInputLayoutLoginPinCode.error = null
                 when {
@@ -50,15 +49,17 @@ class Login : Fragment(R.layout.fragment__login_screen) {
                     editTextLoginPinCode.text.toString().length !in 4..8 ->
                         textInputLayoutLoginPinCode.error = textInputLayoutLoginPinCode.helperText
 
+                    editTextLoginPinCode.text.toString() != userViewModel.pinCode ->
+                        textInputLayoutLoginPinCode.error = getString(R.string.incorrect_pin_code)
+
                     else -> {
                         try {
-                            if (editTextLoginPinCode.text.toString().toInt() == userViewModel.pinCode) {
-                                userViewModel.userIsLogin = true
-                                findNavController().navigate(R.id.action_login_to_homeScreen)
-                            } else
-                                textInputLayoutLoginPinCode.error = getString(R.string.incorrect_pin_code)
+                            editTextLoginPinCode.text.toString().toInt()
+                            userViewModel.userIsLogin = true
+                            findNavController().navigate(R.id.action_login_to_homeScreen)
                         } catch (e: Exception) {
-                            textInputLayoutLoginPinCode.error = getString(R.string.only_number_pin_code)
+                            textInputLayoutLoginPinCode.error =
+                                getString(R.string.only_number_pin_code)
                         }
                     }
                 }

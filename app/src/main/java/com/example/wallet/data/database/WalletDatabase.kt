@@ -17,7 +17,7 @@ interface TransactionDao {
     suspend fun insertTransaction(transaction: Transaction)
 
     @Query("select * from `transaction`")
-    fun getAllTransactions(): Flow<List<Transaction>>
+    fun getLatestTransactions(): Flow<List<Transaction>>
 }
 
 @Database(entities = [Transaction::class], exportSchema = false, version = 1)

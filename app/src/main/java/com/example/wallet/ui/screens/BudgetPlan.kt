@@ -5,20 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
-import com.example.wallet.data.preferences.WalletPreferences
-import com.example.wallet.databinding.FragmentWelcomeScreenBinding
+import com.example.wallet.databinding.FragmentBudgetPlanBinding
+import com.example.wallet.ui.viewmodels.BudgetPlanViewModel
 import com.google.android.material.transition.MaterialSharedAxis
 
-class Welcome : Fragment(R.layout.fragment__welcome_screen) {
-    private lateinit var walletPreferences: WalletPreferences
-    private var _binding: FragmentWelcomeScreenBinding? = null
+class BudgetPlan : Fragment(R.layout.fragment__budget_plan) {
+    private val budgetPlanViewModel: BudgetPlanViewModel by viewModels()
+    private var _binding: FragmentBudgetPlanBinding? = null
     private val binding get() = checkNotNull(_binding)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun onCreateView(
@@ -26,18 +27,14 @@ class Welcome : Fragment(R.layout.fragment__welcome_screen) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentWelcomeScreenBinding.inflate(inflater, container, false)
+        _binding = FragmentBudgetPlanBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding: FragmentWelcomeScreenBinding = FragmentWelcomeScreenBinding.bind(view)
-        walletPreferences = WalletPreferences(requireActivity())
         binding.apply {
-            buttonGo.setOnClickListener {
-                findNavController().navigate(R.id.action_welcome_to_register)
-            }
+            toolbarBudgetPlan.setNavigationOnClickListener { findNavController().navigateUp() }
         }
     }
 

@@ -15,11 +15,12 @@ import com.example.wallet.ui.uistate.RegistrationScreenUiState
 import com.example.wallet.ui.viewmodels.RegistrationScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
 import com.example.wallet.utils.CheckUtils
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Registration : Fragment(R.layout.fragment__registration_screen) {
     private var _binding: FragmentRegistrationScreenBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = checkNotNull(_binding)
     private val registrationScreeViewModel: RegistrationScreenViewModel by viewModels { RegistrationScreenViewModel.Factory }
     private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,13 +56,12 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
     private fun showContentUi() {
         hideLoading()
         binding.apply {
-            // Клик по кнопке "Регистрация"
             buttonActionRegistration.setOnClickListener {
                 if (checkUserDataForRegistration()) {
                     registrationScreeViewModel.registrationUser(
                         name = editTextRegistrationUserName.text.toString(),
                         email = editTextRegistrationUserEmail.text.toString(),
-                        pin = editTextRegistrationUserPinCode.text.toString().toInt()
+                        pin = editTextRegistrationUserPinCode.text.toString()
                     )
                     userViewModel.userIsLogin = true
                 }
@@ -75,6 +75,13 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
     }
 
     private fun showFailedUi() {
+        Snackbar.make(
+            requireView(),
+            R.string.error_message,
+            Snackbar.LENGTH_SHORT
+        )
+            .setAnchorView(binding.buttonActionRegistration)
+            .show()
         hideLoading()
     }
 

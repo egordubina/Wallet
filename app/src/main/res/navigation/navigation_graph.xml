@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_homeScreen_to_addTransaction"
             app:destination="@id/addTransaction" />
+        <action
+            android:id="@+id/action_homeScreen_to_budgetPlan"
+            app:destination="@id/budgetPlan" />
     </fragment>
     <fragment
         android:id="@+id/welcome"
@@ -69,4 +72,9 @@
         android:id="@+id/addTransaction"
         android:name="com.example.wallet.ui.screens.AddTransaction"
         android:label="AddTransaction" />
+    <fragment
+        tools:layout="@layout/fragment__budget_plan"
+        android:id="@+id/budgetPlan"
+        android:name="com.example.wallet.ui.screens.BudgetPlan"
+        android:label="BudgetPlan" />
 </navigation>

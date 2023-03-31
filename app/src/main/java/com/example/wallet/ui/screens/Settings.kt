@@ -6,14 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.example.wallet.R
 import com.example.wallet.data.models.SettingsIds
 import com.example.wallet.data.models.SettingsIds.USER_EMAIL
@@ -23,6 +19,7 @@ import com.example.wallet.data.models.SettingsIds.USE_FINGERPRINT_TO_LOGIN
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import com.example.wallet.ui.viewmodels.SettingsScreenViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Settings : Fragment(R.layout.fragment__settings_screen) {
@@ -30,18 +27,14 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     private val currentUserSettings: MutableMap<SettingsIds, Any> = mutableMapOf()
     private var settingsChangeFlag: Boolean = false
     private var _binding: FragmentSettingsScreenBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
+    private val binding get() = checkNotNull(_binding)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val backPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             checkUserSettings()
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
-        pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null)
-                binding.imageUserPhoto.load(uri) { crossfade(true) }
-        }
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
@@ -93,7 +86,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         binding.apply {
             editTextUserName.setText(name)
             editTextUserEmail.setText(email)
-            switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
+//            switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
 
             toolbarSettings.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -104,9 +97,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 
                     else -> false
                 }
-            }
-            imageUserPhoto.setOnClickListener {
-                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             initWorkWithPinCode()
         }
@@ -167,6 +157,11 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     }
 
     private fun showFailedUi() {
+        Snackbar.make(
+            requireView(),
+            R.string.error_message,
+            Snackbar.LENGTH_SHORT
+        ).show()
         hideLoading()
     }
 
@@ -198,13 +193,13 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                 }
 
                 // fingerprint settings
-                currentUserSettings[USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked -> {
-                    settingsScreenViewModel.changeSettings(
-                        USE_FINGERPRINT_TO_LOGIN,
-                        switchUseFingerPrintToLogin.isChecked.toString()
-                    )
-                    settingsChangeFlag = true
-                }
+//                currentUserSettings[USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked -> {
+//                    settingsScreenViewModel.changeSettings(
+//                        USE_FINGERPRINT_TO_LOGIN,
+//                        switchUseFingerPrintToLogin.isChecked.toString()
+//                    )
+//                    settingsChangeFlag = true
+//                }
 
                 // name settings
                 currentUserSettings[USER_NAME] != editTextUserName.text.toString() -> {

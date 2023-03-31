@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 class TransactionRepository(
     transactionDao: TransactionDao
 ) {
-    val lastTransaction: Flow<List<Transaction>> = transactionDao.getAllTransactions()
+    val lastTransaction: Flow<List<Transaction>> = transactionDao.getLatestTransactions()
     // todo функция для синхронизации транзакций
 }

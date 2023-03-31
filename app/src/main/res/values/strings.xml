@@ -15,13 +15,13 @@
     <string name="action_change_photo_help_text">Нажмите на лицо, чтобы поставить свою замечательную фотографию</string>
     <string name="no_transaction">Транзакций нет</string>
     <string name="fab_action_to_add_transaction">Добавить транзакцию</string>
-    <string name="no_transaction_detailed_info">Транзакций нет.\n\n Вы можете добавить их вручную, нажав на + или привязать карту в настройках</string>
+    <string name="no_transaction_detailed_info">Транзакций нет.\n\n Вы можете добавить их вручную, нажав на + </string>
     <string name="login">Авторизация</string>
     <string name="registration">Регистрация</string>
     <string name="next">Дальше</string>
     <string name="email">E-mail</string>
     <string name="pin_code">Пин код</string>
-    <string name="error_message">Ошибка</string>
+    <string name="error_message">Что-то пошло не так...</string>
     <string name="reg_help_text_name">Введите своё имя, чтобы мы знали, как к вам обращаться</string>
     <string name="reg_help_text_email">Введите почту, чтобы не потерять доступ к аккаунту</string>
     <string name="reg_help_text_pin_code">Пин-код должен быть длиной от 4 до 8 цифр</string>
@@ -44,11 +44,33 @@
     <string name="price">Сумма</string>
     <string name="description">Описание</string>
     <string name="type">Тип</string>
-    <string name="income">Доходы</string>
-    <string name="expenses">Расходы</string>
+    <string name="incomes">Доходы</string>
+    <string name="incomes_home_screen">Доходы\n%d₽</string>
+    <string name="expanses">Расходы</string>
+    <string name="expanses_home_screen">Расходы\n%d₽</string>
     <string name="pin_codes_equals">Пин коды одинаковы</string>
     <string name="add_transaction">Добавить транзакцию</string>
     <string name="transaction_date">Дата: %s</string>
     <string name="select_date">Выбрать дату</string>
-    <string name="latest_transaction">Последнии транзакции</string>
+    <string name="latest_transaction">Последние транзакции</string>
+    <string name="allow_notification">Разрешить отправку уведомений</string>
+    <string name="cost_income" translatable="false">+ %d₽</string>
+    <string name="cost_expanse" translatable="false">- %d₽</string>
+    <string name="input_cost">Введите стоимость</string>
+    <string name="transaction_category_other">Прочее</string>
+    <string name="transaction_category_clothes">Одежда</string>
+    <string name="transaction_category_rest">Отдых</string>
+    <string name="transaction_category_fast_food">Фаст фуд</string>
+    <string name="transaction_category_cafe">Кафе</string>
+    <string name="transaction_category_subscribers">Подписки</string>
+    <string name="transaction_category_sport">Спорт товары</string>
+    <string name="transaction_category_products">Продукты</string>
+    <string name="transaction_category_car">Товары для авто</string>
+    <string name="transaction_category_home">Товары для дома</string>
+    <string name="transaction_category_health">Здоровье</string>
+    <string name="transaction_category_services">Услуги</string>
+    <string name="transaction_category_salary">Зарплата</string>
+    <string name="transaction_category_transfer">Переводы</string>
+    <string name="budget_plan">Планирование бюджета</string>
+    <string name="incorrect_cost">Слишком большая стоимость</string>
 </resources>

@@ -10,7 +10,7 @@ import com.example.wallet.data.preferences.WalletPreferences
 class UserViewModel(private val walletPreferences: WalletPreferences) : ViewModel() {
     val isFirstLogin: Boolean
         get() = walletPreferences.isFirstLogin
-    val pinCode: Int
+    val pinCode: String
         get() = walletPreferences.userPin
     var userIsLogin: Boolean = false
 

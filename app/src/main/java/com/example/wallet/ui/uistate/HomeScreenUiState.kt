@@ -10,6 +10,8 @@ sealed class HomeScreenUiState {
 
     data class Content(
         val userName: String,
-        val transactionsList: List<Transaction>
+        val transactionsList: List<Transaction>,
+        val currentMonthExpanses: Int,
+        val currentMonthIncomes: Int,
     ) : HomeScreenUiState()
 }
