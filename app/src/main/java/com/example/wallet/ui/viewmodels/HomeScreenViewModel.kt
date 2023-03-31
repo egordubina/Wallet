@@ -1,61 +1,67 @@
 package com.example.wallet.ui.viewmodels
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
-import com.example.wallet.data.preferences.WalletPreferences
+import com.example.wallet.data.models.asDomain
 import com.example.wallet.data.repository.TransactionRepository
+import com.example.wallet.data.repository.UserRepository
 import com.example.wallet.domain.models.asUi
-import com.example.wallet.domain.usecases.LoadHomeScreenUseCase
 import com.example.wallet.ui.uistate.HomeScreenUiState
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class HomeScreenViewModel(
-    private val walletPreferences: WalletPreferences,
-    private val transactionRepository: TransactionRepository
+    private val transactionRepository: TransactionRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
-    private val _uiState: MutableLiveData<HomeScreenUiState> =
-        MutableLiveData(HomeScreenUiState.Loading)
-    val uiState: LiveData<HomeScreenUiState> = _uiState
+    private val _uiState: MutableStateFlow<HomeScreenUiState> =
+        MutableStateFlow(HomeScreenUiState.Loading)
 
-    private var job: Job? = null
+    //    val uiState: StateFlow<HomeScreenUiState> = _uiState
+    val uiState = combine(
+        transactionRepository.lastTransaction,
+        userRepository.userInfo
+    ) { transaction, userInfo ->
+        HomeScreenUiState.Content(
+            userName = userInfo.userName,
+            transactionsList = transaction.asDomain().asUi(),
+            currentMonthExpanses = 0,
+            currentMonthIncomes = 0
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = HomeScreenUiState.Loading
+    )
 
     init {
-        fetchData()
-    }
-
-    private fun fetchData() {
-        job?.cancel()
-        _uiState.value = HomeScreenUiState.Loading
-        val useCase = LoadHomeScreenUseCase(walletPreferences, transactionRepository)
-        job = viewModelScope.launch {
-            try {
-                val currentMonthIncomes = useCase.currentMonthIncomes
-                val currentMonthExpanses = useCase.currentMonthExpanses
-                val userName = useCase.userName
-                val transactionList = useCase.allTransaction
-                transactionList.collect {
-                    _uiState.postValue(
-                        HomeScreenUiState.Content(
-                            userName = userName,
-                            transactionsList = it.asUi(),
-                            currentMonthExpanses = currentMonthExpanses,
-                            currentMonthIncomes = currentMonthIncomes
-                        )
-                    )
-                }
-            } catch (e: Exception) {
-                Log.e("Error Application", e.toString())
-                Log.e("Error Application", e.message.toString())
-                _uiState.postValue(HomeScreenUiState.Error(e.message.toString()))
+        viewModelScope.launch {
+            if (!userRepository.getIsFirstLogin()) {
+                _uiState.value = HomeScreenUiState.UserIsFirstLogin
+                return@launch
             }
+            _uiState.value = combine(
+                transactionRepository.lastTransaction,
+                userRepository.userInfo
+            ) { transaction, userInfo ->
+                HomeScreenUiState.Content(
+                    userName = userInfo.userName,
+                    transactionsList = transaction.asDomain().asUi(),
+                    currentMonthExpanses = 0,
+                    currentMonthIncomes = 0
+                )
+            }.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = HomeScreenUiState.Loading
+            ).value
         }
     }
 
@@ -65,8 +71,8 @@ class HomeScreenViewModel(
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 return HomeScreenViewModel(
-                    (application as WalletApplication).walletPreferences,
-                    application.transactionRepository
+                    (application as WalletApplication).transactionRepository,
+                    application.userRepository
                 ) as T
             }
         }

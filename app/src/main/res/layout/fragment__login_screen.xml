@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurfaceContainer">
@@ -34,15 +35,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/default_margin">
+                android:orientation="vertical">
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/linear_progress_indicator__login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/text_view__welcome_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:paddingHorizontal="@dimen/default_margin"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                    tools:text="Привет, Егор!" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/text_input_layout__login_pin_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/pin_code"
+                    android:paddingHorizontal="@dimen/default_margin"
                     app:counterEnabled="true"
                     app:counterMaxLength="8"
                     app:errorEnabled="true"

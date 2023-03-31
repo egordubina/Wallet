@@ -9,6 +9,7 @@ import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.wallet.data.models.Transaction
+import com.example.wallet.data.models.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -20,9 +21,31 @@ interface TransactionDao {
     fun getLatestTransactions(): Flow<List<Transaction>>
 }
 
-@Database(entities = [Transaction::class], exportSchema = false, version = 1)
+@Dao
+interface UserDao {
+    @Query("select * from user")
+    fun getUserInfo(): Flow<User>
+
+    @Query("update user set userName = :name")
+    suspend fun updateUserInfo(name: String)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun registrationUser(user: User)
+
+    @Query("select userPin from user")
+    fun getUserPinCode(): Flow<String>
+
+    @Query("select isFirstLogin from user")
+    suspend fun checkIsFirstLogin(): Boolean
+
+    @Query("update user set isFirstLogin = :status ")
+    suspend fun setUserIsFirstLogin(status: Boolean)
+}
+
+@Database(entities = [Transaction::class, User::class], exportSchema = false, version = 1)
 abstract class WalletDatabase : RoomDatabase() {
     abstract val transactionDao: TransactionDao
+    abstract val userDao: UserDao
 
     companion object {
         private var INSTANCE: WalletDatabase? = null

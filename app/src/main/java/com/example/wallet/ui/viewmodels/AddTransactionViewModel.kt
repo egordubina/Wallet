@@ -1,5 +1,6 @@
 package com.example.wallet.ui.viewmodels
 
+//import com.example.wallet.data.preferences.WalletPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -8,24 +9,22 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
 import com.example.wallet.data.database.WalletDatabase
 import com.example.wallet.data.models.Transaction
-import com.example.wallet.data.models.TransactionType
-import com.example.wallet.data.preferences.WalletPreferences
 import kotlinx.coroutines.launch
 
 class AddTransactionViewModel(
     private val database: WalletDatabase,
-    private val walletPreferences: WalletPreferences
+//    private val walletPreferences: WalletPreferences
 ) : ViewModel() {
 
     fun addTransaction(transaction: Transaction) {
         viewModelScope.launch {
             database.transactionDao.insertTransaction(transaction)
-            if (transaction.type == TransactionType.EXPENSES)
-                walletPreferences.currentMonthExpanses =
-                    walletPreferences.currentMonthExpanses + transaction.price
-            else
-                walletPreferences.currentMonthIncomes =
-                    walletPreferences.currentMonthIncomes + transaction.price
+//            if (transaction.type == TransactionType.EXPENSES)
+//                walletPreferences.currentMonthExpanses =
+//                    walletPreferences.currentMonthExpanses + transaction.price
+//            else
+//                walletPreferences.currentMonthIncomes =
+//                    walletPreferences.currentMonthIncomes + transaction.price
         }
     }
 
@@ -36,7 +35,7 @@ class AddTransactionViewModel(
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 return AddTransactionViewModel(
                     database = (application as WalletApplication).appDatabase,
-                    walletPreferences = application.walletPreferences
+//                    walletPreferences = application.walletPreferences
                 ) as T
             }
         }

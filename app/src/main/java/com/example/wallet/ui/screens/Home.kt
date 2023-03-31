@@ -9,6 +9,9 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.databinding.FragmentHomeScreenBinding
@@ -19,18 +22,14 @@ import com.example.wallet.ui.viewmodels.HomeScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.coroutines.launch
 import java.time.LocalTime
 
 class Home : Fragment(R.layout.fragment__home_screen) {
     private val homeScreenViewModel: HomeScreenViewModel by viewModels { HomeScreenViewModel.Factory }
-    private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
+    private val userViewModel: UserViewModel by activityViewModels()
     private var _binding: FragmentHomeScreenBinding? = null
     private val binding get() = checkNotNull(_binding)
-
-//    private val requestNotificationPermissionLauncher =
-//        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-//            Log.d("Notification permission", "$it")
-//        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +37,25 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeScreenViewModel.uiState.collect { uiState ->
+                    when (uiState) {
+                        is HomeScreenUiState.Content -> showContentUi(
+                            userName = uiState.userName,
+                            transactionList = uiState.transactionsList,
+                            currentMonthIncomes = uiState.currentMonthIncomes,
+                            currentMonthExpanses = uiState.currentMonthExpanses
+                        )
+
+                        HomeScreenUiState.Loading -> {} // todo переписать на состояние
+                        HomeScreenUiState.UserIsFirstLogin ->
+                            findNavController().navigate(R.id.action_homeScreen_to_welcome)
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateView(
@@ -51,25 +69,6 @@ class Home : Fragment(R.layout.fragment__home_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (userViewModel.isFirstLogin)
-            findNavController().navigate(R.id.action_homeScreen_to_welcome)
-        else
-            if (!userViewModel.userIsLogin)
-                findNavController().navigate(R.id.action_homeScreen_to_login)
-
-        homeScreenViewModel.uiState.observe(viewLifecycleOwner) { uiState ->
-            when (uiState) {
-                is HomeScreenUiState.Error -> showErrorUi()
-                is HomeScreenUiState.Content -> showContentUi(
-                    userName = uiState.userName,
-                    transactionList = uiState.transactionsList,
-                    currentMonthIncomes = uiState.currentMonthIncomes,
-                    currentMonthExpanses = uiState.currentMonthExpanses
-                )
-
-                HomeScreenUiState.Loading -> showLoadingUi()
-            }
-        }
         binding.apply {
             toolbarHome.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -90,6 +89,8 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         currentMonthExpanses: Int,
         currentMonthIncomes: Int
     ) {
+        if (!userViewModel.userIsLogin)
+            findNavController().navigate(R.id.action_homeScreen_to_login)
         hideLoading()
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
 //            requestNotificationPermission()
@@ -106,13 +107,11 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                 if (isVisible)
                     adapter = HomeTransactionAdapter(transactionList.asReversed())
             }
-//            val h = textViewLatestTransaction.top
-            nestedScrollViewHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY > textViewLatestTransaction.bottom) {
+            nestedScrollViewHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+                if (scrollY > textViewLatestTransaction.bottom)
                     toolbarHome.setTitle(R.string.latest_transaction)
-                } else {
+                else
                     toolbarHome.setTitle(R.string.app_name)
-                }
             })
             buttonToSetPlan.setOnClickListener { findNavController().navigate(R.id.action_homeScreen_to_budgetPlan) }
         }
@@ -127,6 +126,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             fabAddTransaction.isVisible = false
             buttonToChart.isVisible = false
             buttonToSetPlan.isVisible = false
+            buttonToSetNotification.isVisible = false
             textViewWelcome.isVisible = false
             recyclerViewHomeAllTransaction.isVisible = false
         }
@@ -140,6 +140,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             textViewLatestTransaction.isVisible = true
             fabAddTransaction.isVisible = true
             buttonToChart.isVisible = true
+            buttonToSetNotification.isVisible = true
             buttonToSetPlan.isVisible = true
             textViewWelcome.isVisible = true
             recyclerViewHomeAllTransaction.isVisible = true
@@ -167,19 +168,6 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             else -> getString(R.string.welcome_good_night, userName)
         }
     }
-
-//    private fun requestNotificationPermission() {
-//        val notificationAlertDialog = MaterialAlertDialogBuilder(requireContext())
-//            .setTitle(R.string.allow_notification)
-//            .setMessage("Получайте уведомления, чтобы получать полезные сводки по бюджету и не забывать о постоянных тратах ")
-//            .setPositiveButton("Разрешить") { _, _ ->
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-//                    requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-//            }
-//            .setNegativeButton("Нет") { dialog, _ ->
-//                dialog.cancel()
-//            }.show()
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,24 +1,18 @@
 package com.example.wallet.domain.usecases
 
+import com.example.wallet.data.models.User
 import com.example.wallet.data.models.asDomain
-import com.example.wallet.data.preferences.WalletPreferences
 import com.example.wallet.data.repository.TransactionRepository
+import com.example.wallet.data.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import com.example.wallet.domain.models.Transaction as TransactionDomain
 
 class LoadHomeScreenUseCase(
-    private val walletPreferences: WalletPreferences,
-    transactionRepository: TransactionRepository
+    private val transactionRepository: TransactionRepository,
+    private val userRepository: UserRepository
 ) {
-    val allTransaction: Flow<List<TransactionDomain>> =
+    val lastTransaction: Flow<List<TransactionDomain>> =
         transactionRepository.lastTransaction.map { it.asDomain() }
-    val userName: String
-        get() = walletPreferences.userName
-
-    // Бюджет
-    val currentMonthExpanses: Int
-        get() = walletPreferences.currentMonthExpanses
-    val currentMonthIncomes: Int
-        get() = walletPreferences.currentMonthIncomes
+    val userInfo: Flow<User> = userRepository.userInfo
 }

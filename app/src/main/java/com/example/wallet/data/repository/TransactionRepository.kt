@@ -5,8 +5,7 @@ import com.example.wallet.data.models.Transaction
 import kotlinx.coroutines.flow.Flow
 
 class TransactionRepository(
-    transactionDao: TransactionDao
+    private val transactionDao: TransactionDao
 ) {
     val lastTransaction: Flow<List<Transaction>> = transactionDao.getLatestTransactions()
-    // todo функция для синхронизации транзакций
 }
