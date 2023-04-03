@@ -11,6 +11,7 @@ import com.example.wallet.ui.uistate.LoginScreenUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -18,13 +19,13 @@ class LoginViewModel(
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<LoginScreenUiState> =
         MutableStateFlow(LoginScreenUiState.Loading)
-    val uiState: StateFlow<LoginScreenUiState> = _uiState
+    val uiState: StateFlow<LoginScreenUiState> = _uiState.asStateFlow()
     private var job: Job? = null
 
     init {
         job?.cancel()
+        _uiState.value = LoginScreenUiState.Loading
         job = viewModelScope.launch {
-            _uiState.value = LoginScreenUiState.Loading
             try {
                 userRepository.userInfo.collect { user ->
                     _uiState.value = LoginScreenUiState.Content(
@@ -39,19 +40,16 @@ class LoginViewModel(
     }
 
     fun loginUser(userPin: String, userPinCode: String) {
-        _uiState.value = LoginScreenUiState.Loading
-        job?.cancel()
-        job = viewModelScope.launch {
-            when {
-                userPin.length !in 4..8 -> _uiState.value = LoginScreenUiState.Error
-                userPin.isEmpty() -> _uiState.value = LoginScreenUiState.Error
-                userPin != userPinCode -> LoginScreenUiState.InCorrectPinCode
-                else -> _uiState.value = LoginScreenUiState.Success
-            }
+        when {
+            userPin.length !in 4..8 -> _uiState.value = LoginScreenUiState.Error
+            userPin.isEmpty() -> _uiState.value = LoginScreenUiState.Error
+            userPin != userPinCode -> LoginScreenUiState.IncorrectPinCode
+            else -> _uiState.value = LoginScreenUiState.Success
         }
     }
 
     companion object {
+        @Suppress("UNCHECKED_CAST")
         val Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = extras[APPLICATION_KEY]

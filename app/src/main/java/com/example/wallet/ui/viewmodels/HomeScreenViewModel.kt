@@ -11,59 +11,30 @@ import com.example.wallet.data.repository.TransactionRepository
 import com.example.wallet.data.repository.UserRepository
 import com.example.wallet.domain.models.asUi
 import com.example.wallet.ui.uistate.HomeScreenUiState
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class HomeScreenViewModel(
-    private val transactionRepository: TransactionRepository,
-    private val userRepository: UserRepository
+    transactionRepository: TransactionRepository,
+    userRepository: UserRepository
 ) : ViewModel() {
-    private val _uiState: MutableStateFlow<HomeScreenUiState> =
-        MutableStateFlow(HomeScreenUiState.Loading)
 
-    //    val uiState: StateFlow<HomeScreenUiState> = _uiState
     val uiState = combine(
         transactionRepository.lastTransaction,
-        userRepository.userInfo
-    ) { transaction, userInfo ->
+        userRepository.userInfo,
+    ) { lastTransaction, userInfo ->
         HomeScreenUiState.Content(
+            transactionsList = lastTransaction.asDomain().asUi(),
             userName = userInfo.userName,
-            transactionsList = transaction.asDomain().asUi(),
             currentMonthExpanses = 0,
             currentMonthIncomes = 0
         )
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
+        started = SharingStarted.WhileSubscribed(),
         initialValue = HomeScreenUiState.Loading
     )
-
-    init {
-        viewModelScope.launch {
-            if (!userRepository.getIsFirstLogin()) {
-                _uiState.value = HomeScreenUiState.UserIsFirstLogin
-                return@launch
-            }
-            _uiState.value = combine(
-                transactionRepository.lastTransaction,
-                userRepository.userInfo
-            ) { transaction, userInfo ->
-                HomeScreenUiState.Content(
-                    userName = userInfo.userName,
-                    transactionsList = transaction.asDomain().asUi(),
-                    currentMonthExpanses = 0,
-                    currentMonthIncomes = 0
-                )
-            }.stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = HomeScreenUiState.Loading
-            ).value
-        }
-    }
 
     companion object {
         @Suppress("UNCHECKED_CAST")

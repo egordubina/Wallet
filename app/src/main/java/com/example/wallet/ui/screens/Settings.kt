@@ -20,6 +20,7 @@ import com.example.wallet.data.models.SettingsIds.USER_NAME
 import com.example.wallet.data.models.SettingsIds.USER_PIN
 import com.example.wallet.data.models.SettingsIds.USE_FINGERPRINT_TO_LOGIN
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
+import com.example.wallet.ui.uistate.SettingsScreenUiState
 import com.example.wallet.ui.viewmodels.SettingsScreenViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
@@ -43,16 +44,16 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 settingsScreenViewModel.uiState.collect { uiState ->
-                    showContentUi(
-                        name = uiState.userName,
-                        email = uiState.userEmail,
-                        useFingerprintToLogin = uiState.fingerprintLogin
-                    )
-                    with(currentUserSettings) {
-                        set(USER_NAME, uiState.userName)
-                        set(USE_FINGERPRINT_TO_LOGIN, uiState.fingerprintLogin)
-                        set(USER_EMAIL, uiState.userEmail)
-                        set(USER_PIN, uiState.pinCodeToLogin)
+                    when (uiState) {
+                        is SettingsScreenUiState.Content -> showContentUi(
+                            name = uiState.userName,
+                            email = uiState.userEmail,
+                            pin = uiState.pinCodeToLogin,
+                            useFingerprintToLogin = uiState.fingerprintLogin
+                        )
+
+                        SettingsScreenUiState.Error -> {}
+                        SettingsScreenUiState.Loading -> {}
                     }
                 }
             }
@@ -80,9 +81,16 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     private fun showContentUi(
         name: String,
         email: String,
+        pin: String,
         useFingerprintToLogin: Boolean
     ) {
         hideLoading()
+        with(currentUserSettings) {
+            set(USER_NAME, name)
+            set(USE_FINGERPRINT_TO_LOGIN, useFingerprintToLogin)
+            set(USER_EMAIL, email)
+            set(USER_PIN, pin)
+        }
         binding.apply {
             editTextUserName.setText(name)
             editTextUserEmail.setText(email)
@@ -200,11 +208,8 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 
                 // name settings
                 currentUserSettings[USER_NAME] != editTextUserName.text.toString() -> {
-                    settingsScreenViewModel.updateSettings(editTextUserName.text.toString())
-//                    settingsScreenViewModel.changeSettings(
-//                        USER_NAME,
-//                        editTextUserName.text.toString()
-//                    )
+//                    settingsScreenViewModel.updateSettings(editTextUserName.text.toString())
+
                     settingsChangeFlag = true
                 }
 

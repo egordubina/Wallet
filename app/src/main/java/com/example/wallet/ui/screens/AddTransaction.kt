@@ -132,17 +132,16 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
 
     private fun initTypesCategory(incomes: Boolean): List<String> {
         val types: MutableList<String> = mutableListOf()
-        if (incomes) {
+        if (incomes)
             TransactionCategory.values().forEach {
-                if (it.type == 0 || it.type == 2)
+                if (it.type == TransactionType.INCOME || it.type == TransactionType.NEUTRAL)
                     types.add(getString(it.categoryName))
             }
-        } else {
+        else
             TransactionCategory.values().forEach {
-                if (it.type == 0 || it.type == 1)
+                if (it.type == TransactionType.EXPENSES || it.type == TransactionType.NEUTRAL)
                     types.add(getString(it.categoryName))
             }
-        }
         return types
     }
 

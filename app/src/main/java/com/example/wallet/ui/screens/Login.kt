@@ -24,7 +24,7 @@ import java.time.LocalTime
 class Login : Fragment(R.layout.fragment__login_screen) {
     private var _binding: FragmentLoginScreenBinding? = null
     private val binding get() = checkNotNull(_binding)
-    private val userViewModel: UserViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels() { UserViewModel.Factory }
     private val loginViewModel: LoginViewModel by viewModels { LoginViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class Login : Fragment(R.layout.fragment__login_screen) {
                             findNavController().navigate(R.id.action_login_to_homeScreen)
                         }
 
-                        LoginScreenUiState.InCorrectPinCode -> showInCorrectPinCodeUi()
+                        LoginScreenUiState.IncorrectPinCode -> showInCorrectPinCodeUi()
                         LoginScreenUiState.Error -> showErrorUi()
                     }
                 }
@@ -65,9 +65,6 @@ class Login : Fragment(R.layout.fragment__login_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-//            buttonActionUseFingerprintToLogin.setOnClickListener {
-//                Toast.makeText(requireContext(), "Будет сделано позже", Toast.LENGTH_SHORT).show()
-//            }
             buttonActionLogin.setOnClickListener {
                 textInputLayoutLoginPinCode.error = null
             }

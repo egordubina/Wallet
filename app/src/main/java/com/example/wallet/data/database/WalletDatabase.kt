@@ -26,20 +26,8 @@ interface UserDao {
     @Query("select * from user")
     fun getUserInfo(): Flow<User>
 
-    @Query("update user set userName = :name")
-    suspend fun updateUserInfo(name: String)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun registrationUser(user: User)
-
-    @Query("select userPin from user")
-    fun getUserPinCode(): Flow<String>
-
-    @Query("select isFirstLogin from user")
-    suspend fun checkIsFirstLogin(): Boolean
-
-    @Query("update user set isFirstLogin = :status ")
-    suspend fun setUserIsFirstLogin(status: Boolean)
 }
 
 @Database(entities = [Transaction::class, User::class], exportSchema = false, version = 1)

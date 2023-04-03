@@ -8,6 +8,5 @@ data class User(
     @PrimaryKey val id: Int = 0,
     val userName: String,
     val userEmail: String,
-    val userPin: String,
-    val isFirstLogin: Boolean
+    val userPin: String
 )

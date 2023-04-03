@@ -27,7 +27,7 @@ import java.time.LocalTime
 
 class Home : Fragment(R.layout.fragment__home_screen) {
     private val homeScreenViewModel: HomeScreenViewModel by viewModels { HomeScreenViewModel.Factory }
-    private val userViewModel: UserViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     private var _binding: FragmentHomeScreenBinding? = null
     private val binding get() = checkNotNull(_binding)
 
@@ -38,24 +38,27 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                homeScreenViewModel.uiState.collect { uiState ->
-                    when (uiState) {
-                        is HomeScreenUiState.Content -> showContentUi(
-                            userName = uiState.userName,
-                            transactionList = uiState.transactionsList,
-                            currentMonthIncomes = uiState.currentMonthIncomes,
-                            currentMonthExpanses = uiState.currentMonthExpanses
-                        )
-
-                        HomeScreenUiState.Loading -> {} // todo переписать на состояние
-                        HomeScreenUiState.UserIsFirstLogin ->
-                            findNavController().navigate(R.id.action_homeScreen_to_welcome)
+        if (userViewModel.userIsLogin)
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    homeScreenViewModel.uiState.collect { uiState ->
+                        when (uiState) {
+                            HomeScreenUiState.Loading -> {} // todo переписать на состояние
+                            is HomeScreenUiState.Content -> showContentUi(
+                                userName = uiState.userName,
+                                transactionList = uiState.transactionsList,
+                                currentMonthIncomes = uiState.currentMonthIncomes,
+                                currentMonthExpanses = uiState.currentMonthExpanses
+                            )
+                        }
                     }
                 }
             }
-        }
+        else
+            if (userViewModel.userIsFirstLogin)
+                findNavController().navigate(R.id.action_homeScreen_to_welcome)
+            else
+                findNavController().navigate(R.id.action_homeScreen_to_login)
     }
 
     override fun onCreateView(

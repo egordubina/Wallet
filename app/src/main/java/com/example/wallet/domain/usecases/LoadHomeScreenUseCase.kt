@@ -14,5 +14,5 @@ class LoadHomeScreenUseCase(
 ) {
     val lastTransaction: Flow<List<TransactionDomain>> =
         transactionRepository.lastTransaction.map { it.asDomain() }
-    val userInfo: Flow<User> = userRepository.userInfo
+    val userInfo: Flow<User?> = userRepository.userInfo
 }

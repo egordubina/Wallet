@@ -1,8 +1,12 @@
 package com.example.wallet.ui.uistate
 
-data class SettingsScreenUiState(
-    val userName: String,
-    val fingerprintLogin: Boolean,
-    val pinCodeToLogin: String,
-    val userEmail: String
-)
+sealed class SettingsScreenUiState {
+    object Loading : SettingsScreenUiState()
+    object Error : SettingsScreenUiState()
+    data class Content(
+        val userName: String,
+        val fingerprintLogin: Boolean,
+        val pinCodeToLogin: String,
+        val userEmail: String
+    ) : SettingsScreenUiState()
+}

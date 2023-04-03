@@ -25,7 +25,7 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
     private var _binding: FragmentRegistrationScreenBinding? = null
     private val binding get() = checkNotNull(_binding)
     private val registrationScreeViewModel: RegistrationScreenViewModel by viewModels { RegistrationScreenViewModel.Factory }
-    private val userViewModel: UserViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels() { UserViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
@@ -50,11 +50,6 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
         }
     }
 
-    private fun loginUser() {
-        userViewModel.userIsLogin = true
-        findNavController().navigate(R.id.action_registration_to_homeScreen)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,6 +57,18 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
     ): View {
         _binding = FragmentRegistrationScreenBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.toolbarRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
+    }
+
+    private fun loginUser() {
+        hideLoading()
+        userViewModel.userIsLogin = true
+        userViewModel.userIsFirstLogin = false
+        findNavController().navigate(R.id.action_registration_to_homeScreen)
     }
 
     private fun showIncorrectNameUi() {
@@ -82,11 +89,6 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
             binding.textInputLayoutRegistrationUserPinCode.helperText
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.toolbarRegistration.setNavigationOnClickListener { findNavController().navigateUp() }
-    }
-
     private fun showContentUi() {
         hideLoading()
         binding.apply {
@@ -98,11 +100,6 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
                 )
             }
         }
-    }
-
-    private fun showSuccessfulUi() {
-        hideLoading()
-        findNavController().navigate(R.id.action_registration_to_homeScreen)
     }
 
     private fun showFailedUi() {
