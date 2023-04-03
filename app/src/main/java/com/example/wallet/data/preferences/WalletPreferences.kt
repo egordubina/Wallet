@@ -2,13 +2,15 @@ package com.example.wallet.data.preferences
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import com.example.wallet.data.models.SettingsIds.USER_NEW
+
+const val SETTINGS_USER_NEW: String = "NEW_USER"
 
 /**
  * Класс для общения с sharedPreferences
  * @param context Контекст для создания [preferencesManager]
  * */
 class WalletPreferences(context: Context) {
+
     /**
      * Менеджер, через который проходят все операции с sharedPreferences
      */
@@ -21,6 +23,6 @@ class WalletPreferences(context: Context) {
      * @return *true*, если пользователь первый раз заходит в приложение, иначе *false*
      * */
     var isFirstLogin: Boolean
-        get() = preferencesManager.getBoolean(USER_NEW.id, true)
-        set(value) = editPreferences.putBoolean(USER_NEW.id, value).apply()
+        get() = preferencesManager.getBoolean(SETTINGS_USER_NEW, true)
+        set(value) = editPreferences.putBoolean(SETTINGS_USER_NEW, value).apply()
 }

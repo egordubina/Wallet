@@ -15,10 +15,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.wallet.R
 import com.example.wallet.data.models.SettingsIds
-import com.example.wallet.data.models.SettingsIds.USER_EMAIL
-import com.example.wallet.data.models.SettingsIds.USER_NAME
-import com.example.wallet.data.models.SettingsIds.USER_PIN
-import com.example.wallet.data.models.SettingsIds.USE_FINGERPRINT_TO_LOGIN
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import com.example.wallet.ui.viewmodels.SettingsScreenViewModel
@@ -28,6 +24,7 @@ import kotlinx.coroutines.launch
 
 class Settings : Fragment(R.layout.fragment__settings_screen) {
     private val settingsScreenViewModel: SettingsScreenViewModel by viewModels { SettingsScreenViewModel.Factory }
+
     private val currentUserSettings: MutableMap<SettingsIds, Any> = mutableMapOf()
     private var settingsChangeFlag: Boolean = false
     private var _binding: FragmentSettingsScreenBinding? = null
@@ -35,12 +32,16 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val backPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            checkUserSettings()
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+
+        // Проверка изменения настроек при выходе с помощью системной кнопки
+        val backPressedCallback =
+            requireActivity().onBackPressedDispatcher.addCallback(this) {
+                checkUserSettings()
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 settingsScreenViewModel.uiState.collect { uiState ->
@@ -52,8 +53,8 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                             useFingerprintToLogin = uiState.fingerprintLogin
                         )
 
-                        SettingsScreenUiState.Error -> {}
-                        SettingsScreenUiState.Loading -> {}
+                        SettingsScreenUiState.Error -> showFailedUi()
+                        SettingsScreenUiState.Loading -> showLoadingUi()
                     }
                 }
             }
@@ -85,12 +86,12 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         useFingerprintToLogin: Boolean
     ) {
         hideLoading()
-        with(currentUserSettings) {
-            set(USER_NAME, name)
-            set(USE_FINGERPRINT_TO_LOGIN, useFingerprintToLogin)
-            set(USER_EMAIL, email)
-            set(USER_PIN, pin)
-        }
+//        with(currentUserSettings) {
+//            set(USER_NAME, name)
+//            set(USE_FINGERPRINT_TO_LOGIN, useFingerprintToLogin)
+//            set(USER_EMAIL, email)
+//            set(USER_PIN, pin)
+//        }
         binding.apply {
             editTextUserName.setText(name)
             editTextUserEmail.setText(email)
@@ -114,36 +115,36 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         binding.apply {
             textInputLayoutSettingsCurrentPinCode.error = null
             textInputLayoutSettingsNewPinCode.error = null
-            when {
-                editTextSettingsCurrentPinCode.text.toString() != currentUserSettings[USER_PIN].toString() ->
-                    textInputLayoutSettingsCurrentPinCode.error =
-                        getString(R.string.incorrect_pin_code)
-
-                editTextSettingsNewPinCode.text.toString().length !in 4..8 ->
-                    textInputLayoutSettingsNewPinCode.error =
-                        textInputLayoutSettingsNewPinCode.helperText
-
-                editTextSettingsCurrentPinCode.text.toString() == editTextSettingsNewPinCode.text.toString() -> {
-                    textInputLayoutSettingsNewPinCode.error = getString(R.string.pin_codes_equals)
-                    textInputLayoutSettingsCurrentPinCode.error =
-                        getString(R.string.pin_codes_equals)
-                }
-
-                else -> {
-                    try {
-                        editTextSettingsNewPinCode.text.toString().toInt()
-                        cardChangePinCode.isVisible = false
-                        Toast.makeText(
-                            requireContext(),
-                            R.string.pin_code_has_been_save,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } catch (e: Exception) {
-                        textInputLayoutSettingsNewPinCode.error =
-                            getString(R.string.only_number_pin_code)
-                    }
-                }
-            }
+//            when {
+//                editTextSettingsCurrentPinCode.text.toString() != currentUserSettings[USER_PIN].toString() ->
+//                    textInputLayoutSettingsCurrentPinCode.error =
+//                        getString(R.string.incorrect_pin_code)
+//
+//                editTextSettingsNewPinCode.text.toString().length !in 4..8 ->
+//                    textInputLayoutSettingsNewPinCode.error =
+//                        textInputLayoutSettingsNewPinCode.helperText
+//
+//                editTextSettingsCurrentPinCode.text.toString() == editTextSettingsNewPinCode.text.toString() -> {
+//                    textInputLayoutSettingsNewPinCode.error = getString(R.string.pin_codes_equals)
+//                    textInputLayoutSettingsCurrentPinCode.error =
+//                        getString(R.string.pin_codes_equals)
+//                }
+//
+//                else -> {
+//                    try {
+//                        editTextSettingsNewPinCode.text.toString().toInt()
+//                        cardChangePinCode.isVisible = false
+//                        Toast.makeText(
+//                            requireContext(),
+//                            R.string.pin_code_has_been_save,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    } catch (e: Exception) {
+//                        textInputLayoutSettingsNewPinCode.error =
+//                            getString(R.string.only_number_pin_code)
+//                    }
+//                }
+//            }
         }
     }
 
@@ -186,42 +187,42 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         binding.apply {
             textInputLayoutUserName.error = null
             textInputLayoutUserEmail.error = null
-            when {
-                editTextUserName.text.toString().isEmpty() -> {
-                    textInputLayoutUserName.error = textInputLayoutUserName.helperText
-                    return
-                }
-
-                editTextUserEmail.text.toString().isEmpty() -> {
-                    textInputLayoutUserEmail.error = textInputLayoutUserEmail.helperText
-                    return
-                }
-
-                // fingerprint settings
-                currentUserSettings[USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked -> {
-//                    settingsScreenViewModel.changeSettings(
-//                        USE_FINGERPRINT_TO_LOGIN,
-//                        switchUseFingerPrintToLogin.isChecked.toString()
-//                    )
-                    settingsChangeFlag = true
-                }
-
-                // name settings
-                currentUserSettings[USER_NAME] != editTextUserName.text.toString() -> {
-//                    settingsScreenViewModel.updateSettings(editTextUserName.text.toString())
-
-                    settingsChangeFlag = true
-                }
-
-                // email settingsa
-                currentUserSettings[USER_EMAIL] != editTextUserEmail.text.toString() -> {
-//                    settingsScreenViewModel.changeSettings(
-//                        USER_EMAIL,
-//                        editTextUserEmail.text.toString()
-//                    )
-                    settingsChangeFlag = true
-                }
-            }
+//            when {
+//                editTextUserName.text.toString().isEmpty() -> {
+//                    textInputLayoutUserName.error = textInputLayoutUserName.helperText
+//                    return
+//                }
+//
+//                editTextUserEmail.text.toString().isEmpty() -> {
+//                    textInputLayoutUserEmail.error = textInputLayoutUserEmail.helperText
+//                    return
+//                }
+//
+//                // fingerprint settings
+//                currentUserSettings[USE_FINGERPRINT_TO_LOGIN] != switchUseFingerPrintToLogin.isChecked -> {
+////                    settingsScreenViewModel.changeSettings(
+////                        USE_FINGERPRINT_TO_LOGIN,
+////                        switchUseFingerPrintToLogin.isChecked.toString()
+////                    )
+//                    settingsChangeFlag = true
+//                }
+//
+//                // name settings
+//                currentUserSettings[USER_NAME] != editTextUserName.text.toString() -> {
+////                    settingsScreenViewModel.updateSettings(editTextUserName.text.toString())
+//
+//                    settingsChangeFlag = true
+//                }
+//
+//                // email settingsa
+//                currentUserSettings[USER_EMAIL] != editTextUserEmail.text.toString() -> {
+////                    settingsScreenViewModel.changeSettings(
+////                        USER_EMAIL,
+////                        editTextUserEmail.text.toString()
+////                    )
+//                    settingsChangeFlag = true
+//                }
+//            }
             if (settingsChangeFlag) {
                 Toast.makeText(
                     requireContext(),

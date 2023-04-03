@@ -17,9 +17,9 @@ import com.example.wallet.databinding.FragmentLoginScreenBinding
 import com.example.wallet.ui.uistate.LoginScreenUiState
 import com.example.wallet.ui.viewmodels.LoginViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
+import com.example.wallet.utils.UiUtils
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.launch
-import java.time.LocalTime
 
 class Login : Fragment(R.layout.fragment__login_screen) {
     private var _binding: FragmentLoginScreenBinding? = null
@@ -97,22 +97,13 @@ class Login : Fragment(R.layout.fragment__login_screen) {
     private fun showUi(userName: String, currentPin: String) {
         hideLoading()
         binding.apply {
-            textViewWelcomeLogin.text = getWelcomeMessage(userName)
+            textViewWelcomeLogin.text = UiUtils(requireContext()).getWelcomeMessage(userName)
             buttonActionLogin.setOnClickListener {
                 loginViewModel.loginUser(
                     editTextLoginPinCode.text.toString(),
                     currentPin
                 )
             }
-        }
-    }
-
-    private fun getWelcomeMessage(userName: String): String {
-        return when (LocalTime.now().hour) {
-            in 6 until 12 -> getString(R.string.welcome_good_morning, userName)
-            in 12 until 18 -> getString(R.string.welcome_good_day, userName)
-            in 18 until 22 -> getString(R.string.welcome_good_evening, userName)
-            else -> getString(R.string.welcome_good_night, userName)
         }
     }
 

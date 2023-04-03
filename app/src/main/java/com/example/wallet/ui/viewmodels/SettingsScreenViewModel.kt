@@ -7,20 +7,19 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
-import com.example.wallet.data.models.SettingsIds
-import com.example.wallet.data.models.SettingsIds.*
 import com.example.wallet.data.repository.UserRepository
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SettingsScreenViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _uiState: MutableStateFlow<SettingsScreenUiState> =
         MutableStateFlow(SettingsScreenUiState.Loading)
 
-    val uiState: StateFlow<SettingsScreenUiState> = _uiState
+    val uiState: StateFlow<SettingsScreenUiState> = _uiState.asStateFlow()
     private var job: Job? = null
 
     init {
@@ -34,7 +33,7 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
                         userName = userInfo.userName,
                         fingerprintLogin = false,
                         userEmail = userInfo.userEmail,
-                        pinCodeToLogin = ""
+                        pinCodeToLogin = userInfo.userPin
                     )
                 }
             } catch (e: Exception) {
@@ -42,16 +41,6 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
                 _uiState.value = SettingsScreenUiState.Error
             }
         }
-    }
-
-    fun updateSettings(settings: Map<SettingsIds, String>) {
-//        val user = User(
-//            userName = settings[USER_NAME],
-//            userEmail = settings[USER_EMAIL],
-//            userPin = settings[USER_PIN],
-//            isFirstLogin = false
-//        )
-//        userRepository.updateUserInfo()
     }
 
     companion object {

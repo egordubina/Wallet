@@ -20,10 +20,10 @@ import com.example.wallet.ui.models.Transaction
 import com.example.wallet.ui.uistate.HomeScreenUiState
 import com.example.wallet.ui.viewmodels.HomeScreenViewModel
 import com.example.wallet.ui.viewmodels.UserViewModel
+import com.example.wallet.utils.UiUtils
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.launch
-import java.time.LocalTime
 
 class Home : Fragment(R.layout.fragment__home_screen) {
     private val homeScreenViewModel: HomeScreenViewModel by viewModels { HomeScreenViewModel.Factory }
@@ -43,7 +43,14 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     homeScreenViewModel.uiState.collect { uiState ->
                         when (uiState) {
-                            HomeScreenUiState.Loading -> {} // todo переписать на состояние
+                            HomeScreenUiState.Loading -> showLoadingUi()
+                            HomeScreenUiState.Error -> TODO()
+                            is HomeScreenUiState.NoTransaction -> showContentWithoutTransaction(
+                                userName = uiState.userName,
+                                currentMonthIncomes = uiState.currentMonthIncomes,
+                                currentMonthExpanses = uiState.currentMonthExpanses
+                            )
+
                             is HomeScreenUiState.Content -> showContentUi(
                                 userName = uiState.userName,
                                 transactionList = uiState.transactionsList,
@@ -73,6 +80,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            fabAddTransaction.setOnClickListener { findNavController().navigate(R.id.action_homeScreen_to_addTransaction) }
             toolbarHome.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_item__settings -> {
@@ -86,29 +94,41 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         }
     }
 
+    private fun showContentWithoutTransaction(
+        userName: String,
+        currentMonthIncomes: Int,
+        currentMonthExpanses: Int
+    ) {
+        hideLoading()
+        binding.apply {
+            layoutNoTransaction.isVisible = true
+            textViewLatestTransaction.isVisible = false
+            textViewWelcome.text = UiUtils(requireContext()).getWelcomeMessage(userName)
+            textViewAllExpanses.text =
+                getString(R.string.expanses_home_screen, currentMonthExpanses)
+            textViewAllIncomes.text = getString(R.string.incomes_home_screen, currentMonthIncomes)
+        }
+    }
+
     private fun showContentUi(
         userName: String,
         transactionList: List<Transaction>,
         currentMonthExpanses: Int,
         currentMonthIncomes: Int
     ) {
-        if (!userViewModel.userIsLogin)
-            findNavController().navigate(R.id.action_homeScreen_to_login)
         hideLoading()
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
 //            requestNotificationPermission()
         binding.apply {
-            textViewWelcome.text = getWelcomeMessage(userName)
-            fabAddTransaction.setOnClickListener { findNavController().navigate(R.id.action_homeScreen_to_addTransaction) }
+            textViewWelcome.text = UiUtils(requireContext()).getWelcomeMessage(userName)
             textViewAllExpanses.text =
                 getString(R.string.expanses_home_screen, currentMonthExpanses)
             textViewAllIncomes.text = getString(R.string.incomes_home_screen, currentMonthIncomes)
-            layoutNoTransaction.isVisible = transactionList.isEmpty()
-            textViewLatestTransaction.isVisible = transactionList.isNotEmpty()
+            layoutNoTransaction.isVisible = false
+            textViewLatestTransaction.isVisible = true
             recyclerViewHomeAllTransaction.apply {
-                isVisible = transactionList.isNotEmpty()
-                if (isVisible)
-                    adapter = HomeTransactionAdapter(transactionList.asReversed())
+                isVisible = true
+                adapter = HomeTransactionAdapter(transactionList.asReversed())
             }
             nestedScrollViewHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                 if (scrollY > textViewLatestTransaction.bottom)
@@ -161,15 +181,6 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             getString(R.string.error_message),
             Snackbar.LENGTH_SHORT
         ).show()
-    }
-
-    private fun getWelcomeMessage(userName: String): String {
-        return when (LocalTime.now().hour) {
-            in 6 until 12 -> getString(R.string.welcome_good_morning, userName)
-            in 12 until 18 -> getString(R.string.welcome_good_day, userName)
-            in 18 until 22 -> getString(R.string.welcome_good_evening, userName)
-            else -> getString(R.string.welcome_good_night, userName)
-        }
     }
 
     override fun onDestroyView() {

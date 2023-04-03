@@ -9,10 +9,10 @@ import com.example.wallet.data.preferences.WalletPreferences
 import com.example.wallet.data.repository.UserRepository
 import com.example.wallet.domain.usecases.RegistrationUserUseCase
 import com.example.wallet.ui.uistate.RegistrationScreenUiState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RegistrationScreenViewModel(
@@ -21,7 +21,7 @@ class RegistrationScreenViewModel(
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<RegistrationScreenUiState> =
         MutableStateFlow(RegistrationScreenUiState.Content)
-    val uiState: StateFlow<RegistrationScreenUiState> = _uiState
+    val uiState: StateFlow<RegistrationScreenUiState> = _uiState.asStateFlow()
     private var job: Job? = null
 
     fun registrationUser(name: String, email: String, pin: String) {
@@ -51,7 +51,7 @@ class RegistrationScreenViewModel(
                     return
                 }
                 try {
-                    job = viewModelScope.launch(Dispatchers.IO) {
+                    job = viewModelScope.launch {
                         RegistrationUserUseCase(walletPreferences, userRepository)
                             .registrationUser(name = name, email = email, pin = pin)
                         _uiState.value = RegistrationScreenUiState.RegistrationSuccessful
