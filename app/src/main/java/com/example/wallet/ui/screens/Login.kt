@@ -38,14 +38,14 @@ class Login : Fragment(R.layout.fragment__login_screen) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.uiState.collect {
                     when (it) {
-                        is LoginScreenUiState.Content -> showUi(it.userName, it.userPinCode)
+                        is LoginScreenUiState.Content -> showUi(it.userName)
                         LoginScreenUiState.Loading -> showLoading()
                         LoginScreenUiState.Success -> {
                             userViewModel.userIsLogin = true
                             findNavController().navigate(R.id.action_login_to_homeScreen)
                         }
 
-                        LoginScreenUiState.IncorrectPinCode -> showInCorrectPinCodeUi()
+                        LoginScreenUiState.IncorrectPinCode -> showIncorrectPinCodeUi()
                         LoginScreenUiState.Error -> showErrorUi()
                     }
                 }
@@ -67,11 +67,12 @@ class Login : Fragment(R.layout.fragment__login_screen) {
         binding.apply {
             buttonActionLogin.setOnClickListener {
                 textInputLayoutLoginPinCode.error = null
+                loginViewModel.loginUser(editTextLoginPinCode.text.toString())
             }
         }
     }
 
-    private fun showInCorrectPinCodeUi() {
+    private fun showIncorrectPinCodeUi() {
         hideLoading()
         binding.textInputLayoutLoginPinCode.error = getString(R.string.incorrect_pin_code)
     }
@@ -94,16 +95,10 @@ class Login : Fragment(R.layout.fragment__login_screen) {
         binding.linearProgressIndicatorLogin.isVisible = true
     }
 
-    private fun showUi(userName: String, currentPin: String) {
+    private fun showUi(userName: String) {
         hideLoading()
         binding.apply {
             textViewWelcomeLogin.text = UiUtils(requireContext()).getWelcomeMessage(userName)
-            buttonActionLogin.setOnClickListener {
-                loginViewModel.loginUser(
-                    editTextLoginPinCode.text.toString(),
-                    currentPin
-                )
-            }
         }
     }
 

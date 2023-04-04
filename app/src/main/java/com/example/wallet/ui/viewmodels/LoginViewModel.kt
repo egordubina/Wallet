@@ -20,6 +20,7 @@ class LoginViewModel(
     private val _uiState: MutableStateFlow<LoginScreenUiState> =
         MutableStateFlow(LoginScreenUiState.Loading)
     val uiState: StateFlow<LoginScreenUiState> = _uiState.asStateFlow()
+    private var userPinCode: String? = null
     private var job: Job? = null
 
     init {
@@ -32,6 +33,7 @@ class LoginViewModel(
                         userName = user.userName,
                         userPinCode = user.userPin
                     )
+                    userPinCode = user.userPin
                 }
             } catch (e: Exception) {
                 _uiState.value = LoginScreenUiState.Error
@@ -39,11 +41,12 @@ class LoginViewModel(
         }
     }
 
-    fun loginUser(userPin: String, userPinCode: String) {
+    fun loginUser(userPin: String) {
+        _uiState.value = LoginScreenUiState.Loading
         when {
-            userPin.length !in 4..8 -> _uiState.value = LoginScreenUiState.Error
             userPin.isEmpty() -> _uiState.value = LoginScreenUiState.Error
-            userPin != userPinCode -> LoginScreenUiState.IncorrectPinCode
+            userPin.length !in 4..8 -> _uiState.value = LoginScreenUiState.Error
+            userPin != userPinCode -> _uiState.value = LoginScreenUiState.IncorrectPinCode
             else -> _uiState.value = LoginScreenUiState.Success
         }
     }
