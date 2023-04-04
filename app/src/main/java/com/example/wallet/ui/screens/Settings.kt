@@ -13,12 +13,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionManager
 import com.example.wallet.R
 import com.example.wallet.data.models.SettingsIds
+import com.example.wallet.data.models.SettingsIds.USER_EMAIL
+import com.example.wallet.data.models.SettingsIds.USER_FINGERPRINT
+import com.example.wallet.data.models.SettingsIds.USER_NAME
+import com.example.wallet.data.models.SettingsIds.USER_PIN
 import com.example.wallet.databinding.FragmentSettingsScreenBinding
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import com.example.wallet.ui.viewmodels.SettingsScreenViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.launch
 
@@ -86,12 +92,12 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         useFingerprintToLogin: Boolean
     ) {
         hideLoading()
-//        with(currentUserSettings) {
-//            set(USER_NAME, name)
-//            set(USE_FINGERPRINT_TO_LOGIN, useFingerprintToLogin)
-//            set(USER_EMAIL, email)
-//            set(USER_PIN, pin)
-//        }
+        with(currentUserSettings) {
+            set(USER_NAME, name)
+            set(USER_FINGERPRINT, useFingerprintToLogin)
+            set(USER_EMAIL, email)
+            set(USER_PIN, pin)
+        }
         binding.apply {
             editTextUserName.setText(name)
             editTextUserEmail.setText(email)
@@ -149,14 +155,24 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     }
 
     private fun initWorkWithPinCode() {
+        val materialFadeIn = MaterialFade().apply {
+            duration = 150L
+        }
+        val materialFadeOut = MaterialFade().apply {
+            duration = 84L
+        }
         binding.apply {
             buttonActionToChangePinCode.setOnClickListener {
+                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeIn)
                 cardChangePinCode.isVisible = true
+                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeOut)
                 buttonActionToChangePinCode.isVisible = false
             }
             buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
             buttonActionCancelChangePinCode.setOnClickListener {
+                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeOut)
                 cardChangePinCode.isVisible = false
+                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeIn)
                 buttonActionToChangePinCode.isVisible = true
             }
         }

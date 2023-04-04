@@ -133,6 +133,7 @@ class AddTransaction : Fragment(R.layout.fragment__add_transaction) {
     private fun initTypesCategory(incomes: Boolean): List<String> {
         val types: MutableList<String> = mutableListOf()
         if (incomes)
+            // TODO: переписать на entries когда выйдет kotlin 1.8.20
             TransactionCategory.values().forEach {
                 if (it.type == TransactionType.INCOME || it.type == TransactionType.NEUTRAL)
                     types.add(getString(it.categoryName))

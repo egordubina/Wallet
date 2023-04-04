@@ -6,14 +6,16 @@ plugins {
 
 android {
     namespace = "com.example.wallet"
-    compileSdk = 33
+//    compileSdk = 33
+    compileSdkPreview = "UpsideDownCake"
 
     defaultConfig {
         applicationId = "com.example.wallet"
         minSdk = 26
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.1"
+//        targetSdkPreview = "UpsideDownCake"
+        versionCode = 2
+        versionName = "1.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,7 +49,6 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.coil.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.biometric.ktx)
