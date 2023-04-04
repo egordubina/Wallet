@@ -51,6 +51,10 @@ class LoginViewModel(
         }
     }
 
+    fun loginUserWithBiometric() {
+        _uiState.value = LoginScreenUiState.Success
+    }
+
     companion object {
         @Suppress("UNCHECKED_CAST")
         val Factory = object : ViewModelProvider.Factory {

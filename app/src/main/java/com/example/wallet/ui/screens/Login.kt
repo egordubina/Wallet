@@ -1,9 +1,14 @@
 package com.example.wallet.ui.screens
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -69,6 +74,9 @@ class Login : Fragment(R.layout.fragment__login_screen) {
                 textInputLayoutLoginPinCode.error = null
                 loginViewModel.loginUser(editTextLoginPinCode.text.toString())
             }
+            buttonActionUseFingerprintToLogin.setOnClickListener {
+                showBiometricDialog()
+            }
         }
     }
 
@@ -99,6 +107,34 @@ class Login : Fragment(R.layout.fragment__login_screen) {
         hideLoading()
         binding.apply {
             textViewWelcomeLogin.text = UiUtils(requireContext()).getWelcomeMessage(userName)
+        }
+        showBiometricDialog()
+    }
+
+    private fun showBiometricDialog() {
+        val biometricManager = BiometricManager.from(requireContext())
+        @SuppressLint("SwitchIntDef")
+        when (biometricManager.canAuthenticate(BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                val executor = ContextCompat.getMainExecutor(requireContext())
+                val biometricPrompt =
+                    BiometricPrompt(
+                        this,
+                        executor,
+                        object : BiometricPrompt.AuthenticationCallback() {
+                            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                                super.onAuthenticationSucceeded(result)
+                                loginViewModel.loginUserWithBiometric()
+                            }
+                        })
+                val promptInfo = BiometricPrompt.PromptInfo.Builder()
+                    .setTitle(getString(R.string.app_name))
+                    .setAllowedAuthenticators(BIOMETRIC_STRONG)
+                    .setNegativeButtonText("Использовать пин-код")
+                    .build()
+
+                biometricPrompt.authenticate(promptInfo)
+            }
         }
     }
 
