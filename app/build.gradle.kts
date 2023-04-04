@@ -6,14 +6,13 @@ plugins {
 
 android {
     namespace = "com.example.wallet"
-//    compileSdk = 33
+    compileSdk = 33
     compileSdkPreview = "UpsideDownCake"
 
     defaultConfig {
         applicationId = "com.example.wallet"
         minSdk = 26
         targetSdk = 33
-//        targetSdkPreview = "UpsideDownCake"
         versionCode = 3
         versionName = "1.2"
 
@@ -52,7 +51,6 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.biometric.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
