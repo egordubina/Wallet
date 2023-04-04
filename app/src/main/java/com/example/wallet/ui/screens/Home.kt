@@ -44,7 +44,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                     homeScreenViewModel.uiState.collect { uiState ->
                         when (uiState) {
                             HomeScreenUiState.Loading -> showLoadingUi()
-                            HomeScreenUiState.Error -> TODO()
+                            HomeScreenUiState.Error -> showErrorUi()
                             is HomeScreenUiState.NoTransaction -> showContentWithoutTransaction(
                                 userName = uiState.userName,
                                 currentMonthIncomes = uiState.currentMonthIncomes,
@@ -143,30 +143,16 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     private fun showLoading() {
         binding.apply {
             linearProgressIndicatorHome.isVisible = true
-            textViewAllIncomes.isVisible = false
-            textViewAllExpanses.isVisible = false
-            textViewLatestTransaction.isVisible = false
-            fabAddTransaction.isVisible = false
-            buttonToChart.isVisible = false
-            buttonToSetPlan.isVisible = false
-            buttonToSetNotification.isVisible = false
             textViewWelcome.isVisible = false
-            recyclerViewHomeAllTransaction.isVisible = false
+            groupIfTransactionNotEmpty.isVisible = false
         }
     }
 
     private fun hideLoading() {
         binding.apply {
             linearProgressIndicatorHome.isVisible = false
-            textViewAllIncomes.isVisible = true
-            textViewAllExpanses.isVisible = true
-            textViewLatestTransaction.isVisible = true
-            fabAddTransaction.isVisible = true
-            buttonToChart.isVisible = true
-            buttonToSetNotification.isVisible = true
-            buttonToSetPlan.isVisible = true
             textViewWelcome.isVisible = true
-            recyclerViewHomeAllTransaction.isVisible = true
+            groupIfTransactionNotEmpty.isVisible = true
         }
     }
 
@@ -178,7 +164,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         hideLoading()
         Snackbar.make(
             requireView(),
-            getString(R.string.error_message),
+            "Ошибка",
             Snackbar.LENGTH_SHORT
         ).show()
     }
