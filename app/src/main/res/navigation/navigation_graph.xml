@@ -44,7 +44,11 @@
         android:id="@+id/settings"
         android:name="com.example.wallet.ui.screens.Settings"
         android:label="Settings"
-        tools:layout="@layout/fragment__settings_screen" />
+        tools:layout="@layout/fragment__settings_screen" >
+        <action
+            android:id="@+id/action_settings_to_changePin"
+            app:destination="@id/changePin" />
+    </fragment>
     <fragment
         android:id="@+id/login"
         android:name="com.example.wallet.ui.screens.Login"
@@ -77,4 +81,9 @@
         android:id="@+id/budgetPlan"
         android:name="com.example.wallet.ui.screens.BudgetPlan"
         android:label="BudgetPlan" />
+    <fragment
+        tools:layout="@layout/fragment__change_pin"
+        android:id="@+id/changePin"
+        android:name="com.example.wallet.ui.screens.ChangePin"
+        android:label="ChangePin" />
 </navigation>

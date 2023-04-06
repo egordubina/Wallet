@@ -79,9 +79,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            toolbarSettings.apply {
-                setNavigationOnClickListener { checkUserSettings() }
-            }
+            toolbarSettings.setNavigationOnClickListener { checkUserSettings() }
         }
     }
 
@@ -92,6 +90,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         useFingerprintToLogin: Boolean
     ) {
         hideLoading()
+        // todo перенести логику во viewmodel
         with(currentUserSettings) {
             set(USER_NAME, name)
             set(USER_FINGERPRINT, useFingerprintToLogin)
@@ -102,7 +101,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             editTextUserName.setText(name)
             editTextUserEmail.setText(email)
             switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
-
             toolbarSettings.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_item__save_settings -> {
@@ -113,7 +111,10 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                     else -> false
                 }
             }
-            initWorkWithPinCode()
+            buttonActionToChangePinCode.setOnClickListener {
+                findNavController().navigate(R.id.action_settings_to_changePin)
+            }
+//            initWorkWithPinCode()
         }
     }
 
@@ -154,28 +155,29 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         }
     }
 
+    // todo перенести на новый фрагмент
     private fun initWorkWithPinCode() {
-        val materialFadeIn = MaterialFade().apply {
-            duration = 150L
-        }
-        val materialFadeOut = MaterialFade().apply {
-            duration = 84L
-        }
-        binding.apply {
-            buttonActionToChangePinCode.setOnClickListener {
-                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeIn)
-                cardChangePinCode.isVisible = true
-                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeOut)
-                buttonActionToChangePinCode.isVisible = false
-            }
-            buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
-            buttonActionCancelChangePinCode.setOnClickListener {
-                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeOut)
-                cardChangePinCode.isVisible = false
-                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeIn)
-                buttonActionToChangePinCode.isVisible = true
-            }
-        }
+//        val materialFadeIn = MaterialFade().apply {
+//            duration = 150L
+//        }
+//        val materialFadeOut = MaterialFade().apply {
+//            duration = 84L
+//        }
+//        binding.apply {
+//            buttonActionToChangePinCode.setOnClickListener {
+//                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeIn)
+//                cardChangePinCode.isVisible = true
+//                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeOut)
+//                buttonActionToChangePinCode.isVisible = false
+//            }
+//            buttonActionSavePinCode.setOnClickListener { checkPinCodes() }
+//            buttonActionCancelChangePinCode.setOnClickListener {
+//                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeOut)
+//                cardChangePinCode.isVisible = false
+//                TransitionManager.beginDelayedTransition(scrollViewSettings, materialFadeIn)
+//                buttonActionToChangePinCode.isVisible = true
+//            }
+//        }
     }
 
     private fun showFailedUi() {

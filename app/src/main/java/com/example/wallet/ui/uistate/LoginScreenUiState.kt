@@ -8,7 +8,6 @@ sealed class LoginScreenUiState {
     object Error : LoginScreenUiState()
 
     data class Content(
-        val userName: String,
-        val userPinCode: String
+        val userName: String
     ) : LoginScreenUiState()
 }

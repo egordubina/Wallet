@@ -30,8 +30,7 @@ class LoginViewModel(
             try {
                 userRepository.userInfo.collect { user ->
                     _uiState.value = LoginScreenUiState.Content(
-                        userName = user.userName,
-                        userPinCode = user.userPin
+                        userName = user.userName
                     )
                     userPinCode = user.userPin
                 }
