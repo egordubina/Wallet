@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 class Login : Fragment(R.layout.fragment__login_screen) {
     private var _binding: FragmentLoginScreenBinding? = null
     private val binding get() = checkNotNull(_binding)
-    private val userViewModel: UserViewModel by activityViewModels() { UserViewModel.Factory }
+    private val userViewModel: UserViewModel by activityViewModels { UserViewModel.Factory }
     private val loginViewModel: LoginViewModel by viewModels { LoginViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {

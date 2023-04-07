@@ -46,7 +46,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             requireActivity().onBackPressedDispatcher.addCallback(this) {
                 checkUserSettings()
             }
-        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
+//        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -55,7 +55,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
                         is SettingsScreenUiState.Content -> showContentUi(
                             name = uiState.userName,
                             email = uiState.userEmail,
-                            pin = uiState.pinCodeToLogin,
                             useFingerprintToLogin = uiState.fingerprintLogin
                         )
 
@@ -86,17 +85,16 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     private fun showContentUi(
         name: String,
         email: String,
-        pin: String,
         useFingerprintToLogin: Boolean
     ) {
         hideLoading()
         // todo перенести логику во viewmodel
-        with(currentUserSettings) {
-            set(USER_NAME, name)
-            set(USER_FINGERPRINT, useFingerprintToLogin)
-            set(USER_EMAIL, email)
-            set(USER_PIN, pin)
-        }
+//        with(currentUserSettings) {
+//            set(USER_NAME, name)
+//            set(USER_FINGERPRINT, useFingerprintToLogin)
+//            set(USER_EMAIL, email)
+//            set(USER_PIN, pin)
+//        }
         binding.apply {
             editTextUserName.setText(name)
             editTextUserEmail.setText(email)
@@ -114,14 +112,13 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             buttonActionToChangePinCode.setOnClickListener {
                 findNavController().navigate(R.id.action_settings_to_changePin)
             }
-//            initWorkWithPinCode()
         }
     }
 
-    private fun checkPinCodes() {
-        binding.apply {
-            textInputLayoutSettingsCurrentPinCode.error = null
-            textInputLayoutSettingsNewPinCode.error = null
+//    private fun checkPinCodes() {
+//        binding.apply {
+//            textInputLayoutSettingsCurrentPinCode.error = null
+//            textInputLayoutSettingsNewPinCode.error = null
 //            when {
 //                editTextSettingsCurrentPinCode.text.toString() != currentUserSettings[USER_PIN].toString() ->
 //                    textInputLayoutSettingsCurrentPinCode.error =
@@ -152,11 +149,9 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 //                    }
 //                }
 //            }
-        }
-    }
-
-    // todo перенести на новый фрагмент
-    private fun initWorkWithPinCode() {
+//        }
+//    }
+//    private fun initWorkWithPinCode() {
 //        val materialFadeIn = MaterialFade().apply {
 //            duration = 150L
 //        }
@@ -178,7 +173,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 //                buttonActionToChangePinCode.isVisible = true
 //            }
 //        }
-    }
+//    }
 
     private fun showFailedUi() {
         Snackbar.make(
