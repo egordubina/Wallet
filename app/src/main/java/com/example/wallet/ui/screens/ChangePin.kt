@@ -15,7 +15,6 @@ import com.example.wallet.ui.uistate.ChangePinUiState
 import com.example.wallet.ui.viewmodels.ChangePinViewModel
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 
 class ChangePin : Fragment(R.layout.fragment__change_pin) {
     private var _binding: FragmentChangePinBinding? = null
@@ -23,8 +22,8 @@ class ChangePin : Fragment(R.layout.fragment__change_pin) {
     private val changePinViewModel: ChangePinViewModel by viewModels { ChangePinViewModel.Factory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

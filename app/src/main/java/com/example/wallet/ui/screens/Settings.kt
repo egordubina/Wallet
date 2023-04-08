@@ -28,6 +28,8 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         super.onCreate(savedInstanceState)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

@@ -80,7 +80,9 @@ class Home : Fragment(R.layout.fragment__home_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            fabAddTransaction.setOnClickListener { findNavController().navigate(R.id.action_homeScreen_to_addTransaction) }
+            fabAddTransaction.setOnClickListener {
+                findNavController().navigate(R.id.action_homeScreen_to_addTransaction)
+            }
             toolbarHome.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_item__settings -> {
@@ -130,6 +132,7 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                 isVisible = true
                 adapter = HomeTransactionAdapter(transactionList.asReversed())
             }
+            // Change toolbar title when scroll to latest transactions
             nestedScrollViewHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                 if (scrollY > textViewLatestTransaction.bottom)
                     toolbarHome.setTitle(R.string.latest_transaction)

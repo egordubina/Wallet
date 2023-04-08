@@ -45,17 +45,18 @@ class Login : Fragment(R.layout.fragment__login_screen) {
                     when (it) {
                         is LoginScreenUiState.Content -> showUi(it.userName)
                         LoginScreenUiState.Loading -> showLoading()
-                        LoginScreenUiState.Success -> {
-                            userViewModel.userIsLogin = true
-                            findNavController().navigate(R.id.action_login_to_homeScreen)
-                        }
-
+                        LoginScreenUiState.Success -> toHomeScreen()
                         LoginScreenUiState.IncorrectPinCode -> showIncorrectPinCodeUi()
                         LoginScreenUiState.Error -> showErrorUi()
                     }
                 }
             }
         }
+    }
+
+    private fun toHomeScreen() {
+        userViewModel.userIsLogin = true
+        findNavController().navigate(R.id.action_login_to_homeScreen)
     }
 
     override fun onCreateView(
