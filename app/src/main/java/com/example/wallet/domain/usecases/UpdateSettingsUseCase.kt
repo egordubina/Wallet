@@ -1,8 +1,8 @@
 package com.example.wallet.domain.usecases
 
-import com.example.wallet.data.database.UserDao
+import com.example.wallet.data.repository.UserRepository
 
-class UpdateSettingsUseCase(private val userDao: UserDao) {
+class UpdateSettingsUseCase(private val userRepository: UserRepository) {
     fun updateSettings() {
 
     }

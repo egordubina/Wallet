@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
 import com.example.wallet.data.repository.UserRepository
+import com.example.wallet.domain.usecases.UpdateSettingsUseCase
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SettingsScreenViewModel(private val userRepository: UserRepository) : ViewModel() {
+
     private val _uiState: MutableStateFlow<SettingsScreenUiState> =
         MutableStateFlow(SettingsScreenUiState.Loading)
 
@@ -38,6 +40,18 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
                 }
             } catch (e: Exception) {
                 Log.d("Exception", e.toString())
+                _uiState.value = SettingsScreenUiState.Error
+            }
+        }
+    }
+
+    fun updateSettings(userName: String, userEmail: String, userPin: String) {
+        job?.cancel()
+        _uiState.value = SettingsScreenUiState.Loading
+        job = viewModelScope.launch {
+            try {
+                UpdateSettingsUseCase(userRepository).updateSettings()
+            } catch (e: Exception) {
                 _uiState.value = SettingsScreenUiState.Error
             }
         }

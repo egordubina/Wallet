@@ -22,4 +22,8 @@ class UserRepository(
             )
         )
     }
+
+    suspend fun updateUser(user: User) {
+
+    }
 }
