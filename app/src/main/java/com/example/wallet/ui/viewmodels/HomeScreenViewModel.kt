@@ -24,19 +24,16 @@ class HomeScreenViewModel(
         transactionRepository.lastTransaction,
         userRepository.userInfo,
     ) { lastTransaction, userInfo ->
-        if (lastTransaction.isEmpty())
-            HomeScreenUiState.NoTransaction(
-                userName = userInfo.userName,
-                currentMonthExpanses = 0,
-                currentMonthIncomes = 0
-            )
-        else
+        try {
             HomeScreenUiState.Content(
                 transactionsList = lastTransaction.asDomain().asUi(),
                 userName = userInfo.userName,
                 currentMonthExpanses = 0,
                 currentMonthIncomes = 0
             )
+        } catch (e: Exception) {
+            HomeScreenUiState.Error
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),

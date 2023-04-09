@@ -45,12 +45,6 @@ class Home : Fragment(R.layout.fragment__home_screen) {
                         when (uiState) {
                             HomeScreenUiState.Loading -> showLoadingUi()
                             HomeScreenUiState.Error -> showErrorUi()
-                            is HomeScreenUiState.NoTransaction -> showContentWithoutTransaction(
-                                userName = uiState.userName,
-                                currentMonthIncomes = uiState.currentMonthIncomes,
-                                currentMonthExpanses = uiState.currentMonthExpanses
-                            )
-
                             is HomeScreenUiState.Content -> showContentUi(
                                 userName = uiState.userName,
                                 transactionList = uiState.transactionsList,
@@ -96,22 +90,6 @@ class Home : Fragment(R.layout.fragment__home_screen) {
         }
     }
 
-    private fun showContentWithoutTransaction(
-        userName: String,
-        currentMonthIncomes: Int,
-        currentMonthExpanses: Int
-    ) {
-        hideLoading()
-        binding.apply {
-            layoutNoTransaction.isVisible = true
-            textViewLatestTransaction.isVisible = false
-            textViewWelcome.text = UiUtils(requireContext()).getWelcomeMessage(userName)
-            textViewAllExpanses.text =
-                getString(R.string.expanses_home_screen, currentMonthExpanses)
-            textViewAllIncomes.text = getString(R.string.incomes_home_screen, currentMonthIncomes)
-        }
-    }
-
     private fun showContentUi(
         userName: String,
         transactionList: List<Transaction>,
@@ -126,11 +104,12 @@ class Home : Fragment(R.layout.fragment__home_screen) {
             textViewAllExpanses.text =
                 getString(R.string.expanses_home_screen, currentMonthExpanses)
             textViewAllIncomes.text = getString(R.string.incomes_home_screen, currentMonthIncomes)
-            layoutNoTransaction.isVisible = false
-            textViewLatestTransaction.isVisible = true
+            layoutNoTransaction.isVisible = transactionList.isEmpty()
+            textViewLatestTransaction.isVisible = transactionList.isNotEmpty()
             recyclerViewHomeAllTransaction.apply {
-                isVisible = true
-                adapter = HomeTransactionAdapter(transactionList.asReversed())
+                isVisible = transactionList.isNotEmpty()
+                if (transactionList.isNotEmpty())
+                    adapter = HomeTransactionAdapter(transactionList.asReversed())
             }
             // Change toolbar title when scroll to latest transactions
             nestedScrollViewHome.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->

@@ -19,10 +19,8 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
 
     private val _uiState: MutableStateFlow<SettingsScreenUiState> =
         MutableStateFlow(SettingsScreenUiState.Loading)
-
     val uiState: StateFlow<SettingsScreenUiState> = _uiState.asStateFlow()
     private var job: Job? = null
-
     init {
         job?.cancel()
         _uiState.value = SettingsScreenUiState.Loading
@@ -33,8 +31,7 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
                     _uiState.value = SettingsScreenUiState.Content(
                         userName = userInfo.userName,
                         fingerprintLogin = false,
-                        userEmail = userInfo.userEmail,
-                        pinCodeToLogin = userInfo.userPin
+                        userEmail = userInfo.userEmail
                     )
                 }
             } catch (e: Exception) {
@@ -44,17 +41,9 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
         }
     }
 
-//    fun updateSettings(userName: String, userEmail: String, userPin: String) {
-//        job?.cancel()
-//        _uiState.value = SettingsScreenUiState.Loading
-//        job = viewModelScope.launch {
-//            try {
-//                UpdateSettingsUseCase(userRepository).updateSettings()
-//            } catch (e: Exception) {
-//                _uiState.value = SettingsScreenUiState.Error
-//            }
-//        }
-//    }
+    fun saveSettings() {
+
+    }
 
     companion object {
         @Suppress("UNCHECKED_CAST")

@@ -1,6 +1,7 @@
 package com.example.wallet.ui.screens
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 settingsScreenViewModel.uiState.collect { uiState ->
+                    Log.d("UI State", uiState.toString())
                     when (uiState) {
                         is SettingsScreenUiState.Content -> showContentUi(
                             name = uiState.userName,
@@ -79,6 +81,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             toolbarSettings.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_item__save_settings -> { // todo: save settings
+                        settingsScreenViewModel.saveSettings()
                         true
                     }
 
@@ -110,6 +113,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 
     private fun hideLoading() {
         binding.linearProgressIndicatorSettings.isVisible = false
+        Log.d("UI State", "hide loading")
     }
 
     override fun onDestroyView() {
