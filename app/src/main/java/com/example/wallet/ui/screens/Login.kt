@@ -133,7 +133,6 @@ class Login : Fragment(R.layout.fragment__login_screen) {
                     .setAllowedAuthenticators(BIOMETRIC_STRONG)
                     .setNegativeButtonText("Использовать пин-код")
                     .build()
-
                 biometricPrompt.authenticate(promptInfo)
             }
         }

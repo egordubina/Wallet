@@ -117,6 +117,7 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
         showLoading()
     }
 
+    // TODO: Change to one layout markup
     private fun showLoading() {
         binding.apply {
             linearProgressIndicatorRegistration?.isVisible = true
@@ -126,6 +127,7 @@ class Registration : Fragment(R.layout.fragment__registration_screen) {
         }
     }
 
+    // TODO: Change to one layout markup
     private fun hideLoading() {
         binding.apply {
             linearProgressIndicatorRegistration?.isVisible = false

@@ -12,7 +12,6 @@ import com.example.wallet.databinding.FragmentWelcomeScreenBinding
 import com.google.android.material.transition.MaterialSharedAxis
 
 class Welcome : Fragment(R.layout.fragment__welcome_screen) {
-    //    private lateinit var walletPreferences: WalletPreferences
     private var _binding: FragmentWelcomeScreenBinding? = null
     private val binding get() = checkNotNull(_binding)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +31,6 @@ class Welcome : Fragment(R.layout.fragment__welcome_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding: FragmentWelcomeScreenBinding = FragmentWelcomeScreenBinding.bind(view)
-//        walletPreferences = WalletPreferences(requireActivity())
         binding.apply {
             buttonGo.setOnClickListener {
                 findNavController().navigate(R.id.action_welcome_to_register)
