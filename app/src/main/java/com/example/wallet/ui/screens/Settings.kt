@@ -24,7 +24,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     private val settingsScreenViewModel: SettingsScreenViewModel by viewModels { SettingsScreenViewModel.Factory }
     private var _binding: FragmentSettingsScreenBinding? = null
     private val binding get() = checkNotNull(_binding)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
@@ -35,13 +34,15 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 settingsScreenViewModel.uiState.collect { uiState ->
-                    Log.d("UI State", uiState.toString())
                     when (uiState) {
-                        is SettingsScreenUiState.Content -> showContentUi(
-                            name = uiState.userName,
-                            email = uiState.userEmail,
-                            useFingerprintToLogin = uiState.fingerprintLogin
-                        )
+                        is SettingsScreenUiState.Content -> {
+                            showContentUi(
+                                name = uiState.userName,
+                                email = uiState.userEmail,
+                                useFingerprintToLogin = uiState.fingerprintLogin,
+                                userPin = uiState.userPin
+                            )
+                        }
 
                         SettingsScreenUiState.Error -> showFailedUi()
                         SettingsScreenUiState.Loading -> showLoadingUi()
@@ -63,14 +64,15 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            toolbarSettings.setNavigationOnClickListener { } // todo: save settings
+            toolbarSettings.setNavigationOnClickListener { findNavController().navigateUp() }
         }
     }
 
     private fun showContentUi(
         name: String,
         email: String,
-        useFingerprintToLogin: Boolean
+        useFingerprintToLogin: Boolean,
+        userPin: String
     ) {
         hideLoading()
         // todo перенести логику во viewmodel
@@ -81,7 +83,12 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
             toolbarSettings.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_item__save_settings -> { // todo: save settings
-                        settingsScreenViewModel.saveSettings()
+                        settingsScreenViewModel.saveSettings(
+                            userName = editTextUserName.text.toString(),
+                            userEmail = editTextUserEmail.text.toString(),
+                            useFingerprintToLogin = switchUseFingerPrintToLogin.isChecked,
+                            userPin = userPin
+                        )
                         true
                     }
 

@@ -24,6 +24,6 @@ class UserRepository(
     }
 
     suspend fun updateUser(user: User) {
-
+        userDao.registrationUser(user)
     }
 }

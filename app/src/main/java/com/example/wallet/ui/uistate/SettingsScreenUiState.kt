@@ -6,6 +6,7 @@ sealed class SettingsScreenUiState {
     data class Content(
         val userName: String,
         val fingerprintLogin: Boolean,
-        val userEmail: String
+        val userEmail: String,
+        val userPin: String
     ) : SettingsScreenUiState()
 }

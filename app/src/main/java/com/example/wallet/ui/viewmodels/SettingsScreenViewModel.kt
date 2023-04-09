@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.wallet.WalletApplication
+import com.example.wallet.data.models.User
+import com.example.wallet.data.preferences.WalletPreferences
 import com.example.wallet.data.repository.UserRepository
 import com.example.wallet.ui.uistate.SettingsScreenUiState
 import kotlinx.coroutines.Job
@@ -15,12 +17,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SettingsScreenViewModel(private val userRepository: UserRepository) : ViewModel() {
+class SettingsScreenViewModel(
+    private val userRepository: UserRepository,
+    private val walletPreferences: WalletPreferences
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<SettingsScreenUiState> =
         MutableStateFlow(SettingsScreenUiState.Loading)
     val uiState: StateFlow<SettingsScreenUiState> = _uiState.asStateFlow()
     private var job: Job? = null
+
     init {
         job?.cancel()
         _uiState.value = SettingsScreenUiState.Loading
@@ -30,8 +36,9 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
                 user.collect { userInfo ->
                     _uiState.value = SettingsScreenUiState.Content(
                         userName = userInfo.userName,
-                        fingerprintLogin = false,
-                        userEmail = userInfo.userEmail
+                        fingerprintLogin = walletPreferences.useFingerprintToLogin,
+                        userEmail = userInfo.userEmail,
+                        userPin = userInfo.userPin
                     )
                 }
             } catch (e: Exception) {
@@ -41,8 +48,22 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
         }
     }
 
-    fun saveSettings() {
-
+    // TODO: перепроверить функцию сохранения
+    fun saveSettings(
+        userName: String,
+        userEmail: String,
+        useFingerprintToLogin: Boolean,
+        userPin: String
+    ) {
+        val user = User(
+            userName = userName,
+            userEmail = userEmail,
+            userPin = userPin
+        )
+        viewModelScope.launch {
+            userRepository.updateUser(user)
+        }
+        walletPreferences.useFingerprintToLogin = useFingerprintToLogin
     }
 
     companion object {
@@ -51,7 +72,8 @@ class SettingsScreenViewModel(private val userRepository: UserRepository) : View
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 return SettingsScreenViewModel(
-                    (application as WalletApplication).userRepository
+                    (application as WalletApplication).userRepository,
+                    application.walletPreferences
                 ) as T
             }
         }

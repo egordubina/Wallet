@@ -2,6 +2,7 @@ package com.example.wallet.data.preferences
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.example.wallet.data.models.UserSettingsIds
 
 const val SETTINGS_USER_NEW: String = "NEW_USER"
 
@@ -25,4 +26,8 @@ class WalletPreferences(context: Context) {
     var isFirstLogin: Boolean
         get() = preferencesManager.getBoolean(SETTINGS_USER_NEW, true)
         set(value) = editPreferences.putBoolean(SETTINGS_USER_NEW, value).apply()
+
+    var useFingerprintToLogin: Boolean
+        get() = preferencesManager.getBoolean(UserSettingsIds.USER_FINGERPRINT.id, true)
+        set(value) = editPreferences.putBoolean(UserSettingsIds.USER_FINGERPRINT.id, value).apply()
 }
