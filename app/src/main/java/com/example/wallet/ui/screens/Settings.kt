@@ -34,6 +34,7 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 settingsScreenViewModel.uiState.collect { uiState ->
+                    Log.d("Ui State", uiState.toString())
                     when (uiState) {
                         is SettingsScreenUiState.Content -> {
                             showContentUi(
@@ -64,7 +65,26 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            toolbarSettings.setNavigationOnClickListener { findNavController().navigateUp() }
+            toolbarSettings.apply {
+                setNavigationOnClickListener { findNavController().navigateUp() }
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.menu_item__save_settings -> { // todo: save settings
+                            settingsScreenViewModel.saveSettings(
+                                userName = editTextUserName.text.toString(),
+                                userEmail = editTextUserEmail.text.toString(),
+                                useFingerprintToLogin = switchUseFingerPrintToLogin.isChecked
+                            )
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+            }
+            buttonActionToChangePinCode.setOnClickListener {
+                findNavController().navigate(R.id.action_settings_to_changePin)
+            }
         }
     }
 
@@ -75,29 +95,10 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
         userPin: String
     ) {
         hideLoading()
-        // todo перенести логику во viewmodel
         binding.apply {
             editTextUserName.setText(name)
             editTextUserEmail.setText(email)
             switchUseFingerPrintToLogin.isChecked = useFingerprintToLogin
-            toolbarSettings.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.menu_item__save_settings -> { // todo: save settings
-                        settingsScreenViewModel.saveSettings(
-                            userName = editTextUserName.text.toString(),
-                            userEmail = editTextUserEmail.text.toString(),
-                            useFingerprintToLogin = switchUseFingerPrintToLogin.isChecked,
-                            userPin = userPin
-                        )
-                        true
-                    }
-
-                    else -> false
-                }
-            }
-            buttonActionToChangePinCode.setOnClickListener {
-                findNavController().navigate(R.id.action_settings_to_changePin)
-            }
         }
     }
 
@@ -120,7 +121,6 @@ class Settings : Fragment(R.layout.fragment__settings_screen) {
 
     private fun hideLoading() {
         binding.linearProgressIndicatorSettings.isVisible = false
-        Log.d("UI State", "hide loading")
     }
 
     override fun onDestroyView() {

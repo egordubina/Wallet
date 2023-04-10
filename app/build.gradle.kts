@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.biometric.ktx)

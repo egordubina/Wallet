@@ -26,6 +26,7 @@ class SettingsScreenViewModel(
         MutableStateFlow(SettingsScreenUiState.Loading)
     val uiState: StateFlow<SettingsScreenUiState> = _uiState.asStateFlow()
     private var job: Job? = null
+    private lateinit var userPin: String
 
     init {
         job?.cancel()
@@ -40,6 +41,7 @@ class SettingsScreenViewModel(
                         userEmail = userInfo.userEmail,
                         userPin = userInfo.userPin
                     )
+                    userPin = userInfo.userPin
                 }
             } catch (e: Exception) {
                 Log.d("Exception", e.toString())
@@ -53,17 +55,32 @@ class SettingsScreenViewModel(
         userName: String,
         userEmail: String,
         useFingerprintToLogin: Boolean,
-        userPin: String
     ) {
-        val user = User(
-            userName = userName,
-            userEmail = userEmail,
-            userPin = userPin
-        )
-        viewModelScope.launch {
-            userRepository.updateUser(user)
+        when {
+            userName.isEmpty() -> {
+                Log.d("User Name", "Empty")
+                _uiState.value = SettingsScreenUiState.Error // todo change ui state "name error"
+                return
+            }
+
+            userEmail.isEmpty() -> {
+                Log.d("User Email", "Empty")
+                _uiState.value = SettingsScreenUiState.Error // todo change ui state "email error"
+                return
+            }
+
+            else -> {
+                val user = User(
+                    userName = userName,
+                    userEmail = userEmail,
+                    userPin = userPin
+                )
+                viewModelScope.launch {
+                    userRepository.updateUser(user)
+                }
+                walletPreferences.useFingerprintToLogin = useFingerprintToLogin
+            }
         }
-        walletPreferences.useFingerprintToLogin = useFingerprintToLogin
     }
 
     companion object {

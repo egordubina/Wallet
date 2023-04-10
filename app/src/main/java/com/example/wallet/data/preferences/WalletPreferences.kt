@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.example.wallet.data.models.UserSettingsIds
 
+// todo: change
+
 const val SETTINGS_USER_NEW: String = "NEW_USER"
 
 /**
