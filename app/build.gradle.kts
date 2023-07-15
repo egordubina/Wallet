@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.wallet"
+    namespace = "ru.neuromantics.wallet"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.wallet"
+        applicationId = "ru.neuromantics.wallet"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
@@ -28,14 +28,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_19
-        targetCompatibility = JavaVersion.VERSION_19
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_19.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.8"
     }
 }
 
@@ -54,6 +58,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     ksp(libs.androidx.room.compiler)
 
+    // compose
+    implementation(platform("androidx.compose:compose-bom:2023.06.01"))
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
+    implementation("com.google.accompanist:accompanist-themeadapter-material3:0.31.5-beta")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+    implementation("io.insert-koin:koin-androidx-compose:3.4.5")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
