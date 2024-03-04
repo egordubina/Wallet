@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "ru.neuromantics.wallet"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "ru.neuromantics.wallet"
@@ -59,7 +59,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     // compose
-    implementation(platform("androidx.compose:compose-bom:2023.06.01"))
+    implementation(platform(libs.compose.bom))
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
